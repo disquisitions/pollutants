@@ -1,0 +1,12 @@
+pip
+dask[complete]
+scikit-learn
+numpy>=1.25.*
+pandas>=2.0.*
+scipy>=1.11.*
+requests>=2.31.*
+pytest>=7.4.*
+coverage>=7.2.7
+pytest-cov>=4.1.0
+pylint>=2.17.4
+flake8>=6.0.*
