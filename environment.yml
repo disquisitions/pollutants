@@ -9,7 +9,7 @@ dependencies:
   - numpy>=1.25.*
   - pandas>=2.0.*
   - scipy>=1.11.*
-  - requests
+  - requests>=2.31.*
   - pytest
   - coverage
   - pytest-cov
