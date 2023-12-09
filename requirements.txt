@@ -1,5 +1,5 @@
 pip
-dask[complete]
+dask[complete]>=2023.11
 scikit-learn
 numpy>=1.25.*
 pandas>=2.0.*
