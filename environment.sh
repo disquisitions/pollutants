@@ -13,5 +13,5 @@ conda remove -y --prefix $prefix --all
 : << 'rebuild'
 Rebuild environment <climate> via a requirements.txt file
 rebuild
-conda create -y --prefix $prefix  python==3.11.7
+conda create -y --prefix $prefix  python>=3.11.*
 conda install -y --prefix $prefix -c anaconda --file requirements.txt
