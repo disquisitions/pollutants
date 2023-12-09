@@ -1,5 +1,5 @@
 # Base Image
-FROM python:3.11.7-bookworm
+FROM python:3.11.6-bookworm
 
 # pip
 RUN pip install --upgrade pip
