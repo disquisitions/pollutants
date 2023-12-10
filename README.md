@@ -1,10 +1,12 @@
 <br>
 
-Pollutants
+**Pollutants**
 
 <br>
 
 ## Remote & Local Environments
+
+<br>
 
 ### Remote
 
@@ -48,13 +50,13 @@ Building development environments.  Beforehand update the `base` **`conda`** env
 conda update -n base -c anaconda conda
 ```
 
-An environment might be built via `environment.yml`
+An environment might be built via **environment.yml**
 
 ```shell
 conda env create --file environment.yml -p /opt/miniconda3/envs/climate
 ```
 
-or via `requirements.txt`
+or via **requirements.txt**
 
 ```shell
 prefix=/opt/miniconda3/envs/climate
@@ -70,7 +72,7 @@ pip install ... --no-cache-dir
 conda deactivate
 ```
 
-might be necessary
+might be necessary.
 
 <br>
 
