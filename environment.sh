@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# Update conda
-conda update -n base -c conda-forge conda
+: << 'comment'
+The set up herein is in line with the Dockerfile set up.  Both use the same
+requirements.txt file to create an environment.
+comment
 
 # The environment in focus
 prefix=/opt/miniconda3/envs/climate
