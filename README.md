@@ -42,28 +42,35 @@ Similarly, Visual Studio Code as its container attachment instructions; study [A
 
 ### Local
 
-Building development environments.  Try
+Building development environments.  Beforehand update the `base` **`conda`** environment
+
+```shell
+conda update -n base -c anaconda conda
+```
+
+An environment might be built via `environment.yml`
 
 ```shell
 conda env create --file environment.yml -p /opt/miniconda3/envs/climate
 ```
 
-or
+or via `requirements.txt`
 
 ```shell
-
-# Initiate an environment
 prefix=/opt/miniconda3/envs/climate
 conda create -y --prefix $prefix python==3.11.7
 conda install -y --prefix $prefix -c anaconda --file requirements.txt
+```
 
-# It is quite possible that one or more packages are only available via `pip`, hence the succeeding
-# lines
+In this case, it is quite possible that one or more packages are only available via `pip`, hence the directives
+
+```shell
 conda activate climate
-pip install ... --no-cache-dir
 pip install ... --no-cache-dir
 conda deactivate
 ```
+
+might be necessary
 
 <br>
 
