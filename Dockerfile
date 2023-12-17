@@ -15,4 +15,7 @@ RUN pip install --requirement /app/requirements.txt --no-cache-dir
 EXPOSE 8050
 
 # ENTRYPOINT
-ENTRYPOINT ["bash"]
+ENTRYPOINT ["python"]
+
+# CMD
+CMD ["src/main.py"]
