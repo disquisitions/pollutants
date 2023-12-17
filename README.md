@@ -76,6 +76,23 @@ might be necessary.
 
 <br>
 
+## Development
+
+The directive
+
+```shell
+pylint --generate-rcfile > .pylintrc
+```
+
+generates the dotfile `.pylintrc` of the static code analyser [pylint](https://pylint.pycqa.org/en/latest/user_guide/checkers/features.html).  Subsequently, analyse via
+
+```shell
+python -m pylint --rcfile .pylintrc ...
+```
+
+
+<br>
+
 ## References
 
 * [Docker Official Images: Python](https://hub.docker.com/_/python/)
