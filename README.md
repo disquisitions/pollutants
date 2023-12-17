@@ -53,13 +53,13 @@ conda update -n base -c anaconda conda
 An environment might be built via **environment.yml**
 
 ```shell
-conda env create --file environment.yml -p /opt/miniconda3/envs/climate
+conda env create --file environment.yml -p /opt/miniconda3/envs/pollutants
 ```
 
 or via **requirements.txt**
 
 ```shell
-prefix=/opt/miniconda3/envs/climate
+prefix=/opt/miniconda3/envs/pollutants
 conda create -y --prefix $prefix python==3.11.7
 conda install -y --prefix $prefix -c anaconda --file requirements.txt
 ```
@@ -67,7 +67,7 @@ conda install -y --prefix $prefix -c anaconda --file requirements.txt
 In this case, it is quite possible that one or more packages are only available via `pip`, hence the directives
 
 ```shell
-conda activate climate
+conda activate pollutants
 pip install ... --no-cache-dir
 conda deactivate
 ```
