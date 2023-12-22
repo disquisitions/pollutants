@@ -19,8 +19,11 @@ def main():
     url: str = src.data.url.URL().exc(datestr=datestr)
     logger.info(url)
     sample = src.functions.objects.Objects().api(url=url)
-    logger.info(sample.__getitem__('name'))
-    logger.info(sample.__getitem__('data'))
+    logger.info(sample[0].__getitem__('name'))
+    logger.info(sample[0].__getitem__('data'))
+
+    # Additionally
+    src.data.pollutants.Pollutants().exc()
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
@@ -41,6 +44,7 @@ if __name__ == '__main__':
     # Modules
     import src.functions.objects
     import src.functions.cache
+    import src.data.pollutants
     import src.data.url
 
     main()
