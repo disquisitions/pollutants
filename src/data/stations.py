@@ -1,6 +1,8 @@
 """Module stations.py"""
 import logging
 
+import pandas as pd
+
 import src.functions.objects
 
 class Stations:
@@ -22,6 +24,14 @@ class Stations:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
+    @staticmethod
+    def __structure(blob: dict) -> pd.DataFrame:
+
+        try:
+            return pd.json_normalize(data=blob, max_level=2)
+        except ImportError as err:
+            raise Exception(err) from err
+
     def exc(self):
         """
 
@@ -29,5 +39,8 @@ class Stations:
         """
 
         objects = src.functions.objects.Objects()
-        data: dict = objects.api(url=self.__url)
+        dictionary: dict = objects.api(url=self.__url)
+        self.__logger.info(dictionary)
+
+        data: pd.DataFrame = self.__structure(blob=dictionary)
         self.__logger.info(data)
