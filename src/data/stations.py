@@ -44,3 +44,7 @@ class Stations:
 
         data: pd.DataFrame = self.__structure(blob=dictionary)
         self.__logger.info(data)
+
+        coordinates = pd.DataFrame(data=data['geometry.coordinates'].to_list(), columns=['longitude', 'latitude', 'height'])
+        data = data.copy().drop(columns='geometry.coordinates').join(coordinates, how='left')
+        self.__logger.info(data)
