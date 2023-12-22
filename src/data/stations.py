@@ -1,6 +1,8 @@
 """Module stations.py"""
 import logging
 
+import src.functions.objects
+
 class Stations:
     """
     Class Stations
@@ -9,7 +11,7 @@ class Stations:
 
     def __init__(self):
         """
-
+        Constructor
         """
 
         self.__url = 'https://www.scottishairquality.scot/sos-scotland/api/v1/stations'
@@ -25,3 +27,7 @@ class Stations:
 
         :return:
         """
+
+        objects = src.functions.objects.Objects()
+        data: dict = objects.api(url=self.__url)
+        self.__logger.info(data)
