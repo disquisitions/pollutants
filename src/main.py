@@ -24,6 +24,7 @@ def main():
 
     # Additionally
     src.data.pollutants.Pollutants().exc()
+    src.data.stations.Stations().exc()
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
@@ -45,6 +46,7 @@ if __name__ == '__main__':
     import src.functions.objects
     import src.functions.cache
     import src.data.pollutants
+    import src.data.stations
     import src.data.url
 
     main()
