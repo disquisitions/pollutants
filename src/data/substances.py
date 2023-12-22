@@ -1,10 +1,10 @@
-"""Module pollutants.py"""
+"""Module substances.py"""
 import logging
 
 import src.functions.objects
 
 
-class Pollutants:
+class Substances:
     """
     Class Pollutants
     Reads-in the ...
