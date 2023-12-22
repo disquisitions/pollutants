@@ -1,8 +1,8 @@
 name: pollutants
 channels:
-  - anaconda
+  - conda-forge
 dependencies:
-  - python>=3.11.7
+  - python==3.11.7
   - pip
   - dask>=2023.11
   - scikit-learn
