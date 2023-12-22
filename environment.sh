@@ -16,5 +16,4 @@ conda remove -y --prefix $prefix --all
 : << 'rebuild'
   Rebuild environment <pollutants> via a requirements.txt file
 rebuild
-conda create -y --prefix $prefix -c conda-forge  python==3.11.7
-conda install -y --prefix $prefix -c conda-forge --file requirements.txt
+conda env create -f environment.yml -p $prefix
