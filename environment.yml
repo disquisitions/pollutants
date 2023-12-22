@@ -2,7 +2,7 @@ name: pollutants
 channels:
   - anaconda
 dependencies:
-  - python>=3.11.6
+  - python>=3.11.7
   - pip
   - dask>=2023.11
   - scikit-learn
