@@ -2,7 +2,6 @@
 import logging
 import os
 import sys
-import collections
 
 
 def main():
@@ -23,7 +22,7 @@ def main():
     logger.info(sample[0].__getitem__('data'))
 
     # Additionally
-    src.data.pollutants.Pollutants().exc()
+    src.data.substances.Substances().exc()
     src.data.stations.Stations().exc()
 
     # Deleting __pycache__
@@ -45,7 +44,7 @@ if __name__ == '__main__':
     # Modules
     import src.functions.objects
     import src.functions.cache
-    import src.data.pollutants
+    import src.data.substances
     import src.data.stations
     import src.data.url
 
