@@ -11,7 +11,7 @@ def main():
 
     # Log
     logger: logging.Logger = logging.getLogger(__name__)
-    logger.info('pollutants')
+    logger.info('Pollutants')
 
     # Try
     datestr = '2023-11-18'
