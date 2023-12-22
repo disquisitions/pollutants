@@ -97,6 +97,7 @@ python -m pylint --rcfile .pylintrc ...
 
 * [Docker Official Images: Python](https://hub.docker.com/_/python/)
 * [Image Comparisons](https://pythonspeed.com/articles/base-image-python-docker-images/)
+* [`man` reference](https://linux.die.net)
 
 <br>
 <br>
