@@ -1,13 +1,18 @@
+"""Module pollutants.py"""
 import logging
 
 import src.functions.objects
 
 
 class Pollutants:
+    """
+    Class Pollutants
+    Reads-in the ...
+    """
 
     def __init__(self) -> None:
         """
-
+        Constructor
         """
         self.__url: str = 'https://www.scottishairquality.scot/sos-scotland/api/v1/phenomena'
 
