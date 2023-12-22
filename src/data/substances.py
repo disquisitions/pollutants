@@ -6,7 +6,7 @@ import src.functions.objects
 
 class Substances:
     """
-    Class Pollutants
+    Class Substances
     Reads-in the ...
     """
 
