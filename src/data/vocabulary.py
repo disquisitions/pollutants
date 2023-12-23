@@ -36,7 +36,12 @@ class Vocabulary:
         :return:
         """
 
-        return blob.copy().rename(columns=self.__rename)
+        data = blob.copy().rename(columns=self.__rename)
+
+        identifiers = data.copy().loc[:, 'uri'].str.rsplit(pat='/', n=1, expand=True)
+        data.loc[:, 'pollution_id'] = identifiers.loc[:, 1].array
+
+        return data
 
     def exc(self):
 
