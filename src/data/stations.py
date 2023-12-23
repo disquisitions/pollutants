@@ -17,8 +17,10 @@ class Stations:
         Constructor
         """
 
+        # The stations url (uniform resource locator)
         self.__url = 'https://www.scottishairquality.scot/sos-scotland/api/v1/stations'
 
+        # The data source field names, and their corresponding new names.
         self.__rename = dict(zip(['properties.id', 'properties.label'], ['station_id', 'station_label']))
 
         # Logging
