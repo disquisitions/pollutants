@@ -15,12 +15,15 @@ class Substances:
     def __init__(self) -> None:
         """
         Constructor
-        {'labels': ['id', 'label'], 'names': ['pollutant_id', 'uri'], cast: [int, str]}
         """
 
         self.__url: str = 'https://www.scottishairquality.scot/sos-scotland/api/v1/phenomena'
 
-        self.__rename = dict(zip(['id', 'label'], ['pollutant_id', 'uri']))
+        labels = ['id', 'label']
+        names = ['pollutant_id', 'uri']
+        casts = [int, str]
+        self.__rename = dict(zip(labels, names))
+        self.__dtype = dict(zip(names, casts))
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -35,7 +38,8 @@ class Substances:
         except ImportError as err:
             raise Exception(err) from err
 
-        return normalised.rename(columns=self.__rename)
+        normalised.rename(columns=self.__rename, inplace=True)
+        return normalised.astype(dtype=self.__dtype)
 
     def exc(self):
         """
@@ -44,7 +48,7 @@ class Substances:
         """
 
         objects = src.functions.objects.Objects()
-        data: dict = objects.api(url=self.__url)
-        self.__logger.info(data)
+        dictionary: dict = objects.api(url=self.__url)
 
-        self.__structure(blob=data)
+        data = self.__structure(blob=dictionary)
+        self.__logger.info(data.info())
