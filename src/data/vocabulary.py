@@ -46,9 +46,11 @@ class Vocabulary:
 
         data = blob.copy()
 
+        # Deriving the <pollution_id>
         identifiers = data.copy().loc[:, 'uri'].str.rsplit(pat='/', n=1, expand=True)
         data.loc[:, 'pollution_id'] = identifiers.loc[:, 1].astype(dtype=int).array
 
+        # Extracting the <recommended_unit_of_measure>
         units = data.copy().loc[:, 'recommended_unit'].str.rsplit(pat='/', n=1, expand=True)
         data.loc[:, 'recommended_unit_of_measure'] = units.loc[:, 1].array
         data.drop(columns='recommended_unit', inplace=True)
