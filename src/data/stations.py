@@ -28,9 +28,14 @@ class Stations:
     def __structure(blob: dict) -> pd.DataFrame:
 
         try:
-            return pd.json_normalize(data=blob, max_level=2)
+            normalised = pd.json_normalize(data=blob, max_level=2)
         except ImportError as err:
             raise Exception(err) from err
+
+        coordinates = pd.DataFrame(data=normalised['geometry.coordinates'].to_list(), columns=['longitude', 'latitude', 'height'])
+        data = normalised.copy().drop(columns='geometry.coordinates').join(coordinates, how='left')
+
+        return data
 
     def exc(self):
         """
@@ -43,8 +48,4 @@ class Stations:
         self.__logger.info(dictionary)
 
         data: pd.DataFrame = self.__structure(blob=dictionary)
-        self.__logger.info(data)
-
-        coordinates = pd.DataFrame(data=data['geometry.coordinates'].to_list(), columns=['longitude', 'latitude', 'height'])
-        data = data.copy().drop(columns='geometry.coordinates').join(coordinates, how='left')
         self.__logger.info(data)
