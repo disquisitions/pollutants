@@ -27,13 +27,19 @@ class Stations:
 
     @staticmethod
     def __structure(blob: dict) -> pd.DataFrame:
+        """
+
+        :param blob:
+        :return:
+        """
 
         try:
             normalised = pd.json_normalize(data=blob, max_level=2)
         except ImportError as err:
             raise Exception(err) from err
 
-        coordinates = pd.DataFrame(data=normalised['geometry.coordinates'].to_list(), columns=['longitude', 'latitude', 'height'])
+        coordinates = pd.DataFrame(data=normalised['geometry.coordinates'].to_list(),
+                                   columns=['longitude', 'latitude', 'height'])
         data = normalised.copy().drop(columns='geometry.coordinates').join(coordinates, how='left')
 
         return data
