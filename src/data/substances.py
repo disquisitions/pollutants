@@ -13,7 +13,9 @@ class Substances:
     def __init__(self) -> None:
         """
         Constructor
+        {'labels': ['id', 'label'], 'names': ['pollutant_id', 'uri'], cast: [int, str]}
         """
+
         self.__url: str = 'https://www.scottishairquality.scot/sos-scotland/api/v1/phenomena'
 
         # Logging
