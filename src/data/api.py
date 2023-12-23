@@ -1,9 +1,9 @@
-"""Module url"""
+"""Module api.py"""
 
 
-class URL:
+class API:
     """
-    Class URL
+    Class API
     """
 
     def __init__(self) -> None:
