@@ -44,3 +44,6 @@ class Vocabulary:
         data: pd.DataFrame = streams.api(uri=self.__uri, header=0, usecols=self.__dtype['labels'],
                                          dtype=self.__dtype, date_fields=self.__date_fields )
         self.__logger.info(data)
+
+        data = self.__structure(blob=data)
+        self.__logger.info(data)
