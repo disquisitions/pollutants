@@ -37,10 +37,17 @@ class Sequences:
 
         return data
 
-    def __feature_engineering(self, blob: pd.DataFrame):
+    @staticmethod
+    def __feature_engineering(blob: pd.DataFrame) -> pd.DataFrame:
 
-        identifiers = blob.copy()['description'].str.split(n=1, expand=True)
-        self.__logger.info(identifiers.loc[0, 0])
+        data = blob.copy()
+
+        identifiers: pd.DataFrame = data.copy()['description'].str.split(n=1, expand=True)
+        identifiers = identifiers.copy().loc[:, 0].str.rsplit(pat='/', n=1, expand=True)
+        data.loc[:, 'pollution_id'] = identifiers.loc[:, 1].astype(dtype=int).array
+        data.drop(columns='description', inplace=True)
+
+        return data
 
     def exc(self):
 
@@ -49,6 +56,6 @@ class Sequences:
 
         data = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
-        self.__feature_engineering(blob=data)
+        data = self.__feature_engineering(blob=data)
         self.__logger.info(data.info())
         self.__logger.info(data.head())
