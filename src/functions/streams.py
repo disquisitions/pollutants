@@ -3,9 +3,9 @@ Module: streams.py
 """
 import csv
 import pathlib
-import requests
 
 import pandas as pd
+import requests
 
 
 class Streams:
@@ -40,41 +40,50 @@ class Streams:
             raise ValueError(err.strerror) from err
 
     @staticmethod
-    def read(uri: str, header: int = 0, usecols: list = None, dtype: dict = None) -> pd.DataFrame:
+    def read(uri: str, header: int = 0, usecols: list = None, dtype: dict = None,
+             date_fields: list = None) -> pd.DataFrame:
         """
 
         :param uri: The uniform resource identifier; path + file + extension string.
         :param header: The header row of the `csv` file
         :param usecols: The fields in focus
         :param dtype: Dictionary of type per field
+        :param date_fields: The list of data fields, if any.
         :return:
         """
 
+        if date_fields is None:
+            parse_dates = False
+        else:
+            parse_dates = date_fields
+
         try:
             return pd.read_csv(filepath_or_buffer=uri, header=header, usecols=usecols, dtype=dtype,
-                               encoding='utf-8', parse_dates=False)
+                               encoding='utf-8', parse_dates=parse_dates)
         except ImportError:
             return pd.DataFrame()
 
-    def api(self, uri: str, header: int = 0, usecols: list = None, dtype: dict = None) -> pd.DataFrame:
+    def api(self, uri: str, header: int = 0, usecols: list = None, dtype: dict = None,
+            date_fields: list = None) -> pd.DataFrame:
         """
 
         :param uri: The uniform resource identifier; path + file + extension string.
         :param header: The header row of the `csv` file
         :param usecols: The fields in focus
         :param dtype: Dictionary of type per field
+        :param date_fields: The list of data fields, if any.
         :return:
         """
 
         data = pd.DataFrame()
 
         try:
-            response = requests.head(url=uri, timeout = 300)
+            response = requests.head(url=uri, timeout=300)
             response.raise_for_status()
         except requests.exceptions.HTTPError as err:
             raise ValueError(f'HTTP Error: {err}') from err
 
         if response.status_code == 200:
-            data = self.read(uri=uri, header=header, usecols=usecols, dtype=dtype)
+            data = self.read(uri=uri, header=header, usecols=usecols, dtype=dtype, date_fields=date_fields)
 
         return data
