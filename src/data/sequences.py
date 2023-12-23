@@ -1,17 +1,27 @@
-import src.functions.objects
+"""Module sequences.py"""
 import logging
+
 import pandas as pd
+
+import src.functions.objects
 
 
 class Sequences:
+    """
+    Class Sequences
+    Reads-in the metadata of each telemetric device's data
+    """
 
     def __init__(self):
         """
-
+        Constructor
         """
 
+        # The url (uniform resource locator) of the metadata in focus
         self.__url = 'https://www.scottishairquality.scot/sos-scotland/api/v1/timeseries'
 
+        # The data source field names <labels>, and their corresponding new names <names>; the new names are
+        # in line with field-naming standards & defined ontology.
         labels = ['id', 'label', 'uom', 'station.properties.id', 'station.properties.label']
         names = ['sequence_id', 'description', 'unit_of_measure', 'station_id', 'station_label']
         self.__rename = dict(zip(labels, names))
@@ -24,6 +34,11 @@ class Sequences:
 
     @staticmethod
     def __structure(blob: dict) -> pd.DataFrame:
+        """
+
+        :param blob:
+        :return:
+        """
 
         try:
             normalised = pd.json_normalize(data=blob, max_level=2)
@@ -39,6 +54,11 @@ class Sequences:
 
     @staticmethod
     def __feature_engineering(blob: pd.DataFrame) -> pd.DataFrame:
+        """
+
+        :param blob:
+        :return:
+        """
 
         data = blob.copy()
 
@@ -50,10 +70,17 @@ class Sequences:
         return data
 
     def exc(self):
+        """
 
+        :return:
+        """
+
+        # Reads-in the metadata
         objects = src.functions.objects.Objects()
         dictionary = objects.api(url=self.__url)
 
+        # Hence, (a) structuring, (b) renaming the fields in line with field naming conventions
+        # and ontology standards, and (c) adding & dropping features
         data = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
         data = self.__feature_engineering(blob=data)
