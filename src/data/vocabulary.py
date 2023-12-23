@@ -12,10 +12,10 @@ class Vocabulary:
         self.__uri: str = 'https://dd.eionet.europa.eu/vocabulary/aq/pollutant/csv'
 
         # get <pollutant_id> from <uri>
-        self.__fields = {'labels': ['URI', 'Label', 'Definition', 'Notation', 'Status', 'AcceptedDate', 'recommendedUnit'],
-                         'name': ['uri', 'substance', 'definition', 'notation', 'status', 'accepted_date', 'recommended_unit'],
-                         'type': str}
-        self.__parse_dates = ['AcceptedDate']
+        labels = ['URI', 'Label', 'Definition', 'Notation', 'Status', 'AcceptedDate', 'recommendedUnit']
+        names = ['uri', 'substance', 'definition', 'notation', 'status', 'accepted_date', 'recommended_unit']
+        self.__dtype = {'labels': labels, 'type': [str] * len(labels)}
+        self.__date_fields = ['AcceptedDate']
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -26,4 +26,5 @@ class Vocabulary:
     def exc(self):
 
         streams = src.functions.streams.Streams()
-        streams.api(uri=self.__uri)
+        streams.api(uri=self.__uri, header=0, usecols=self.__dtype['labels'],
+                    dtype=self.__dtype, date_fields=self.__date_fields )
