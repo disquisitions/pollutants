@@ -11,23 +11,26 @@ class URL:
         Constructor
         """
 
-    def __pattern(self, datestr: str) -> str:
+    @staticmethod
+    def __pattern(sequence_id: int, datestr: str) -> str:
         """
-        
+
+        :param sequence_id: The identification code of an air pollutant sequence
         :param datestr: Date string YYYY-mm-dd
         :return
         """
 
-        string = """https://www.scottishairquality.scot/sos-scotland/api/v1/timeseries/214/getData?""" + \
-                 """expanded=true&phenomenon=1&format=highcharts&timespan={datestr}T00:00:00Z/{datestr}T23:59:59Z"""
+        string = f"""https://www.scottishairquality.scot/sos-scotland/api/v1/timeseries/{sequence_id}/getData?""" + \
+                 f"""expanded=true&phenomenon=1&format=highcharts&timespan={datestr}T00:00:00Z/{datestr}T23:59:59Z"""
 
-        return string.format(datestr=datestr)
+        return string
 
-    def exc(self, datestr: str) -> str:
+    def exc(self, sequence_id: int, datestr: str) -> str:
         """
-        
+
+        :param sequence_id: The identification code of an air pollutant sequence
         :param datestr: Date string YYYY-mm-dd
         :return
         """
 
-        return self.__pattern(datestr=datestr)
+        return self.__pattern(sequence_id=sequence_id, datestr=datestr)
