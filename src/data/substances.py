@@ -31,16 +31,25 @@ class Substances:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def __structure(self, blob: dict) -> pd.DataFrame:
+    @staticmethod
+    def __structure(blob: dict) -> pd.DataFrame:
+        """
+
+        :param blob:
+        :return:
+        """
 
         try:
-            normalised = pd.json_normalize(data=blob, max_level=1)
+            return pd.json_normalize(data=blob, max_level=1)
         except ImportError as err:
             raise Exception(err) from err
 
-        return normalised.rename(columns=self.__rename)
-
     def __casting(self, blob: pd.DataFrame) -> pd.DataFrame:
+        """
+
+        :param blob:
+        :return:
+        """
 
         return blob.copy().astype(dtype=self.__dtype)
 
@@ -54,5 +63,6 @@ class Substances:
         dictionary: dict = objects.api(url=self.__url)
 
         data = self.__structure(blob=dictionary)
+        data.rename(columns=self.__rename, inplace=True)
         data = self.__casting(blob=data)
         self.__logger.info(data.info())
