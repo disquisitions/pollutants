@@ -19,6 +19,8 @@ class Stations:
 
         self.__url = 'https://www.scottishairquality.scot/sos-scotland/api/v1/stations'
 
+        self.__rename = dict(zip(['properties.id', 'properties.label'], ['station_id', 'station_label']))
+
         # Logging
         logging.basicConfig(level=logging.INFO,
                             format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
@@ -41,6 +43,7 @@ class Stations:
         coordinates = pd.DataFrame(data=normalised['geometry.coordinates'].to_list(),
                                    columns=['longitude', 'latitude', 'height'])
         data = normalised.copy().drop(columns='geometry.coordinates').join(coordinates, how='left')
+        data.drop(columns=['type', 'geometry.type', 'height'], inplace=True)
 
         return data
 
@@ -50,9 +53,12 @@ class Stations:
         :return:
         """
 
+        # Reading-in the JSON data of telemetric device stations
         objects = src.functions.objects.Objects()
         dictionary: dict = objects.api(url=self.__url)
 
+        # Hence, structuring, and renaming the fields in line with field naming conventions and ontology standards.
         data: pd.DataFrame = self.__structure(blob=dictionary)
+        data.rename(columns=self.__rename, inplace=True)
         self.__logger.info(data.info())
         self.__logger.info(data.head())
