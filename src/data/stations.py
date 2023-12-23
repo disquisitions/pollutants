@@ -55,3 +55,4 @@ class Stations:
 
         data: pd.DataFrame = self.__structure(blob=dictionary)
         self.__logger.info(data.info())
+        self.__logger.info(data.head())
