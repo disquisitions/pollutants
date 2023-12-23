@@ -23,8 +23,8 @@ class Vocabulary:
         self.__uri: str = 'https://dd.eionet.europa.eu/vocabulary/aq/pollutant/csv'
         self.__date_fields = ['AcceptedDate']
 
-        labels = ['URI', 'Label', 'Definition', 'Notation', 'Status', 'AcceptedDate', 'recommendedUnit']
-        names = ['uri', 'substance', 'definition', 'notation', 'status', 'accepted_date', 'recommended_unit']
+        labels = ['URI', 'Label', 'Notation', 'Status', 'AcceptedDate', 'recommendedUnit']
+        names = ['uri', 'substance', 'notation', 'status', 'accepted_date', 'recommended_unit']
         self.__dtype = dict(zip(labels, [str] * len(labels)))
         self.__rename = dict(zip(labels, names))
 
@@ -45,7 +45,7 @@ class Vocabulary:
         data = blob.copy()
 
         identifiers = data.copy().loc[:, 'uri'].str.rsplit(pat='/', n=1, expand=True)
-        data.loc[:, 'pollution_id'] = identifiers.loc[:, 1].array
+        data.loc[:, 'pollution_id'] = identifiers.loc[:, 1].astype(dtype=int).array
 
         units = data.copy().loc[:, 'recommended_unit'].str.rsplit(pat='/', n=1, expand=True)
         data.loc[:, 'recommended_unit_of_measure'] = units.loc[:, 1].array
