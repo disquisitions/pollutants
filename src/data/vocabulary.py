@@ -46,9 +46,9 @@ class Vocabulary:
 
         data = blob.copy()
 
-        # Deriving the <pollution_id>
+        # Deriving the <pollutant_id>
         identifiers = data.copy().loc[:, 'uri'].str.rsplit(pat='/', n=1, expand=True)
-        data.loc[:, 'pollution_id'] = identifiers.loc[:, 1].astype(dtype=int).array
+        data.loc[:, 'pollutant_id'] = identifiers.loc[:, 1].astype(dtype=int).array
 
         # Extracting the <recommended_unit_of_measure>
         units = data.copy().loc[:, 'recommended_unit'].str.rsplit(pat='/', n=1, expand=True)
@@ -72,5 +72,4 @@ class Vocabulary:
         # adding & dropping features
         data = data.copy().rename(columns=self.__rename)
         data = self.__feature_engineering(blob=data)
-        self.__logger.info(data.info())
-        self.__logger.info(data.head())
+        self.__logger.info('Vocabulary\n %s', data.head())
