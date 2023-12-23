@@ -5,6 +5,7 @@ import pandas as pd
 
 import src.functions.objects
 
+
 class Stations:
     """
     Class Stations
