@@ -5,6 +5,7 @@ import pandas as pd
 
 import src.functions.streams
 
+
 class Vocabulary:
     """
     Class Vocabulary
@@ -14,18 +15,18 @@ class Vocabulary:
     def __init__(self):
         """
         Constructor
+
+        The application programming interface's <csv> data reading parameters.
+        Field name updates: in line with field-naming standards & defined ontology.
         """
 
         self.__uri: str = 'https://dd.eionet.europa.eu/vocabulary/aq/pollutant/csv'
-
-        # The application programming interface's <csv> data reading parameters
-        self.__labels = ['URI', 'Label', 'Definition', 'Notation', 'Status', 'AcceptedDate', 'recommendedUnit']
-        self.__dtype = dict(zip(self.__labels, [str] * len(self.__labels)))
         self.__date_fields = ['AcceptedDate']
 
-        # Field name updates: in line with field-naming standards & defined ontology
+        labels = ['URI', 'Label', 'Definition', 'Notation', 'Status', 'AcceptedDate', 'recommendedUnit']
         names = ['uri', 'substance', 'definition', 'notation', 'status', 'accepted_date', 'recommended_unit']
-        self.__rename = dict(zip(self.__labels, names))
+        self.__dtype = dict(zip(labels, [str] * len(labels)))
+        self.__rename = dict(zip(labels, names))
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -35,7 +36,6 @@ class Vocabulary:
 
     def __structure(self, blob: pd.DataFrame) -> pd.DataFrame:
         """
-        get <pollutant_id> from <uri>
 
         :param blob:
         :return:
@@ -46,13 +46,16 @@ class Vocabulary:
         identifiers = data.copy().loc[:, 'uri'].str.rsplit(pat='/', n=1, expand=True)
         data.loc[:, 'pollution_id'] = identifiers.loc[:, 1].array
 
+        units = data.copy().loc[:, 'recommended_unit'].str.rsplit(pat='/', n=1, expand=True)
+        data.loc[:, 'recommended_unit_of_measure'] = units.loc[:, 1].array
+
         return data
 
     def exc(self):
 
         streams = src.functions.streams.Streams()
-        data: pd.DataFrame = streams.api(uri=self.__uri, header=0, usecols=self.__labels,
-                                         dtype=self.__dtype, date_fields=self.__date_fields )
+        data: pd.DataFrame = streams.api(uri=self.__uri, header=0, usecols=list(self.__dtype.keys()),
+                                         dtype=self.__dtype, date_fields=self.__date_fields)
 
         data = self.__structure(blob=data)
         self.__logger.info(data.info())
