@@ -19,7 +19,7 @@ class URL:
         """
 
         string = """https://www.scottishairquality.scot/sos-scotland/api/v1/timeseries/214/getData?""" + \
-        """expanded=true&phenomenon=1&format=highcharts&timespan={datestr}T00:00:00Z/{datestr}T23:59:59Z"""
+                 """expanded=true&phenomenon=1&format=highcharts&timespan={datestr}T00:00:00Z/{datestr}T23:59:59Z"""
 
         return string.format(datestr=datestr)
 
