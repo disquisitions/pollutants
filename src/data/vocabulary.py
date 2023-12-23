@@ -14,13 +14,13 @@ class Vocabulary:
         self.__uri: str = 'https://dd.eionet.europa.eu/vocabulary/aq/pollutant/csv'
 
         # The application programming interface's <csv> data reading parameters
-        labels = ['URI', 'Label', 'Definition', 'Notation', 'Status', 'AcceptedDate', 'recommendedUnit']
-        self.__dtype = dict(zip(labels, [str] * len(labels)))
+        self.__labels = ['URI', 'Label', 'Definition', 'Notation', 'Status', 'AcceptedDate', 'recommendedUnit']
+        self.__dtype = dict(zip(self.__labels, [str] * len(self.__labels)))
         self.__date_fields = ['AcceptedDate']
 
         # Field name updates: in line with field-naming standards & defined ontology
         names = ['uri', 'substance', 'definition', 'notation', 'status', 'accepted_date', 'recommended_unit']
-        self.__rename = dict(zip(labels, names))
+        self.__rename = dict(zip(self.__labels, names))
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -41,7 +41,7 @@ class Vocabulary:
     def exc(self):
 
         streams = src.functions.streams.Streams()
-        data: pd.DataFrame = streams.api(uri=self.__uri, header=0, usecols=self.__dtype['labels'],
+        data: pd.DataFrame = streams.api(uri=self.__uri, header=0, usecols=self.__labels,
                                          dtype=self.__dtype, date_fields=self.__date_fields )
         self.__logger.info(data)
 
