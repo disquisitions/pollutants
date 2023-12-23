@@ -56,3 +56,4 @@ class Vocabulary:
 
         data = self.__structure(blob=data)
         self.__logger.info(data.info())
+        self.__logger.info(data.head())
