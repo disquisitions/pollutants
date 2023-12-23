@@ -35,7 +35,7 @@ class Vocabulary:
         self.__logger = logging.getLogger(__name__)
 
     @staticmethod
-    def __features(blob: pd.DataFrame) -> pd.DataFrame:
+    def __feature_engineering(blob: pd.DataFrame) -> pd.DataFrame:
         """
 
         :param blob:
@@ -49,6 +49,7 @@ class Vocabulary:
 
         units = data.copy().loc[:, 'recommended_unit'].str.rsplit(pat='/', n=1, expand=True)
         data.loc[:, 'recommended_unit_of_measure'] = units.loc[:, 1].array
+        data.drop(columns='recommended_unit', inplace=True)
 
         return data
 
@@ -58,12 +59,14 @@ class Vocabulary:
         :return:
         """
 
+        # Reads-in the details of each substance
         streams = src.functions.streams.Streams()
         data: pd.DataFrame = streams.api(uri=self.__uri, header=0, usecols=list(self.__dtype.keys()),
                                          dtype=self.__dtype, date_fields=self.__date_fields)
 
+        # Hence, (a) renaming the fields in line with field naming conventions and ontology standards, and (b)
+        # adding & dropping features
         data = data.copy().rename(columns=self.__rename)
-
-        data = self.__features(blob=data)
+        data = self.__feature_engineering(blob=data)
         self.__logger.info(data.info())
         self.__logger.info(data.head())
