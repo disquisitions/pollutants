@@ -25,6 +25,7 @@ def main():
     src.data.substances.Substances().exc()
     src.data.stations.Stations().exc()
     src.data.vocabulary.Vocabulary().exc()
+    src.data.sequences.Sequences().exc()
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
@@ -48,6 +49,7 @@ if __name__ == '__main__':
     import src.data.substances
     import src.data.stations
     import src.data.vocabulary
+    import src.data.sequences
     import src.data.url
 
     main()
