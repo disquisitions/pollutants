@@ -2,6 +2,7 @@
 import logging
 import os
 import sys
+import pandas as pd
 
 
 def main():
@@ -14,14 +15,13 @@ def main():
     logger.info('Pollutants')
 
     # Try
-    # pollutant_id = 1
     sequence_id = 214
     datestr = '2023-11-18'
     url: str = src.data.api.API().exc(sequence_id=sequence_id, datestr=datestr)
     logger.info(url)
     sample = src.functions.objects.Objects().api(url=url)
-    logger.info(sample[0].__getitem__('name'))
-    logger.info(sample[0].__getitem__('data'))
+    dictionary = sample[0].__getitem__('data')
+    logger.info(pd.DataFrame(data=dictionary, columns=['epoch', 'measure']))
 
     # Additionally
     src.data.substances.Substances().exc()
