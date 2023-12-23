@@ -64,7 +64,7 @@ class Sequences:
 
         identifiers: pd.DataFrame = data.copy()['description'].str.split(n=1, expand=True)
         identifiers = identifiers.copy().loc[:, 0].str.rsplit(pat='/', n=1, expand=True)
-        data.loc[:, 'pollution_id'] = identifiers.loc[:, 1].astype(dtype=int).array
+        data.loc[:, 'pollutant_id'] = identifiers.loc[:, 1].astype(dtype=int).array
         data.drop(columns='description', inplace=True)
 
         return data
@@ -84,5 +84,4 @@ class Sequences:
         data = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
         data = self.__feature_engineering(blob=data)
-        self.__logger.info(data.info())
-        self.__logger.info(data.head())
+        self.__logger.info('Sequences\n %s', data.head())
