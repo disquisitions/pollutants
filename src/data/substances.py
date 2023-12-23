@@ -28,14 +28,14 @@ class Substances:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def __structure(self, blob: dict):
+    def __structure(self, blob: dict) -> pd.DataFrame:
 
         try:
             normalised = pd.json_normalize(data=blob, max_level=1)
         except ImportError as err:
             raise Exception(err) from err
 
-        self.__logger.info(normalised)
+        return normalised.rename(columns=self.__rename)
 
     def exc(self):
         """
