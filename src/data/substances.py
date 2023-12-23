@@ -59,9 +59,12 @@ class Substances:
         :return:
         """
 
+        # Reading-in the JSON data of substances
         objects = src.functions.objects.Objects()
         dictionary: dict = objects.api(url=self.__url)
 
+        # Hence, (a) structuring, (b) renaming fields in line with standards, and (c) ensuring
+        # the appropriate data type per field.
         data = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
         data = self.__casting(blob=data)
