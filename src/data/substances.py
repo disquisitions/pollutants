@@ -71,5 +71,4 @@ class Substances:
         data = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
         data = self.__casting(blob=data)
-        self.__logger.info(data.info())
-        self.__logger.info(data.head())
+        self.__logger.info('Substances\n %s', data.head())
