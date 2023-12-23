@@ -34,14 +34,15 @@ class Vocabulary:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def __structure(self, blob: pd.DataFrame) -> pd.DataFrame:
+    @staticmethod
+    def __features(blob: pd.DataFrame) -> pd.DataFrame:
         """
 
         :param blob:
         :return:
         """
 
-        data = blob.copy().rename(columns=self.__rename)
+        data = blob.copy()
 
         identifiers = data.copy().loc[:, 'uri'].str.rsplit(pat='/', n=1, expand=True)
         data.loc[:, 'pollution_id'] = identifiers.loc[:, 1].array
@@ -52,11 +53,17 @@ class Vocabulary:
         return data
 
     def exc(self):
+        """
+
+        :return:
+        """
 
         streams = src.functions.streams.Streams()
         data: pd.DataFrame = streams.api(uri=self.__uri, header=0, usecols=list(self.__dtype.keys()),
                                          dtype=self.__dtype, date_fields=self.__date_fields)
 
-        data = self.__structure(blob=data)
+        data = data.copy().rename(columns=self.__rename)
+
+        data = self.__features(blob=data)
         self.__logger.info(data.info())
         self.__logger.info(data.head())
