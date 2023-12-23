@@ -1,3 +1,4 @@
+"""Module vocabulary.py"""
 import logging
 
 import pandas as pd
@@ -5,6 +6,10 @@ import pandas as pd
 import src.functions.streams
 
 class Vocabulary:
+    """
+    Class Vocabulary
+    Reads-in the reference ...
+    """
 
     def __init__(self):
         """
@@ -48,7 +53,6 @@ class Vocabulary:
         streams = src.functions.streams.Streams()
         data: pd.DataFrame = streams.api(uri=self.__uri, header=0, usecols=self.__labels,
                                          dtype=self.__dtype, date_fields=self.__date_fields )
-        self.__logger.info(data)
 
         data = self.__structure(blob=data)
-        self.__logger.info(data)
+        self.__logger.info(data.info())
