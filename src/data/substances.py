@@ -38,8 +38,11 @@ class Substances:
         except ImportError as err:
             raise Exception(err) from err
 
-        normalised.rename(columns=self.__rename, inplace=True)
-        return normalised.astype(dtype=self.__dtype)
+        return normalised.rename(columns=self.__rename)
+
+    def __casting(self, blob: pd.DataFrame) -> pd.DataFrame:
+
+        return blob.copy().astype(dtype=self.__dtype)
 
     def exc(self):
         """
@@ -51,4 +54,5 @@ class Substances:
         dictionary: dict = objects.api(url=self.__url)
 
         data = self.__structure(blob=dictionary)
+        data = self.__casting(blob=data)
         self.__logger.info(data.info())
