@@ -9,20 +9,22 @@ import src.functions.streams
 class Vocabulary:
     """
     Class Vocabulary
-    Reads-in the reference ...
+    Reads-in the air quality pollutants dictionary
     """
 
     def __init__(self):
         """
         Constructor
-
-        The application programming interface's <csv> data reading parameters.
-        Field name updates: in line with field-naming standards & defined ontology.
         """
 
+        # The url (uniform resource locator) of the air quality pollutants dictionary
         self.__uri: str = 'https://dd.eionet.europa.eu/vocabulary/aq/pollutant/csv'
+
+        # Its date fields
         self.__date_fields = ['AcceptedDate']
 
+        # The data source field names <labels>, and their corresponding new names <names>; the new names are
+        # in line with field-naming standards & defined ontology.
         labels = ['URI', 'Label', 'Notation', 'Status', 'AcceptedDate', 'recommendedUnit']
         names = ['uri', 'substance', 'notation', 'status', 'accepted_date', 'recommended_unit']
         self.__dtype = dict(zip(labels, [str] * len(labels)))
