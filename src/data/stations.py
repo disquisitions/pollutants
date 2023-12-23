@@ -47,4 +47,4 @@ class Stations:
         dictionary: dict = objects.api(url=self.__url)
 
         data: pd.DataFrame = self.__structure(blob=dictionary)
-        self.__logger.info(data.head())
+        self.__logger.info(data.info())
