@@ -17,8 +17,11 @@ class Substances:
         Constructor
         """
 
+        # The substances url (uniform resource locator)
         self.__url: str = 'https://www.scottishairquality.scot/sos-scotland/api/v1/phenomena'
 
+        # The data source field names <labels>, their corresponding new names <names>,
+        # and their expected data types <casts>
         labels = ['id', 'label']
         names = ['pollutant_id', 'uri']
         casts = [int, str]
@@ -69,3 +72,4 @@ class Substances:
         data.rename(columns=self.__rename, inplace=True)
         data = self.__casting(blob=data)
         self.__logger.info(data.info())
+        self.__logger.info(data.head())
