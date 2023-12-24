@@ -24,6 +24,8 @@ class Interface:
 
         self.__collection = src.data.references.References().exc()
 
+        self.__directories = src.functions.directories.Directories()
+
         # Logging
         logging.basicConfig(level=logging.INFO,
                             format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
@@ -51,12 +53,17 @@ class Interface:
         :return:
         """
 
+        # The sequences associated with the pollutant in question
         sequences = self.__sequences(pollutant_id=pollutant_id)
 
+        # The pollutant's top directory
         basename = os.path.join(self.__storage, str(pollutant_id))
+
+        # If restart, erase existing data
         if restart:
-            directories = src.functions.directories.Directories()
-            directories.cleanup(path=basename)
-            computation = [dask.delayed(directories.create)(path=os.path.join(basename, str(sequence.station_id)))
-                           for sequence in sequences]
-            dask.compute(computation)
+            self.__directories.cleanup(path=basename)
+
+        # Ascertain the existence of each station's directory
+        computation = [dask.delayed(self.__directories.create)(path=os.path.join(basename, str(sequence.station_id)))
+                       for sequence in sequences]
+        dask.compute(computation)
