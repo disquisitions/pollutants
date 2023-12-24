@@ -14,10 +14,13 @@ def main():
     logger: logging.Logger = logging.getLogger(__name__)
     logger.info('Pollutants')
 
+    date = pd.Timestamp.today().date() - pd.Timedelta('1 day')
+    logger.info(date)
+
     # Try
     pollutant_id = 1
-    interface = src.data.interface.Interface()
-    interface.exc(pollutant_id=pollutant_id, restart=True)
+    interface = src.data.interface.Interface(pollutant_id=pollutant_id, restart=True)
+    interface.exc()
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
