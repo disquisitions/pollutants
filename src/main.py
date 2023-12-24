@@ -21,7 +21,10 @@ def main():
     logger.info(url)
     sample = src.functions.objects.Objects().api(url=url)
     dictionary = sample[0].__getitem__('data')
-    logger.info(pd.DataFrame(data=dictionary, columns=['epoch', 'measure']))
+    data = pd.DataFrame(data=dictionary, columns=['epoch_ms', 'measure'])
+    data.loc[:, 'timestamp'] = pd.to_datetime(data.loc[:, 'epoch_ms'].array, unit='ms', origin='unix')
+    data.loc[:, 'date'] = data.loc[:, 'timestamp'].dt.date.array
+    logger.info(data)
 
     # Additionally
     src.data.substances.Substances().exc()
