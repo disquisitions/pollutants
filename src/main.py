@@ -15,16 +15,9 @@ def main():
     logger.info('Pollutants')
 
     # Try
-    sequence_id = 214
-    datestr = '2023-11-18'
-    url: str = src.data.api.API().exc(sequence_id=sequence_id, datestr=datestr)
-    logger.info(url)
-    sample = src.functions.objects.Objects().api(url=url)
-    dictionary = sample[0].__getitem__('data')
-    data = pd.DataFrame(data=dictionary, columns=['epoch_ms', 'measure'])
-    data.loc[:, 'timestamp'] = pd.to_datetime(data.loc[:, 'epoch_ms'].array, unit='ms', origin='unix')
-    data.loc[:, 'date'] = data.loc[:, 'timestamp'].dt.date.array
-    logger.info(data)
+    pollutant_id = 1
+    interface = src.data.interface.Interface()
+    interface.exc(pollutant_id=pollutant_id)
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
@@ -44,6 +37,7 @@ if __name__ == '__main__':
     
     # Modules
     import src.data.api
+    import src.data.interface
     import src.functions.objects
     import src.functions.cache
 
