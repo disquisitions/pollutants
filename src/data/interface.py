@@ -1,5 +1,4 @@
 """Module interface.py"""
-import logging
 import os
 
 import dask
@@ -15,62 +14,57 @@ class Interface:
     Class Interface
     """
 
-    def __init__(self):
-        """
-        Constructor
+    def __init__(self, pollutant_id: int, restart: bool):
         """
 
-        self.__storage = os.path.join(os.getcwd(), 'warehouse', 'pollutants')
-        self.__references = src.data.references.References().exc()
+        :param pollutant_id:
+        :param restart:
+        """
 
         # Directories deletion & creation instance
         self.__directories = src.functions.directories.Directories()
 
-        # Logging
-        logging.basicConfig(level=logging.INFO,
-                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger = logging.getLogger(__name__)
+        # If restart, erase existing data
+        self.__storage = os.path.join(os.getcwd(), 'warehouse', 'pollutants')
+        self.__pollutant_id = pollutant_id
+        self.__basename = os.path.join(self.__storage, str(self.__pollutant_id))
+        if restart:
+            self.__directories.cleanup(path=self.__basename)
 
-    def __sequences(self, pollutant_id: int) -> list[src.elements.sequence.Sequence]:
+        # The references
+        self.__references = src.data.references.References().exc()
+
+    def __sequences(self) -> list[src.elements.sequence.Sequence]:
         """
 
-        :param pollutant_id:
         :return:
         """
 
         instances: pd.DataFrame = self.__references.sequences.loc[
-                                  self.__references.sequences['pollutant_id'] == pollutant_id, :]
+                                  self.__references.sequences['pollutant_id'] == self.__pollutant_id, :]
         structures: list[dict] = instances.to_dict(orient='records')
 
         return [src.elements.sequence.Sequence(**structure) for structure in structures]
 
-    def __paths(self, basename: str, sequences: list[src.elements.sequence.Sequence]):
+    def __paths(self, sequences: list[src.elements.sequence.Sequence]):
         """
 
-        :param basename:
         :param sequences:
         :return:
         """
 
         # Ascertain the existence of each station's directory
-        computation = [dask.delayed(self.__directories.create)(path=os.path.join(basename, str(sequence.station_id)))
-                       for sequence in sequences]
+        computation = [
+            dask.delayed(self.__directories.create)(path=os.path.join(self.__basename, str(sequence.station_id))) for
+            sequence in sequences]
         dask.compute(computation)
 
-    def exc(self, pollutant_id: int, restart: bool = False):
+    def exc(self):
         """
 
-        :param pollutant_id:
-        :param restart:
         :return:
         """
 
         # The sequences associated with the pollutant in question
-        sequences = self.__sequences(pollutant_id=pollutant_id)
-
-        # The pollutant's top directory.  If restart is True, erase existing data
-        basename = os.path.join(self.__storage, str(pollutant_id))
-        if restart:
-            self.__directories.cleanup(path=basename)
-        self.__paths(basename=basename, sequences=sequences)
+        sequences = self.__sequences()
+        self.__paths(sequences=sequences)
