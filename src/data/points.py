@@ -6,7 +6,6 @@ import pandas as pd
 
 import src.data.api
 import src.elements.sequence
-import src.functions.directories
 import src.functions.objects
 import src.functions.streams
 
@@ -30,7 +29,6 @@ class Points:
         self.__api = src.data.api.API()
         self.__objects = src.functions.objects.Objects()
         self.__streams = src.functions.streams.Streams()
-        self.__directories = src.functions.directories.Directories()
 
     @dask.delayed
     def __url(self, sequence_id: int, datestr: str) -> str:
@@ -81,7 +79,6 @@ class Points:
         """
 
         basename = os.path.join(self.__path, str(station_id))
-        self.__directories.create(path=basename)
 
         return self.__streams.write(blob=blob, path=os.path.join(basename, f'{datestr}.csv'))
 
