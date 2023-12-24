@@ -1,5 +1,7 @@
 import dask
 
+import pandas as pd
+
 import src.data.api
 import src.functions.objects
 
@@ -24,7 +26,19 @@ class Points:
     @dask.delayed
     def __read(self, url: str) -> dict:
 
-        return self.__objects.api(url=url)
+        content: dict = self.__objects.api(url=url)
+        dictionary = content[0].__getitem__('data')
+
+        return dictionary
+
+    @dask.delayed
+    def __build(self, dictionary: dict) -> pd.DataFrame:
+
+        data = pd.DataFrame(data=dictionary, columns=['epoch_ms', 'measure'])
+        data.loc[:, 'timestamp'] = pd.to_datetime(data.loc[:, 'epoch_ms'].array, unit='ms', origin='unix')
+        data.loc[:, 'date'] = data.loc[:, 'timestamp'].dt.date.array
+
+        return data
 
     def exc(self, datestr: str):
 
@@ -32,4 +46,5 @@ class Points:
         for sequence_id in self.__sequence_id_:
             url = self.__url(sequence_id=sequence_id, datestr=datestr)
             dictionary = self.__read(url=url)
-            computations.append(dictionary)
+            data = self.__build(dictionary=dictionary)
+            computations.append(data)
