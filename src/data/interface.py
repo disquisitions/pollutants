@@ -1,6 +1,8 @@
 
 import logging
 
+import pandas as pd
+
 import src.data.references
 
 
@@ -26,7 +28,7 @@ class Interface:
         collection = src.data.references.References().exc()
 
         sequences = collection.sequences
-        self.__logger.info(sequences.info())
-
-        excerpt = sequences.loc[sequences['pollutant_id'] == pollutant_id, :]
+        excerpt: pd.DataFrame = sequences.loc[sequences['pollutant_id'] == pollutant_id, :]
         self.__logger.info(excerpt.info())
+
+        self.__logger.info(excerpt.to_dict())
