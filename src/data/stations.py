@@ -49,7 +49,7 @@ class Stations:
 
         return data
 
-    def exc(self):
+    def exc(self) -> pd.DataFrame:
         """
 
         :return:
@@ -63,3 +63,5 @@ class Stations:
         data: pd.DataFrame = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
         self.__logger.info('Stations\n %s', data.head())
+
+        return data
