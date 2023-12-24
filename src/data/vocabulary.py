@@ -72,6 +72,6 @@ class Vocabulary:
         # adding & dropping features
         data = data.copy().rename(columns=self.__rename)
         data = self.__feature_engineering(blob=data)
-        self.__logger.info('Vocabulary\n %s', data.head())
+        self.__logger.info('Vocabulary\n %s', data.info())
 
         return data
