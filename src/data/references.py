@@ -12,6 +12,8 @@ import src.elements.references
 class References:
     """
     Class References
+
+    Rebuild, or retrieve the Amazon S3 data?  The Amazon S3 aspect is upcoming.
     """
 
     def __init__(self):
