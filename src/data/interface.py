@@ -29,6 +29,7 @@ class Interface:
 
         sequences = collection.sequences
         excerpt: pd.DataFrame = sequences.loc[sequences['pollutant_id'] == pollutant_id, :]
-        self.__logger.info(excerpt.info())
+        self.__logger.info('Excerpt (Above)\n%s\n\n', excerpt.info())
 
-        self.__logger.info(excerpt.to_dict())
+        records = excerpt.to_dict(orient='records')
+        self.__logger.info(records)
