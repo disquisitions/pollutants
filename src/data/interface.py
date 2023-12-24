@@ -6,7 +6,7 @@ class Interface:
 
         """
 
-    def exc(self):
+    def exc(self, pollutant_id: int):
         """
 
         :return:
