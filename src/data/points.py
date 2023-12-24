@@ -16,15 +16,15 @@ class Points:
     Retrieves telemetric device's data points by date
     """
 
-    def __init__(self, sequences: list[src.elements.sequence.Sequence], path: str):
+    def __init__(self, sequences: list[src.elements.sequence.Sequence], storage: str):
         """
 
         :param sequences:
-        :param path:
+        :param storage:
         """
 
         self.__sequences = sequences
-        self.__path = path
+        self.__storage = storage
 
         self.__api = src.data.api.API()
         self.__objects = src.functions.objects.Objects()
@@ -78,7 +78,7 @@ class Points:
         :return:
         """
 
-        basename = os.path.join(self.__path, str(station_id))
+        basename = os.path.join(self.__storage, str(station_id))
 
         return self.__streams.write(blob=blob, path=os.path.join(basename, f'{datestr}.csv'))
 
@@ -96,3 +96,6 @@ class Points:
             data = self.__build(dictionary=dictionary)
             message = self.__write(blob=data, datestr=datestr, station_id=sequence.station_id)
             computations.append(message)
+        messages = dask.compute(computations, scheduler='threads')[0]
+
+        return messages
