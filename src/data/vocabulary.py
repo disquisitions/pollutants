@@ -57,7 +57,7 @@ class Vocabulary:
 
         return data
 
-    def exc(self):
+    def exc(self) -> pd.DataFrame:
         """
 
         :return:
@@ -73,3 +73,5 @@ class Vocabulary:
         data = data.copy().rename(columns=self.__rename)
         data = self.__feature_engineering(blob=data)
         self.__logger.info('Vocabulary\n %s', data.head())
+
+        return data
