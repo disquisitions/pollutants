@@ -4,6 +4,7 @@ import logging
 import pandas as pd
 
 import src.data.references
+import src.elements.sequence
 
 
 class Interface:
@@ -33,3 +34,6 @@ class Interface:
 
         records = excerpt.to_dict(orient='records')
         self.__logger.info(records)
+
+        instances = [src.elements.sequence.Sequence(**record) for record in records]
+        self.__logger.info(instances)
