@@ -1,7 +1,8 @@
-
+"""Module interface.py"""
 import logging
 import os
 
+import dask
 import pandas as pd
 
 import src.data.references
@@ -10,6 +11,9 @@ import src.functions.directories
 
 
 class Interface:
+    """
+    Class Interface
+    """
 
     def __init__(self):
         """
@@ -18,33 +22,41 @@ class Interface:
 
         self.__storage = os.path.join(os.getcwd(), 'warehouse', 'pollutants')
 
+        self.__collection = src.data.references.References().exc()
+
         # Logging
         logging.basicConfig(level=logging.INFO,
                             format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def exc(self, pollutant_id: int, restart: bool = False):
+    def __sequences(self, pollutant_id: int) -> list[src.elements.sequence.Sequence]:
         """
 
+        :param pollutant_id:
         :return:
         """
 
-        path = os.path.join(self.__storage, str(pollutant_id))
+        instances: pd.DataFrame = self.__collection.sequences.loc[
+                                  self.__collection.sequences['pollutant_id'] == pollutant_id, :]
+        structures: list[dict] = instances.to_dict(orient='records')
 
+        return [src.elements.sequence.Sequence(**structure) for structure in structures]
+
+    def exc(self, pollutant_id: int, restart: bool = False):
+        """
+
+        :param pollutant_id:
+        :param restart:
+        :return:
+        """
+
+        sequences = self.__sequences(pollutant_id=pollutant_id)
+
+        basename = os.path.join(self.__storage, str(pollutant_id))
         if restart:
             directories = src.functions.directories.Directories()
-            directories.cleanup(path=path)
-            directories.create(path=path)
-
-        collection = src.data.references.References().exc()
-
-        sequences = collection.sequences
-        excerpt: pd.DataFrame = sequences.loc[sequences['pollutant_id'] == pollutant_id, :]
-        self.__logger.info('Excerpt (Above)\n%s\n\n', excerpt.info())
-
-        records = excerpt.to_dict(orient='records')
-        self.__logger.info(records)
-
-        instances = [src.elements.sequence.Sequence(**record) for record in records]
-        self.__logger.info(instances)
+            directories.cleanup(path=basename)
+            computation = [dask.delayed(directories.create)(path=os.path.join(basename, str(sequence.station_id)))
+                           for sequence in sequences]
+            dask.compute(computation)
