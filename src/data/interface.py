@@ -5,6 +5,7 @@ import os
 import pandas as pd
 
 import src.data.references
+import src.data.points
 import src.elements.sequence
 import src.functions.directories
 
@@ -24,12 +25,11 @@ class Interface:
         # Directories deletion & creation instance
         self.__directories = src.functions.directories.Directories()
 
-        # If restart, erase existing data
-        self.__storage = os.path.join(os.getcwd(), 'warehouse', 'pollutants')
+        # If case restart, erase the existing pollutant store
         self.__pollutant_id = pollutant_id
-        self.__basename = os.path.join(self.__storage, str(self.__pollutant_id))
+        self.__storage = os.path.join(os.getcwd(), 'warehouse', 'pollutants', str(self.__pollutant_id))
         if restart:
-            self.__directories.cleanup(path=self.__basename)
+            self.__directories.cleanup(path=self.__storage)
 
         # The references
         self.__references = src.data.references.References().exc()
@@ -46,7 +46,7 @@ class Interface:
 
         return [src.elements.sequence.Sequence(**structure) for structure in structures]
 
-    def exc(self):
+    def exc(self, dates: list[str]):
         """
 
         :return:
@@ -54,5 +54,12 @@ class Interface:
 
         # The sequences associated with the pollutant in question
         sequences = self.__sequences()
-        [self.__directories.create(path=os.path.join(self.__basename, str(sequence.station_id)))
+        points = src.data.points.Points(sequences=sequences, storage=self.__storage)
+
+        # Ascertaining the existence of, or re-creating, directories
+        [self.__directories.create(path=os.path.join(self.__storage, str(sequence.station_id)))
          for sequence in sequences]
+
+        # Retrieving data
+        streams = [points.exc(datestr=datestr) for datestr in dates]
+        logging.log(level=logging.INFO, msg=streams)
