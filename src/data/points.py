@@ -1,19 +1,19 @@
 import dask
-
 import pandas as pd
 
 import src.data.api
+import src.elements.sequence
 import src.functions.objects
 
 
 class Points:
 
-    def __init__(self, sequence_id_: list):
+    def __init__(self, sequences: list[src.elements.sequence.Sequence]):
         """
 
         """
 
-        self.__sequence_id_ = sequence_id_
+        self.__sequences = sequences
 
         self.__api = src.data.api.API()
         self.__objects = src.functions.objects.Objects()
@@ -43,8 +43,8 @@ class Points:
     def exc(self, datestr: str):
 
         computations = []
-        for sequence_id in self.__sequence_id_:
-            url = self.__url(sequence_id=sequence_id, datestr=datestr)
+        for sequence in self.__sequences:
+            url = self.__url(sequence_id=sequence.sequence_id, datestr=datestr)
             dictionary = self.__read(url=url)
             data = self.__build(dictionary=dictionary)
             computations.append(data)
