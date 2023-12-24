@@ -1,4 +1,7 @@
+"""Module references.py"""
 import collections
+
+import pandas as pd
 
 import src.data.sequences
 import src.data.stations
@@ -7,19 +10,25 @@ import src.elements.references
 
 
 class References:
+    """
+    Class References
+    """
 
     def __init__(self):
         """
-
+        Constructor
         """
 
     @staticmethod
-    def exc():
+    def exc() -> src.elements.references.References:
         """
 
         :return:
         """
 
-        src.data.substances.Substances().exc()
-        src.data.stations.Stations().exc()
-        src.data.sequences.Sequences().exc()
+        substances: pd.DataFrame = src.data.substances.Substances().exc()
+        stations: pd.DataFrame = src.data.stations.Stations().exc()
+        sequences: pd.DataFrame = src.data.sequences.Sequences().exc()
+
+        return src.elements.references.References(
+            substances=substances, stations=stations, sequences=sequences)
