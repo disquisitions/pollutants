@@ -61,7 +61,7 @@ class Substances:
     def __extra_fields(blob: pd.DataFrame):
 
         definitions = src.data.vocabulary.Vocabulary().exc()
-        data = blob.copy().drop(columns='url').merge(definitions, how='left', on='pollutant_id')
+        data = blob.copy().drop(columns='uri').merge(definitions, how='left', on='pollutant_id')
 
         return data
 
