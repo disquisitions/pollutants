@@ -82,6 +82,6 @@ class Substances:
         data.rename(columns=self.__rename, inplace=True)
         data = self.__casting(blob=data)
         data = self.__extra_fields(blob=data)
-        self.__logger.info('Substances\n %s', data.head())
+        self.__logger.info('Substances\n %s', data.info())
 
         return data
