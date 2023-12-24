@@ -15,17 +15,13 @@ def main():
     logger.info('Pollutants')
 
     date = pd.Timestamp.today().date() - pd.Timedelta('1 day')
-    logger.info(date)
-    dates = pd.date_range(start=date - pd.Timedelta('732 days'), end=date, freq='D')
-    logger.info(dates)
-    for i in dates:
-        logger.info(str(i.date()))
+    values = pd.date_range(start=date - pd.Timedelta('28 days'), end=date, freq='D').to_list()
+    dates = [str(value.date()) for value in values]
 
     # Try
     pollutant_id = 1
     interface = src.data.interface.Interface(pollutant_id=pollutant_id, restart=True)
-
-    interface.exc()
+    interface.exc(dates=dates)
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
