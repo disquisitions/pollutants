@@ -4,6 +4,7 @@ import logging
 import pandas as pd
 
 import src.functions.objects
+import src.data.vocabulary
 
 
 class Substances:
@@ -56,6 +57,14 @@ class Substances:
 
         return blob.copy().astype(dtype=self.__dtype)
 
+    @staticmethod
+    def __extra_fields(blob: pd.DataFrame):
+
+        definitions = src.data.vocabulary.Vocabulary().exc()
+        data = blob.copy().drop(columns='url').merge(definitions,how='left', on='pollutant_id')
+
+        return data
+
     def exc(self):
         """
 
@@ -66,9 +75,11 @@ class Substances:
         objects = src.functions.objects.Objects()
         dictionary: dict = objects.api(url=self.__url)
 
-        # Hence, (a) structuring, (b) renaming fields in line with standards, and (c) ensuring
-        # the appropriate data type per field.
+        # Hence, (a) structuring, (b) renaming fields in line with standards, (c) ensuring
+        # the appropriate data type per field, and (d) adding fields that outline what each
+        # <pollutant_id> denotes.
         data = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
         data = self.__casting(blob=data)
+        data = self.__extra_fields(blob=data)
         self.__logger.info('Substances\n %s', data.head())
