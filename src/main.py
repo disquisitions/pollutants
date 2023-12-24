@@ -17,7 +17,7 @@ def main():
     # Try
     pollutant_id = 1
     interface = src.data.interface.Interface()
-    interface.exc(pollutant_id=pollutant_id)
+    interface.exc(pollutant_id=pollutant_id, restart=True)
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
