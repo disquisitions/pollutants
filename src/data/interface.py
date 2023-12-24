@@ -21,9 +21,9 @@ class Interface:
         """
 
         self.__storage = os.path.join(os.getcwd(), 'warehouse', 'pollutants')
+        self.__references = src.data.references.References().exc()
 
-        self.__collection = src.data.references.References().exc()
-
+        # Directories deletion & creation instance
         self.__directories = src.functions.directories.Directories()
 
         # Logging
@@ -39,8 +39,8 @@ class Interface:
         :return:
         """
 
-        instances: pd.DataFrame = self.__collection.sequences.loc[
-                                  self.__collection.sequences['pollutant_id'] == pollutant_id, :]
+        instances: pd.DataFrame = self.__references.sequences.loc[
+                                  self.__references.sequences['pollutant_id'] == pollutant_id, :]
         structures: list[dict] = instances.to_dict(orient='records')
 
         return [src.elements.sequence.Sequence(**structure) for structure in structures]
