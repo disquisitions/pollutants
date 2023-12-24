@@ -69,7 +69,7 @@ class Sequences:
 
         return data
 
-    def exc(self):
+    def exc(self) -> pd.DataFrame:
         """
 
         :return:
@@ -85,3 +85,5 @@ class Sequences:
         data.rename(columns=self.__rename, inplace=True)
         data = self.__feature_engineering(blob=data)
         self.__logger.info('Sequences\n %s', data.head())
+
+        return data
