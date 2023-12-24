@@ -22,8 +22,8 @@ class Sequences:
 
         # The data source field names <labels>, and their corresponding new names <names>; the new names are
         # in line with field-naming standards & defined ontology.
-        labels = ['id', 'label', 'uom', 'station.properties.id', 'station.properties.label']
-        names = ['sequence_id', 'description', 'unit_of_measure', 'station_id', 'station_label']
+        labels = ['id', 'label', 'uom', 'station.properties.id']
+        names = ['sequence_id', 'description', 'unit_of_measure', 'station_id']
         self.__rename = dict(zip(labels, names))
 
         # Logging
@@ -35,6 +35,12 @@ class Sequences:
     @staticmethod
     def __structure(blob: dict) -> pd.DataFrame:
         """
+        The stations data details each station's <station_id>, <station_label>, <longitude>,
+        & <latitude> fields.  The sequences & stations data can be joined, whenever
+        necessary, via their <station_id> fields.
+
+        coordinates = pd.DataFrame(data=normalised['station.geometry.coordinates'].to_list(),
+                                   columns=['longitude', 'latitude', 'height'])
 
         :param blob:
         :return:
@@ -45,10 +51,8 @@ class Sequences:
         except ImportError as err:
             raise Exception(err) from err
 
-        coordinates = pd.DataFrame(data=normalised['station.geometry.coordinates'].to_list(),
-                                   columns=['longitude', 'latitude', 'height'])
-        data = normalised.copy().drop(columns='station.geometry.coordinates').join(coordinates, how='left')
-        data.drop(columns=['station.type', 'station.geometry.type', 'height'], inplace=True)
+        data = normalised.copy().drop(columns=['station.properties.label', 'station.geometry.coordinates',
+                                               'station.type', 'station.geometry.type'])
 
         return data
 
@@ -62,6 +66,7 @@ class Sequences:
 
         data = blob.copy()
 
+        # The identification codes of the pollutants
         identifiers: pd.DataFrame = data.copy()['description'].str.split(n=1, expand=True)
         identifiers = identifiers.copy().loc[:, 0].str.rsplit(pat='/', n=1, expand=True)
         data.loc[:, 'pollutant_id'] = identifiers.loc[:, 1].astype(dtype=int).array
@@ -84,6 +89,6 @@ class Sequences:
         data = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
         data = self.__feature_engineering(blob=data)
-        self.__logger.info('Sequences\n %s', data.head())
+        self.__logger.info('Sequences\n %s', data.info())
 
         return data
