@@ -45,6 +45,19 @@ class Interface:
 
         return [src.elements.sequence.Sequence(**structure) for structure in structures]
 
+    def __paths(self, basename: str, sequences: list[src.elements.sequence.Sequence]):
+        """
+
+        :param basename:
+        :param sequences:
+        :return:
+        """
+
+        # Ascertain the existence of each station's directory
+        computation = [dask.delayed(self.__directories.create)(path=os.path.join(basename, str(sequence.station_id)))
+                       for sequence in sequences]
+        dask.compute(computation)
+
     def exc(self, pollutant_id: int, restart: bool = False):
         """
 
@@ -56,14 +69,8 @@ class Interface:
         # The sequences associated with the pollutant in question
         sequences = self.__sequences(pollutant_id=pollutant_id)
 
-        # The pollutant's top directory
+        # The pollutant's top directory.  If restart is True, erase existing data
         basename = os.path.join(self.__storage, str(pollutant_id))
-
-        # If restart, erase existing data
         if restart:
             self.__directories.cleanup(path=basename)
-
-        # Ascertain the existence of each station's directory
-        computation = [dask.delayed(self.__directories.create)(path=os.path.join(basename, str(sequence.station_id)))
-                       for sequence in sequences]
-        dask.compute(computation)
+        self.__paths(basename=basename, sequences=sequences)
