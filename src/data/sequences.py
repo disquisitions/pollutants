@@ -24,7 +24,9 @@ class Sequences:
         # in line with field-naming standards & defined ontology.
         labels = ['id', 'label', 'uom', 'station.properties.id']
         names = ['sequence_id', 'description', 'unit_of_measure', 'station_id']
+        casts = [int, str, str, int]
         self.__rename = dict(zip(labels, names))
+        self.__dtype = dict(zip(names, casts))
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -38,9 +40,6 @@ class Sequences:
         The stations data details each station's <station_id>, <station_label>, <longitude>,
         & <latitude> fields.  The sequences & stations data can be joined, whenever
         necessary, via their <station_id> fields.
-
-        coordinates = pd.DataFrame(data=normalised['station.geometry.coordinates'].to_list(),
-                                   columns=['longitude', 'latitude', 'height'])
 
         :param blob:
         :return:
@@ -85,10 +84,11 @@ class Sequences:
         dictionary = objects.api(url=self.__url)
 
         # Hence, (a) structuring, (b) renaming the fields in line with field naming conventions
-        # and ontology standards, and (c) adding & dropping features
+        # and ontology standards, (c) casting, and (d) adding & dropping features
         data = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
+        data = data.copy().astype(dtype=self.__dtype)
         data = self.__feature_engineering(blob=data)
-        self.__logger.info('Sequences\n %s', data.info())
+        self.__logger.info('Sequences (Above)\n%s\n\n', data.info())
 
         return data
