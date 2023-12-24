@@ -6,7 +6,7 @@ import typing
 
 class Sequence(typing.NamedTuple):
     """
-
+    The Sequence class
     """
 
     sequence_id: int
