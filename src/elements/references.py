@@ -12,6 +12,6 @@ class References(typing.NamedTuple):
     The References class.
     """
 
-    substances: pd.DataFrame
-    stations: pd.DataFrame
-    sequences: pd.DataFrame
+    substances: pd.DataFrame = None
+    stations: pd.DataFrame = None
+    sequences: pd.DataFrame = None
