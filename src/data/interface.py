@@ -46,9 +46,10 @@ class Interface:
 
         return [src.elements.sequence.Sequence(**structure) for structure in structures]
 
-    def exc(self, dates: list[str]):
+    def exc(self, datestr_: list[str]):
         """
 
+        :param datestr_:
         :return:
         """
 
@@ -60,6 +61,7 @@ class Interface:
         [self.__directories.create(path=os.path.join(self.__storage, str(sequence.station_id)))
          for sequence in sequences]
 
-        # Retrieving data
-        streams = [points.exc(datestr=datestr) for datestr in dates]
-        logging.log(level=logging.INFO, msg=streams)
+        # Retrieving data per date, but for several stations in parallel
+        for datestr in datestr_:
+            messages = points.exc(datestr=datestr)
+            logging.log(level=logging.INFO, msg=messages)
