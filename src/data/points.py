@@ -6,9 +6,9 @@ import pandas as pd
 
 import src.data.api
 import src.elements.sequence
+import src.functions.directories
 import src.functions.objects
 import src.functions.streams
-import src.functions.directories
 
 
 class Points:
