@@ -26,12 +26,6 @@ def main():
     data.loc[:, 'date'] = data.loc[:, 'timestamp'].dt.date.array
     logger.info(data)
 
-    # Additionally
-    src.data.substances.Substances().exc()
-    src.data.stations.Stations().exc()
-    src.data.vocabulary.Vocabulary().exc()
-    src.data.sequences.Sequences().exc()
-
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
     
@@ -49,12 +43,8 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
     
     # Modules
+    import src.data.api
     import src.functions.objects
     import src.functions.cache
-    import src.data.substances
-    import src.data.stations
-    import src.data.vocabulary
-    import src.data.sequences
-    import src.data.api
 
     main()
