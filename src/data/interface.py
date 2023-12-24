@@ -1,7 +1,7 @@
 """Module interface.py"""
+import logging
 import os
 
-import dask
 import pandas as pd
 
 import src.data.references
@@ -46,19 +46,6 @@ class Interface:
 
         return [src.elements.sequence.Sequence(**structure) for structure in structures]
 
-    def __paths(self, sequences: list[src.elements.sequence.Sequence]):
-        """
-
-        :param sequences:
-        :return:
-        """
-
-        # Ascertain the existence of each station's directory
-        computation = [
-            dask.delayed(self.__directories.create)(path=os.path.join(self.__basename, str(sequence.station_id))) for
-            sequence in sequences]
-        dask.compute(computation)
-
     def exc(self):
         """
 
@@ -67,4 +54,5 @@ class Interface:
 
         # The sequences associated with the pollutant in question
         sequences = self.__sequences()
-        self.__paths(sequences=sequences)
+        [self.__directories.create(path=os.path.join(self.__basename, str(sequence.station_id)))
+         for sequence in sequences]
