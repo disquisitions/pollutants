@@ -12,3 +12,7 @@ class Config:
         availability_zone = 'eun1-az3'
         regional_endpoint = 's3express-control.eu-north-1.amazonaws.com'
         zonal_endpoint = f's3express-eun1-az1.{region}.amazonaws.com'
+
+        # bucket base
+        bucket_base_name = 'pollutants/{pollutant_id}/{station_id}'
+        bucket_base_name_affix = f'--{availability_zone}--x-s3'
