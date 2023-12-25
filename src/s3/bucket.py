@@ -2,7 +2,7 @@ import boto3
 import botocore.exceptions
 
 
-class Buckets:
+class Bucket:
 
     def __init__(self):
         """
