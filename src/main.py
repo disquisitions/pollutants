@@ -16,12 +16,12 @@ def main():
 
     date = pd.Timestamp.today().date() - pd.Timedelta('1 day')
     values = pd.date_range(start=date - pd.Timedelta('28 days'), end=date, freq='D').to_list()
-    dates = [str(value.date()) for value in values]
+    datestr_ = [str(value.date()) for value in values]
 
     # Try
     pollutant_id = 1
     interface = src.data.interface.Interface(pollutant_id=pollutant_id, restart=True)
-    interface.exc(dates=dates)
+    interface.exc(datestr_=datestr_)
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
