@@ -100,6 +100,14 @@ python -m pylint --rcfile .pylintrc ...
 * [`man` reference](https://linux.die.net)
 * [NumFocus Sponsored Projects](https://numfocus.org/sponsored-projects)
   * [pandas](https://pandas.pydata.org)
+* Amazon Web Services
+  * [Get started with Amazon S3 buckets and objects using an AWS SDK](https://docs.aws.amazon.com/AmazonS3/latest/userguide/example_s3_Scenario_GettingStarted_section.html)
+  * [Getting IAM Identity Center user credentials for the AWS CLI or AWS SDKs](https://docs.aws.amazon.com/singlesignon/latest/userguide/howtogetcredentials.html)
+  * [AWS SDKs and Tools Reference Guide](https://docs.aws.amazon.com/sdkref/latest/guide/overview.html)
+  * [AWS security credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/security-creds.html)
+  * [Using temporary credentials with AWS resources](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html)
+  * [Using temporary security credentials with the AWS SDKs](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html#using-temp-creds-sdk)
+  * [Switching to an IAM role (AWS API)](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-api.html)
 
 <br>
 <br>
