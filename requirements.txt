@@ -1,5 +1,7 @@
 dask[complete]>=2023.11
 graphviz
+boto3
+botocore
 scikit-learn
 numpy>=1.25.*
 pandas>=2.0.*
