@@ -1,0 +1,8 @@
+# S3
+parameters:
+  region_name: 'eu-north-1'
+  availability_zone: 'eun1-az3'
+  regional_root: 'https://s3express-control'
+  zonal_root: 'https://s3express-{availability_zone}'
+  root_affix: '.{region_name}.amazonaws.com'
+  bucket_base_name_affix: '--{availability_zone}--x-s3'
