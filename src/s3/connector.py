@@ -1,3 +1,4 @@
+"""Module connector.py"""
 import os
 import yaml
 
@@ -5,10 +6,16 @@ import src.elements.connector
 
 
 class Connector:
+    """
+    Class Connector
+
+    S3 Express One Zone, which has 4 overarching regions
+    https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    """
 
     def __init__(self):
         """
-
+        Constructor
         """
 
         self.__uri = os.path.join(os.getcwd(), 'resources', 'connector.yaml')
