@@ -8,6 +8,6 @@ class Depositories:
 
     def exc(self):
         """
-        
+
         :return:
         """
