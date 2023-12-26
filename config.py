@@ -10,10 +10,10 @@ class Config:
 
         # S3 Express One Zone, which has 4 overarching regions
         # https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-        region_code = 'eu-north-1'
+        region_name = 'eu-north-1'
         availability_zone = 'eun1-az3'
-        regional_endpoint = f'https://s3express-control.{region_code}.amazonaws.com'
-        zonal_endpoint = f'https://s3express-{availability_zone}.{region_code}.amazonaws.com'
+        regional_endpoint = f'https://s3express-control.{region_name}.amazonaws.com'
+        zonal_endpoint = f'https://s3express-{availability_zone}.{region_name}.amazonaws.com'
         bucket_base_name_affix = f'--{availability_zone}--x-s3'
 
         # Data
