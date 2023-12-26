@@ -1,11 +1,10 @@
 """Module references.py"""
-import collections
 
 import pandas as pd
 
-import src.data.sequences
-import src.data.stations
-import src.data.substances
+import src.references.sequences
+import src.references.stations
+import src.references.substances
 import src.elements.references
 
 
@@ -28,9 +27,9 @@ class References:
         :return:
         """
 
-        substances: pd.DataFrame = src.data.substances.Substances().exc()
-        stations: pd.DataFrame = src.data.stations.Stations().exc()
-        sequences: pd.DataFrame = src.data.sequences.Sequences().exc()
+        substances: pd.DataFrame = src.references.substances.Substances().exc()
+        stations: pd.DataFrame = src.references.stations.Stations().exc()
+        sequences: pd.DataFrame = src.references.sequences.Sequences().exc()
 
         return src.elements.references.References(
-            substances=substances, stations=stations, sequences=sequences)
+            sequences=sequences, stations=stations, substances=substances)
