@@ -1,4 +1,4 @@
-"""Module interfac.py"""
+"""Module interface.py"""
 
 import pandas as pd
 
@@ -8,9 +8,9 @@ import src.references.substances
 import src.elements.references
 
 
-class References:
+class Interface:
     """
-    Class References
+    Class Interface
 
     Rebuild, or retrieve the Amazon S3 data?  The Amazon S3 aspect is upcoming.
     """
