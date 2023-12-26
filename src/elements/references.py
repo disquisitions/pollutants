@@ -9,7 +9,7 @@ import pandas as pd
 
 class References(typing.NamedTuple):
     """
-    The Interface class.
+    The data type class Interface
     """
 
     sequences: pd.DataFrame = None
