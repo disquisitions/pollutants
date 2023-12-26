@@ -19,6 +19,8 @@ class Interface:
         Constructor
         """
 
+        self.__bucket_base_name='pollutants/references/{filename}.csv'
+
     @staticmethod
     def exc() -> None:
         """
