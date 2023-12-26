@@ -23,7 +23,21 @@ class Connector:
 
         return blob['parameters']
 
+    @staticmethod
+    def __build_collection(dictionary: dict) -> src.elements.connector.Connector:
+
+        parameters = src.elements.connector.Connector(**dictionary)
+
+        zonal_root = parameters.zonal_root.format(availability_zone=parameters.availability_zone)
+        root_affix = parameters.root_affix.format(region_name=parameters.region_name)
+        bucket_base_name_affix = parameters.bucket_base_name_affix.format(availability_zone=parameters.availability_zone)
+        parameters = parameters._replace(zonal_root=zonal_root, root_affix=root_affix,
+                                         bucket_base_name_affix=bucket_base_name_affix)
+
+        return parameters
+
     def exc(self) -> src.elements.connector.Connector:
 
         dictionary = self.__get_dictionary()
-        return src.elements.connector.Connector(**dictionary)
+
+        return self.__build_collection(dictionary=dictionary)
