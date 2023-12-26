@@ -26,12 +26,6 @@ def main():
 
     connector = src.s3.connector.Connector()
     parameters: src.elements.connector.Connector = connector.exc()
-    zonal_root = parameters.zonal_root.format(availability_zone=parameters.availability_zone)
-    root_affix = parameters.root_affix.format(region_name=parameters.region_name)
-    bucket_base_name_affix = parameters.bucket_base_name_affix.format(availability_zone=parameters.availability_zone)
-    parameters = parameters._replace(zonal_root=zonal_root, root_affix=root_affix,
-                                     bucket_base_name_affix=bucket_base_name_affix)
-
     logger.info(parameters)
 
     # Deleting __pycache__
