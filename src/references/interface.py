@@ -19,7 +19,7 @@ class Interface:
         Constructor
         """
 
-        self.__bucket_base_name='pollutants/references/{filename}.csv'
+        self.__bucket_base_name = 'pollutants/references/'
 
     @staticmethod
     def exc() -> None:
