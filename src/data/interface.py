@@ -4,10 +4,10 @@ import os
 
 import pandas as pd
 
-import src.references.interface
 import src.data.points
 import src.elements.sequence
 import src.functions.directories
+import src.references.sequences
 
 
 class Interface:
@@ -31,17 +31,15 @@ class Interface:
         if restart:
             self.__directories.cleanup(path=self.__storage)
 
-        # The references
-        self.__references = src.references.interface.Interface().exc()
-
     def __sequences(self) -> list[src.elements.sequence.Sequence]:
         """
 
         :return:
         """
 
-        instances: pd.DataFrame = self.__references.sequences.loc[
-                                  self.__references.sequences['pollutant_id'] == self.__pollutant_id, :]
+        sequences = src.references.sequences.Sequences().exc()
+
+        instances: pd.DataFrame = sequences.loc[sequences['pollutant_id'] == self.__pollutant_id, :]
         structures: list[dict] = instances.to_dict(orient='records')
 
         return [src.elements.sequence.Sequence(**structure) for structure in structures]
