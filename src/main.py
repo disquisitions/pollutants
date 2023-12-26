@@ -28,6 +28,8 @@ def main():
     parameters: src.elements.connector.Connector = connector.exc()
     logger.info(parameters)
 
+    src.references.interface.Interface(parameters=parameters).exc()
+
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
     
@@ -50,6 +52,8 @@ if __name__ == '__main__':
     import src.functions.objects
     import src.functions.cache
     import src.s3.connector
+    import src.s3.profile
     import src.elements.connector
+    import src.references.interface
 
     main()
