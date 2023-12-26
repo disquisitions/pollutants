@@ -4,7 +4,7 @@ import os
 
 import pandas as pd
 
-import src.data.references
+import src.references.interface
 import src.data.points
 import src.elements.sequence
 import src.functions.directories
@@ -32,7 +32,7 @@ class Interface:
             self.__directories.cleanup(path=self.__storage)
 
         # The references
-        self.__references = src.data.references.References().exc()
+        self.__references = src.references.interface.Interface().exc()
 
     def __sequences(self) -> list[src.elements.sequence.Sequence]:
         """
