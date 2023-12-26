@@ -4,7 +4,7 @@ import logging
 import pandas as pd
 
 import src.functions.objects
-import src.data.vocabulary
+import src.references.vocabulary
 
 
 class Substances:
@@ -60,7 +60,7 @@ class Substances:
     @staticmethod
     def __extra_fields(blob: pd.DataFrame):
 
-        definitions = src.data.vocabulary.Vocabulary().exc()
+        definitions = src.references.vocabulary.Vocabulary().exc()
         data = blob.copy().drop(columns='uri').merge(definitions, how='left', on='pollutant_id')
 
         return data
