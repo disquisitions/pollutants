@@ -5,7 +5,6 @@ import pandas as pd
 import src.references.sequences
 import src.references.stations
 import src.references.substances
-import src.elements.references
 
 
 class Interface:
@@ -21,15 +20,12 @@ class Interface:
         """
 
     @staticmethod
-    def exc() -> src.elements.references.References:
+    def exc() -> None:
         """
 
         :return:
         """
 
-        substances: pd.DataFrame = src.references.substances.Substances().exc()
-        stations: pd.DataFrame = src.references.stations.Stations().exc()
-        sequences: pd.DataFrame = src.references.sequences.Sequences().exc()
-
-        return src.elements.references.References(
-            sequences=sequences, stations=stations, substances=substances)
+        src.references.substances.Substances().exc()
+        src.references.stations.Stations().exc()
+        src.references.sequences.Sequences().exc()
