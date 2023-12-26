@@ -1,5 +1,5 @@
 """
-This is the data type References
+This is the data type Interface
 """
 
 import typing
@@ -9,7 +9,7 @@ import pandas as pd
 
 class References(typing.NamedTuple):
     """
-    The References class.
+    The Interface class.
     """
 
     sequences: pd.DataFrame = None
