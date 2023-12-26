@@ -14,5 +14,5 @@ class Config:
         zonal_endpoint = f's3express-eun1-az1.{region}.amazonaws.com'
 
         # bucket base
-        bucket_base_name = 'pollutants/{pollutant_id}/{station_id}'
+        bucket_base_name = 'pollutants/{pollutant_id}/{station_id}/{datestr}.csv'
         bucket_base_name_affix = f'--{availability_zone}--x-s3'
