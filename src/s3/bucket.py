@@ -9,14 +9,15 @@ class Bucket:
 
         """
 
-        self.__resource = boto3.resource('s3')
+        self.__s3_client = boto3.client('s3', region_name='')
 
     def create(self, bucket_name: str):
 
-        bucket = self.__resource.Bucket(bucket_name)
-
         try:
-            bucket.create(CreateBucketConfiguration={
-                'LocationConstraint': self.__resource.meta.client.meta.region_name})
+            bucket_configuration = {
+                'Location': {'Type': 'AvailabilityZone', 'Name': ''},
+                'Bucket': {'Type': 'Directory', 'DataRedundancy': 'SingleAvailabilityZone'}
+            }
+            self.__s3_client.create_bucket(Bucket='', CreateBucketConfiguration=bucket_configuration)
         except botocore.exceptions.ClientError as err:
-            raise Exception(err.response) from err
+            raise Exception(err) from err
