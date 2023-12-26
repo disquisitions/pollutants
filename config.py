@@ -17,19 +17,21 @@ class Config:
         bucket_base_name_affix = f'--{availability_zone}--x-s3'
 
         # Data
-        DataPartition = collections.namedtuple(
-            typename='DataPartition', field_names=['bucket_base_name', 'bucket_base_name_affix',
-                                                   'regional_endpoint', 'zonal_endpoint'])
-        DataPartition(bucket_base_name='pollutants/points/{pollutant_id}/{station_id}/{datestr}.csv',
-                      bucket_base_name_affix=bucket_base_name_affix,
-                      regional_endpoint=regional_endpoint,
-                      zonal_endpoint=zonal_endpoint)
+        PartitionOfPoints = collections.namedtuple(
+            typename='PartitionOfPoints', field_names=['bucket_base_name', 'bucket_base_name_affix',
+                                                       'regional_endpoint', 'zonal_endpoint'])
+        partition_of_points = PartitionOfPoints(
+            bucket_base_name='pollutants/points/{pollutant_id}/{station_id}/{datestr}.csv',
+            bucket_base_name_affix=bucket_base_name_affix,
+            regional_endpoint=regional_endpoint,
+            zonal_endpoint=zonal_endpoint)
 
         # References
-        ReferencesPartition = collections.namedtuple(
-            typename='ReferencesPartition', field_names=['bucket_base_name', 'bucket_base_name_affix',
-                                                         'regional_endpoint', 'zonal_endpoint'])
-        ReferencesPartition(bucket_base_name='pollutants/references/{filename}.csv',
-                            bucket_base_name_affix=bucket_base_name_affix,
-                            regional_endpoint=regional_endpoint,
-                            zonal_endpoint=zonal_endpoint)
+        PartitionOfReferences = collections.namedtuple(
+            typename='PartitionOfReferences', field_names=['bucket_base_name', 'bucket_base_name_affix',
+                                                           'regional_endpoint', 'zonal_endpoint'])
+        partition_of_references = PartitionOfReferences(
+            bucket_base_name='pollutants/references/{filename}.csv',
+            bucket_base_name_affix=bucket_base_name_affix,
+            regional_endpoint=regional_endpoint,
+            zonal_endpoint=zonal_endpoint)
