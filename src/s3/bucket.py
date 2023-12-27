@@ -46,7 +46,7 @@ class Bucket:
         }
 
         try:
-            self.__bucket.create(ACL='private',
+            self.__bucket.create(ACL=self.__parameters.access_control_list,
                                  CreateBucketConfiguration=create_bucket_configuration)
             self.__bucket.wait_until_exists()
         except botocore.exceptions.ClientError as err:
