@@ -67,3 +67,18 @@ class Bucket:
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
+    def exists(self) -> bool:
+        """
+
+        :return:
+        """
+
+        try:
+            state: dict = self.__bucket.meta.client.head_bucket(Bucket=self.__bucket.name)
+        except botocore.exceptions.ClientError as err:
+            raise Exception(err) from err
+
+        if 'BucketRegion' in state.keys():
+            return True
+        else:
+            return False
