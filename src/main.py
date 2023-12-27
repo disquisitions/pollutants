@@ -25,9 +25,8 @@ def main():
     logger.info(hazards)
 
     # Try
-    parameters = src.s3.connector.Connector().exc()
-    entity = src.s3.bucket.Bucket(parameters=parameters, bucket_name='pollutants')
-    logger.info(entity.exists())
+    exists = src.s3.bucket.Bucket(bucket_name='pollutants').exists()
+    logger.info('Does the bucket <pollutants> exists? %s', exists)
 
     # Try
     logger.info('List of Buckets:\n%s', src.s3.list.List().exc())
