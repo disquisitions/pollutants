@@ -24,6 +24,14 @@ def main():
     hazards = [1, 5]
     logger.info(hazards)
 
+    # Try
+    parameters = src.s3.connector.Connector().exc()
+    entity = src.s3.bucket.Bucket(parameters=parameters, bucket_name='pollutants')
+    logger.info(entity.exists())
+
+    # Try
+    logger.info('List of Buckets:\n%s', src.s3.list.List().exc())
+
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
     
@@ -41,13 +49,10 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
     
     # Modules
-    import src.data.api
-    import src.data.interface
-    import src.functions.objects
     import src.functions.cache
     import src.s3.connector
-    import src.s3.profile
     import src.elements.connector
-    import src.references.interface
+    import src.s3.bucket
+    import src.s3.list
 
     main()
