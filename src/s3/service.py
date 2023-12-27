@@ -10,7 +10,7 @@ import src.s3.parameters
 import src.s3.profile
 
 
-class Entities:
+class Service:
 
     def __init__(self):
         """
