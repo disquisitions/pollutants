@@ -1,9 +1,11 @@
 """Module stations.py"""
+import os
 import logging
 
 import pandas as pd
 
 import src.functions.objects
+import src.functions.streams
 
 
 class Stations:
@@ -22,6 +24,9 @@ class Stations:
 
         # The data source field names, and their corresponding new names.
         self.__rename = dict(zip(['properties.id', 'properties.label'], ['station_id', 'station_label']))
+
+        # ...
+        self.__streams = src.functions.streams.Streams()
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -49,7 +54,24 @@ class Stations:
 
         return data
 
-    def exc(self) -> pd.DataFrame:
+    def __write(self, blob: pd.DataFrame, pathstr: str) -> str:
+        """
+        Locally
+
+        :param blob:
+        :return:
+        """
+
+        return self.__streams.write(blob=blob, path=pathstr)
+
+    def __deliver(self):
+        """
+        Deliver to Amazon S3
+
+        :return:
+        """
+
+    def exc(self, storage: str) -> pd.DataFrame:
         """
 
         :return:
@@ -63,5 +85,8 @@ class Stations:
         data: pd.DataFrame = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
         self.__logger.info('Stations (Above)\n%s\n\n', data.info())
+
+        # Save
+        self.__write(blob=data, pathstr=os.path.join(storage, 'stations.csv'))
 
         return data
