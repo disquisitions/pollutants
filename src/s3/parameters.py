@@ -48,7 +48,7 @@ class Parameters:
 
     def exc(self) -> src.elements.parameters.Parameters:
         """
-        
+
         :return:
         """
 
