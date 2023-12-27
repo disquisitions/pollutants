@@ -2,11 +2,11 @@ import logging
 
 import botocore.exceptions
 
-import src.s3.entities
+import src.s3.service
 import src.s3.profile
 
 
-class Bucket(src.s3.entities.Entities):
+class Bucket(src.s3.service.Service):
 
     def __init__(self, bucket_name: str):
         """
