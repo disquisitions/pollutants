@@ -7,7 +7,7 @@ import boto3
 
 import src.elements.parameters
 import src.s3.parameters
-import src.s3.profile
+import src.functions.profile
 
 
 class Service:
@@ -20,7 +20,7 @@ class Service:
 
         # Auto-login via IAM Identity Centre Single Sign On; beware of machine prerequisite.
         # https://docs.aws.amazon.com/signin/latest/userguide/command-line-sign-in.html
-        profile = src.s3.profile.Profile().exc()
+        profile = src.functions.profile.Profile().exc()
         boto3.setup_default_session(profile_name=profile)
 
         # The parameters
