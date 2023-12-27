@@ -1,25 +1,27 @@
-import logging
+"""
+Module bucket.py
+"""
 
 import botocore.exceptions
 
-import src.s3.service
+import src.elements.service
 
 
-class Bucket(src.s3.service.Service):
+class Bucket:
+    """
+    https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/index.html
+    """
 
-    def __init__(self, bucket_name: str):
+    def __init__(self, service: src.elements.service.Service, bucket_name: str):
         """
-        Via resource
-           * https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.\
-                html#boto3.session.Session.resource
-           * https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/index.html
 
+        :param service: The service objects provides (a) overarching S3 parameters settings, e.g.,
+        region code name, etc., and (b) a S3 resource instance, which has Amazon S3 interactions settings.
         :param bucket_name:
         """
 
-        super(Bucket, self).__init__()
-        self.__parameters = super().parameters()
-        self.__s3_resource = super().resource()
+        self.__parameters = service.parameters
+        self.__s3_resource = service.s3_resource
 
         # A bucket instance
         self.__bucket = self.__s3_resource.Bucket(name=bucket_name)
@@ -28,14 +30,12 @@ class Bucket(src.s3.service.Service):
         """
         https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/create.html
 
-
         :return:
         """
 
         create_bucket_configuration = {
             'LocationConstraint': self.__parameters.location_constraint
         }
-
         try:
             self.__bucket.create(ACL=self.__parameters.access_control_list,
                                  CreateBucketConfiguration=create_bucket_configuration)
