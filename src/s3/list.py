@@ -3,22 +3,22 @@ Module list.py
 """
 import logging
 
-import src.s3.service
+import src.elements.service
 
 
-class List(src.s3.service.Service):
+class List:
     """
     Class List
 
     Will list all the S3 objects associated with this machine's active AWS CLI profile
     """
 
-    def __init__(self):
+    def __init__(self, service: src.elements.service.Service):
         """
         Constructor
         """
 
-        super(List, self).__init__()
+        self.__service = service
 
         # Logging
         logging.basicConfig(level=logging.INFO, format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
@@ -26,5 +26,9 @@ class List(src.s3.service.Service):
         self.__logger: logging.Logger = logging.getLogger(__name__)
 
     def exc(self):
+        """
 
-        return list(super().resource().buckets.all())
+        :return:
+        """
+
+        return list(self.__service.s3_resource.buckets.all())
