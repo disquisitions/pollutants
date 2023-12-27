@@ -5,7 +5,7 @@ import yaml
 import src.elements.parameters
 
 
-class Connector:
+class Parameters:
     """
     Class Parameters
 
@@ -47,6 +47,10 @@ class Connector:
         return parameters
 
     def exc(self) -> src.elements.parameters.Parameters:
+        """
+        
+        :return:
+        """
 
         dictionary = self.__get_dictionary()
 
