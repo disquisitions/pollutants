@@ -32,14 +32,17 @@ class Connector:
 
     @staticmethod
     def __build_collection(dictionary: dict) -> src.elements.connector.Connector:
+        """
+
+        :param dictionary:
+        :return:
+        """
 
         parameters = src.elements.connector.Connector(**dictionary)
 
-        zonal_root = parameters.zonal_root.format(availability_zone=parameters.availability_zone)
-        root_affix = parameters.root_affix.format(region_name=parameters.region_name)
-        bucket_base_name_affix = parameters.bucket_base_name_affix.format(availability_zone=parameters.availability_zone)
-        parameters = parameters._replace(zonal_root=zonal_root, root_affix=root_affix,
-                                         bucket_base_name_affix=bucket_base_name_affix)
+        # Parsing variables
+        location_constraint = parameters.location_constraint.format(region_name=parameters.region_name)
+        parameters = parameters._replace(location_constraint=location_constraint)
 
         return parameters
 
