@@ -52,8 +52,18 @@ class Bucket:
         :return:
         """
 
+        # Foremost, delete the bucket's objects
         try:
-            self.__bucket.objects.delete()
-            self.__bucket.delete()
+            state = self.__bucket.objects.delete()
+            if not state['Deleted']['DeleteMarker']:
+                raise state['Errors']['Message']
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
+
+        # Subsequently, delete the bucket
+        try:
+            self.__bucket.delete()
+            self.__bucket.wait_until_not_exists()
+        except botocore.exceptions.ClientError as err:
+            raise Exception(err) from err
+
