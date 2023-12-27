@@ -1,4 +1,4 @@
-# S3
+# S3: Endpoints -> https://docs.aws.amazon.com/general/latest/gr/s3.html
 parameters:
   region_name: 'eu-west-1'
   location_constraint: '{region_name}'
