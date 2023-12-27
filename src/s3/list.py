@@ -1,9 +1,17 @@
+"""
+Module list.py
+"""
 import logging
 
 import src.s3.entities
 
 
 class List(src.s3.entities.Entities):
+    """
+    Class List
+
+    Will list all the S3 objects associated with this machine's active AWS CLI profile
+    """
 
     def __init__(self):
         super(List, self).__init__()
