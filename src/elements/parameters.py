@@ -1,12 +1,12 @@
 """
-This is data type Connector
+This is data type Parameters
 """
 import typing
 
 
-class Connector(typing.NamedTuple):
+class Parameters(typing.NamedTuple):
     """
-    The data type class Connector
+    The data type class Parameters
     """
 
     region_name: str
