@@ -1,8 +1,9 @@
-
+import logging
 import boto3
 import botocore.exceptions
 
 import src.elements.connector
+import src.s3.profile
 
 
 class Bucket:
@@ -10,7 +11,8 @@ class Bucket:
     def __init__(self, parameters: src.elements.connector.Connector, bucket_name: str):
         """
         Via resource
-           * https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html#boto3.session.Session.resource
+           * https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.\
+                html#boto3.session.Session.resource
            * https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/index.html
 
         :param parameters:
@@ -18,15 +20,20 @@ class Bucket:
 
         self.__parameters = parameters
 
-        # Note, this is optional because the resource instance can build it automatically, via provided parameters
-        endpoint_url = self.__parameters.root.format(bucket_name=bucket_name, region_name=self.__parameters.region_name)
-
         # The resource instance
-        self.__s3_resource = boto3.resource(service_name='s3', region_name=self.__parameters.region_name,
-                                            endpoint_url=endpoint_url)
+        profile = src.s3.profile.Profile().exc()
+        boto3.setup_default_session(profile_name=profile)
+        self.__s3_resource = boto3.resource(service_name='s3', region_name=self.__parameters.region_name)
         self.__bucket = self.__s3_resource.Bucket(name=bucket_name)
 
-    def create(self, ):
+        # Logging
+        logging.basicConfig(level=logging.INFO, format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
+                            datefmt='%Y-%m-%d %H:%M:%S')
+        self.__logger: logging.Logger = logging.getLogger(__name__)
+
+        self.__logger.info('Items\n%s', list(self.__s3_resource.buckets.all()))
+
+    def create(self):
         """
         https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/create.html
 
@@ -45,9 +52,11 @@ class Bucket:
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
-    def delete(self):
+    def delete(self) -> bool:
         """
         https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/objects.html
+        https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/delete.html
+        https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/wait_until_not_exists.html
 
         :return:
         """
@@ -64,14 +73,19 @@ class Bucket:
         try:
             self.__bucket.delete()
             self.__bucket.wait_until_not_exists()
+            return True or False
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
     def exists(self) -> bool:
         """
+        https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/head_bucket.html#S3.Client.head_bucket
+        https://awscli.amazonaws.com/v2/documentation/api/2.0.34/reference/s3api/head-bucket.html
 
         :return:
         """
+
+        self.__logger.info(self.__bucket.name)
 
         try:
             state: dict = self.__bucket.meta.client.head_bucket(Bucket=self.__bucket.name)
@@ -79,6 +93,4 @@ class Bucket:
             raise Exception(err) from err
 
         if 'BucketRegion' in state.keys():
-            return True
-        else:
-            return False
+            return True or False
