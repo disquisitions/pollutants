@@ -2,6 +2,7 @@
 import logging
 import os
 import sys
+
 import pandas as pd
 
 
@@ -47,8 +48,6 @@ if __name__ == '__main__':
     
     # Modules
     import src.functions.cache
-    import src.s3.connector
-    import src.elements.connector
     import src.s3.bucket
     import src.s3.list
 
