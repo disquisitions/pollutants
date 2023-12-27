@@ -69,16 +69,16 @@ class Points:
         return data
 
     @dask.delayed
-    def __write(self, blob: pd.DataFrame, datestr: str, station_id: int) -> str:
+    def __write(self, blob: pd.DataFrame, datestr: str, sequence: src.elements.sequence.Sequence) -> str:
         """
 
         :param blob:
         :param datestr:
-        :param station_id:
+        :param sequence:
         :return:
         """
 
-        basename = os.path.join(self.__storage, str(station_id))
+        basename = os.path.join(self.__storage, str(sequence.pollutant_id), str(sequence.station_id))
 
         return self.__streams.write(blob=blob, path=os.path.join(basename, f'{datestr}.csv'))
 
