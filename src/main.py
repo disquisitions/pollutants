@@ -12,7 +12,6 @@ def main():
 
     # Logging
     logger: logging.Logger = logging.getLogger(__name__)
-    logger.info('Pollutants')
 
     # Dates
     date = pd.Timestamp.today().date() - pd.Timedelta('1 day')
@@ -25,11 +24,10 @@ def main():
     logger.info(hazards)
 
     # Try
-    exists = src.s3.bucket.Bucket(bucket_name='pollutants').exists()
-    logger.info('Does the bucket <pollutants> exists? %s', exists)
-
-    # Try
-    logger.info('List of Buckets:\n%s', src.s3.list.List().exc())
+    logger.info('Does the bucket <pollutants> exists? %s',
+                src.s3.bucket.Bucket(bucket_name='pollutants').exists())
+    logger.info('List of Buckets:\n%s',
+                src.s3.list.List().exc())
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
