@@ -5,8 +5,8 @@ import logging
 
 import boto3
 
-import src.elements.connector
-import src.s3.connector
+import src.elements.parameters
+import src.s3.parameters
 import src.s3.profile
 
 
@@ -24,12 +24,12 @@ class Entities:
         boto3.setup_default_session(profile_name=profile)
 
         # The parameters
-        self.__parameters: src.elements.connector.Connector = src.s3.connector.Connector().exc()
+        self.__parameters: src.elements.parameters.Parameters = src.s3.parameters.Parameters().exc()
 
         # The S3 resource
         self.__s3_resource = boto3.resource(service_name='s3', region_name=self.__parameters.region_name)
 
-    def parameters(self) -> src.elements.connector.Connector:
+    def parameters(self) -> src.elements.parameters.Parameters:
         """
 
         :return:
