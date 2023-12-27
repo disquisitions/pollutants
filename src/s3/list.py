@@ -3,10 +3,10 @@ Module list.py
 """
 import logging
 
-import src.s3.entities
+import src.s3.service
 
 
-class List(src.s3.entities.Entities):
+class List(src.s3.service.Service):
     """
     Class List
 
