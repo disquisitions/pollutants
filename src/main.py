@@ -10,25 +10,19 @@ def main():
     Entry point
     """
 
-    # Log
+    # Logging
     logger: logging.Logger = logging.getLogger(__name__)
     logger.info('Pollutants')
 
+    # Dates
     date = pd.Timestamp.today().date() - pd.Timedelta('1 day')
     values = pd.date_range(start=date - pd.Timedelta('28 days'), end=date, freq='D').to_list()
     datestr_ = [str(value.date()) for value in values]
     logger.info(datestr_)
 
-    # Try
-    # pollutant_id = 1
-    # interface = src.data.interface.Interface(pollutant_id=pollutant_id, restart=True)
-    # interface.exc(datestr_=datestr_)
-
-    connector = src.s3.connector.Connector()
-    parameters: src.elements.connector.Connector = connector.exc()
-    logger.info(parameters)
-
-    src.references.interface.Interface(parameters=parameters).exc()
+    # Pollutants - Sulphur Dioxide, Particulate Matter
+    hazards = [1, 5]
+    logger.info(hazards)
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
