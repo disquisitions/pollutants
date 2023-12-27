@@ -114,6 +114,15 @@ python -m pylint --rcfile .pylintrc ...
   * [Configuring Tokens](https://docs.aws.amazon.com/cli/latest/userguide/sso-configure-profile-token.html#sso-configure-profile-token-auto-sso)
 
 <br>
+
+## Special
+
+| focus          | resource                                                                                                            | client                                                                                                                      |
+|:---------------|:--------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------|
+| create         | [create](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/create.html)          | [create](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/create_bucket.html)           |
+| delete objects | [delete objects](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/objects.html) | [delete objects](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/delete_objects.html#) |
+
+<br>
 <br>
 
 <br>
