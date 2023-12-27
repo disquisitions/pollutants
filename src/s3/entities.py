@@ -1,4 +1,8 @@
+"""
+Module entities.py
+"""
 import logging
+
 import boto3
 
 import src.elements.connector
@@ -10,6 +14,7 @@ class Entities:
 
     def __init__(self):
         """
+        Re-visit profile in relation to cloud runs.
 
         """
 
@@ -20,15 +25,22 @@ class Entities:
 
         # The parameters
         self.__parameters: src.elements.connector.Connector = src.s3.connector.Connector().exc()
-        print(self.__parameters)
 
         # The S3 resource
         self.__s3_resource = boto3.resource(service_name='s3', region_name=self.__parameters.region_name)
 
     def parameters(self) -> src.elements.connector.Connector:
+        """
+
+        :return:
+        """
 
         return self.__parameters
 
     def resource(self):
+        """
+
+        :return:
+        """
 
         return self.__s3_resource
