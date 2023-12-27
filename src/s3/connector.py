@@ -18,7 +18,7 @@ class Connector:
         Constructor
         """
 
-        self.__uri = os.path.join(os.getcwd(), 'resources', 'connector.yaml')
+        self.__uri = os.path.join(os.getcwd(), 'resources', 'parameters.yaml')
 
     def __get_dictionary(self) -> dict:
 
