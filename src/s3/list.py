@@ -14,6 +14,10 @@ class List(src.s3.entities.Entities):
     """
 
     def __init__(self):
+        """
+        Constructor
+        """
+
         super(List, self).__init__()
 
         # Logging
