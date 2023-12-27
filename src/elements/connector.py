@@ -11,4 +11,4 @@ class Connector(typing.NamedTuple):
 
     region_name: str
     location_constraint: str
-    root: str
+    access_control_list: str
