@@ -3,7 +3,6 @@ import logging
 import botocore.exceptions
 
 import src.s3.service
-import src.s3.profile
 
 
 class Bucket(src.s3.service.Service):
