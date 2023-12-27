@@ -1,13 +1,11 @@
+"""Module profile.py"""
 import os
 import yaml
 
 
 class Profile:
     """
-    Class Connector
-
-    S3 Express One Zone, which has 4 overarching regions
-    https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    Class Profile
     """
 
     def __init__(self):
@@ -18,6 +16,10 @@ class Profile:
         self.__uri = os.path.join(os.getcwd(), 'resources', 'profile.yaml')
 
     def __get_name(self) -> dict:
+        """
+
+        :return:
+        """
 
         with open(file=self.__uri, mode='r') as stream:
             try:
@@ -25,9 +27,13 @@ class Profile:
             except yaml.YAMLError as err:
                 raise Exception(err) from err
 
-        return blob['parameters']['name']
+        return blob['profile']['name']
 
     def exc(self) -> str:
+        """
+
+        :return:
+        """
 
         name = self.__get_name()
 
