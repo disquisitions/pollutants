@@ -1,13 +1,13 @@
-"""Module connector.py"""
+"""Module parameters.py"""
 import os
 import yaml
 
-import src.elements.connector
+import src.elements.parameters
 
 
 class Connector:
     """
-    Class Connector
+    Class Parameters
 
     S3 Express One Zone, which has 4 overarching regions
     https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
@@ -31,14 +31,14 @@ class Connector:
         return blob['parameters']
 
     @staticmethod
-    def __build_collection(dictionary: dict) -> src.elements.connector.Connector:
+    def __build_collection(dictionary: dict) -> src.elements.parameters.Parameters:
         """
 
         :param dictionary:
         :return:
         """
 
-        parameters = src.elements.connector.Connector(**dictionary)
+        parameters = src.elements.parameters.Parameters(**dictionary)
 
         # Parsing variables
         location_constraint = parameters.location_constraint.format(region_name=parameters.region_name)
@@ -46,7 +46,7 @@ class Connector:
 
         return parameters
 
-    def exc(self) -> src.elements.connector.Connector:
+    def exc(self) -> src.elements.parameters.Parameters:
 
         dictionary = self.__get_dictionary()
 
