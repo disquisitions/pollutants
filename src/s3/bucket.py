@@ -1,37 +1,29 @@
 import logging
-import boto3
+
 import botocore.exceptions
 
-import src.elements.connector
+import src.s3.entities
 import src.s3.profile
 
 
-class Bucket:
+class Bucket(src.s3.entities.Entities):
 
-    def __init__(self, parameters: src.elements.connector.Connector, bucket_name: str):
+    def __init__(self, bucket_name: str):
         """
         Via resource
            * https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.\
                 html#boto3.session.Session.resource
            * https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/index.html
 
-        :param parameters:
+        :param bucket_name:
         """
 
-        self.__parameters = parameters
+        super(Bucket, self).__init__()
+        self.__parameters = super().parameters()
+        self.__s3_resource = super().resource()
 
-        # The resource instance
-        profile = src.s3.profile.Profile().exc()
-        boto3.setup_default_session(profile_name=profile)
-        self.__s3_resource = boto3.resource(service_name='s3', region_name=self.__parameters.region_name)
+        # A bucket instance
         self.__bucket = self.__s3_resource.Bucket(name=bucket_name)
-
-        # Logging
-        logging.basicConfig(level=logging.INFO, format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger: logging.Logger = logging.getLogger(__name__)
-
-        self.__logger.info('Items\n%s', list(self.__s3_resource.buckets.all()))
 
     def create(self):
         """
@@ -84,8 +76,6 @@ class Bucket:
 
         :return:
         """
-
-        self.__logger.info(self.__bucket.name)
 
         try:
             state: dict = self.__bucket.meta.client.head_bucket(Bucket=self.__bucket.name)
