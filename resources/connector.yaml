@@ -2,4 +2,4 @@
 parameters:
   region_name: 'eu-west-1'
   location_constraint: '{region_name}'
-  root: 'https://{bucket_name}.s3.{region_name}.amazonaws.com/'
+  access_control_list: 'private'
