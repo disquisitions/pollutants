@@ -65,7 +65,24 @@ class Substances:
 
         return data
 
-    def exc(self) -> pd.DataFrame:
+    @staticmethod
+    def __metadata() -> dict:
+        """
+
+        :return:
+        """
+
+        return {
+            'pollutant_id': 'The identification code of a pollutant.',
+            'uri': 'The European Environment Information and Observation Network (EIONET) page of a pollutant',
+            'substance': 'The name, and more, of the pollutant.',
+            'notation': 'The chemical formula of the pollutant.',
+            'status': 'Denotes whether a substance is still a valid pollutant.',
+            'accepted_date': 'Probably the date the substance was accepted as a pollutant.',
+            'recommended_unit_of_measure': 'The recommended unit of measure'
+        }
+
+    def exc(self) -> (pd.DataFrame, dict):
         """
 
         :return:
@@ -85,4 +102,4 @@ class Substances:
         self.__logger.info(data.head())
         self.__logger.info('Substances (Above)\n%s\n\n', data.info())
 
-        return data
+        return data, self.__metadata()
