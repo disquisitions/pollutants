@@ -3,12 +3,12 @@ Module upload.py
 """
 import io
 
-import botocore.exceptions
 import boto3
+import botocore.exceptions
 import pandas as pd
 
-import src.elements.service
 import src.elements.parameters
+import src.elements.service
 
 
 class Upload:
@@ -30,9 +30,12 @@ class Upload:
         self.__parameters: src.elements.parameters.Parameters = service.parameters
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
 
-    def bytes(self, data: pd.DataFrame, metadata: dict, bucket_name: str, key_name: str) -> bool:
+    def bytes(self, data: pd.DataFrame, metadata: dict, key_name: str) -> bool:
         """
 
+        :param data: The data that will be delivered to Amazon S3
+        :param metadata: The metadata of the data
+        :param key_name: The key name of the data -> {}/{}/{}.csv
         :return:
         """
 
@@ -40,7 +43,7 @@ class Upload:
         data.to_csv(path_or_buf=buffer, header=True)
 
         # A bucket object
-        bucket = self.__s3_resource.Bucket(name=bucket_name)
+        bucket = self.__s3_resource.Bucket(name=self.__parameters.bucket_name)
 
         try:
             bucket.put_object(
