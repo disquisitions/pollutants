@@ -21,7 +21,7 @@ class Vocabulary:
         self.__uri: str = 'https://dd.eionet.europa.eu/vocabulary/aq/pollutant/csv'
 
         # Its date fields
-        self.__date_fields = ['AcceptedDate']
+        self.__date_format = {'AcceptedDate': '%Y-%m-%d'}
 
         # The data source field names <labels>, and their corresponding new names <names>; the new names are
         # in line with field-naming standards & defined ontology.
@@ -65,13 +65,15 @@ class Vocabulary:
 
         # Reads-in the details of each substance
         streams = src.functions.streams.Streams()
-        data: pd.DataFrame = streams.api(uri=self.__uri, header=0, usecols=list(self.__dtype.keys()),
-                                         dtype=self.__dtype, date_fields=self.__date_fields)
+        data: pd.DataFrame = streams.api(
+            uri=self.__uri, header=0, usecols=list(self.__dtype.keys()), dtype=self.__dtype,
+            date_format=self.__date_format)
 
         # Hence, (a) renaming the fields in line with field naming conventions and ontology standards, and (b)
         # adding & dropping features
         data = data.copy().rename(columns=self.__rename)
         data = self.__feature_engineering(blob=data)
+        self.__logger.info(data.head())
         self.__logger.info('Vocabulary (Above)\n%s\n\n', data.info())
 
         return data
