@@ -31,8 +31,9 @@ class Objects:
 
     def filter(self, prefix: str):
 
-        x = list(self.__bucket.objects.filter(Prefix=prefix))
-        self.__logger.info(x)
+        items = list(self.__bucket.objects.filter(Prefix=prefix))
+
+        return len(items)
 
     def all(self):
         """
@@ -40,5 +41,6 @@ class Objects:
         :return:
         """
 
-        x = list(self.__bucket.objects.all())
-        self.__logger.info(x)
+        items = list(self.__bucket.objects.all())
+
+        return len(items)
