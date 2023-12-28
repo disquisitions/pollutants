@@ -41,7 +41,7 @@ class Streams:
 
     @staticmethod
     def read(uri: str, header: int = 0, usecols: list = None, dtype: dict = None,
-             date_fields: list = None) -> pd.DataFrame:
+             date_fields: list = None, date_format: dict = None) -> pd.DataFrame:
         """
 
         :param uri: The uniform resource identifier; path + file + extension string.
@@ -49,6 +49,7 @@ class Streams:
         :param usecols: The fields in focus
         :param dtype: Dictionary of type per field
         :param date_fields: The list of data fields, if any.
+        :param date_format: The date format per date field
         :return:
         """
 
@@ -59,12 +60,12 @@ class Streams:
 
         try:
             return pd.read_csv(filepath_or_buffer=uri, header=header, usecols=usecols, dtype=dtype,
-                               encoding='utf-8', parse_dates=parse_dates)
+                               encoding='utf-8', parse_dates=parse_dates, date_format=date_format)
         except ImportError:
             return pd.DataFrame()
 
     def api(self, uri: str, header: int = 0, usecols: list = None, dtype: dict = None,
-            date_fields: list = None) -> pd.DataFrame:
+            date_fields: list = None, date_format: dict = None) -> pd.DataFrame:
         """
 
         :param uri: The uniform resource identifier; path + file + extension string.
@@ -72,6 +73,7 @@ class Streams:
         :param usecols: The fields in focus
         :param dtype: Dictionary of type per field
         :param date_fields: The list of data fields, if any.
+        :param date_format: The date format per date field
         :return:
         """
 
@@ -84,6 +86,7 @@ class Streams:
             raise ValueError(f'HTTP Error: {err}') from err
 
         if response.status_code == 200:
-            data = self.read(uri=uri, header=header, usecols=usecols, dtype=dtype, date_fields=date_fields)
+            data = self.read(uri=uri, header=header, usecols=usecols,
+                             dtype=dtype, date_fields=date_fields, date_format=date_format)
 
         return data
