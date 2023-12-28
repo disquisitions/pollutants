@@ -1,5 +1,6 @@
 """Module interface.py"""
 import logging
+import io
 
 import pandas as pd
 
@@ -48,7 +49,8 @@ class Interface:
             data, metadata = src.references.stations.Stations().exc()
             self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
         else:
-            data = self.__unload.exc(key_name=key_name)
+            chunk = self.__unload.exc(key_name=key_name)
+            data = pd.read_csv(io.BytesIO(chunk))
 
         return data
 
@@ -62,7 +64,8 @@ class Interface:
             data, metadata = src.references.substances.Substances().exc()
             self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
         else:
-            data = self.__unload.exc(key_name=key_name)
+            chunk = self.__unload.exc(key_name=key_name)
+            data = pd.read_csv(io.BytesIO(chunk))
 
         return data
 
@@ -76,7 +79,9 @@ class Interface:
             data, metadata = src.references.registry.Registry().exc()
             self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
         else:
-            data = self.__unload.exc(key_name=key_name)
+            chunk = self.__unload.exc(key_name=key_name)
+            print(chunk)
+            data = pd.read_csv(io.BytesIO(chunk))
 
         return data
 
@@ -86,8 +91,11 @@ class Interface:
         :return:
         """
 
-        frame = self.__registry().copy().merge(self.__stations().copy(), how='left', on='station_id')
+        registry = self.__registry()
+        stations = self.__stations()
         substances = self.__substances().copy()[['pollutant_id', 'substance', 'notation']]
+
+        frame = registry.merge(stations, how='left', on='station_id')
         frame = frame.copy().merge(substances, how='left', on='pollutant_id')
 
         logging.log(level=logging.INFO, msg=frame)
