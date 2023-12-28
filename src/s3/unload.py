@@ -26,4 +26,4 @@ class Unload:
         data = io.BytesIO()
 
         return self.__s3_resource.Bucket(name=self.__parameters.bucket_name).download_fileobj(
-            Key=key_name, Filename=data)
+            Key=key_name, Fileobj=data)
