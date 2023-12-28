@@ -55,6 +55,6 @@ if __name__ == '__main__':
     # Restart?
     #   * In production, False
     #   * If the number of objects within references/ is != 3, True (Empty the project's S3 bucket)
-    restart = True
+    restart = False
 
     main()
