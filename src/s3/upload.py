@@ -40,7 +40,7 @@ class Upload:
         """
 
         buffer = io.StringIO()
-        data.to_csv(path_or_buf=buffer, header=True)
+        data.to_csv(path_or_buf=buffer, header=True, index=False, encoding='utf-8')
 
         # A bucket object
         bucket = self.__s3_resource.Bucket(name=self.__parameters.bucket_name)
