@@ -1,9 +1,10 @@
 """
 Module bucket.py
 """
-
+import boto3
 import botocore.exceptions
 
+import src.elements.parameters
 import src.elements.service
 
 
@@ -12,19 +13,18 @@ class Bucket:
     https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/index.html
     """
 
-    def __init__(self, service: src.elements.service.Service, bucket_name: str):
+    def __init__(self, service: src.elements.service.Service):
         """
 
         :param service: The service objects provides (a) overarching S3 parameters settings, e.g.,
         region code name, etc., and (b) a S3 resource instance, which has Amazon S3 interactions settings.
-        :param bucket_name:
         """
 
-        self.__parameters = service.parameters
-        self.__s3_resource = service.s3_resource
+        self.__parameters: src.elements.parameters.Parameters = service.parameters
+        self.__s3_resource: boto3.session.Session.resource = service.s3_resource
 
         # A bucket instance
-        self.__bucket = self.__s3_resource.Bucket(name=bucket_name)
+        self.__bucket = self.__s3_resource.Bucket(name=self.__parameters.bucket_name)
 
     def create(self):
         """
