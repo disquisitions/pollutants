@@ -52,7 +52,9 @@ if __name__ == '__main__':
     # Service
     service = src.s3.service.Service().service
 
-    # Restart?  The default state will be False
+    # Restart?
+    # In production, False
+    # If the number of objects within references/ is != 3, True
     restart = True
 
     main()
