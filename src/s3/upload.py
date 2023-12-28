@@ -1,10 +1,11 @@
 """
 Module upload.py
 """
-import typing
+import io
 
 import botocore.exceptions
 import boto3
+import pandas as pd
 
 import src.elements.service
 import src.elements.parameters
@@ -29,11 +30,14 @@ class Upload:
         self.__parameters: src.elements.parameters.Parameters = service.parameters
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
 
-    def bytes(self, data: typing.Any, metadata: dict, bucket_name: str, key_name: str) -> bool:
+    def bytes(self, data: pd.DataFrame, metadata: dict, bucket_name: str, key_name: str) -> bool:
         """
 
         :return:
         """
+
+        buffer = io.StringIO()
+        data.to_csv(path_or_buf=buffer, header=True)
 
         # A bucket object
         bucket = self.__s3_resource.Bucket(name=bucket_name)
@@ -41,7 +45,7 @@ class Upload:
         try:
             bucket.put_object(
                 ACL=self.__parameters.access_control_list,
-                Body=data,
+                Body=buffer.getvalue(),
                 Key=key_name, Metadata=metadata)
             return True or False
         except botocore.exceptions.ClientError as err:
