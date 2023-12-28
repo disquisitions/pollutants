@@ -73,7 +73,19 @@ class Registry:
 
         return data
 
-    def exc(self) -> pd.DataFrame:
+    @staticmethod
+    def __metadata() -> dict:
+        """
+
+        :return:
+        """
+
+        return {'sequence_id': 'The identification code of the sequence the telemetric device records.',
+                'unit_of_measure': 'The unit of measure of the recordings',
+                'station_id': 'The identification code of the station that hosts the telemetric device.',
+                'pollutant_id': 'The identification code of the pollutant the telemetric device measures.'}
+
+    def exc(self) -> (pd.DataFrame, dict):
         """
 
         :return:
@@ -92,4 +104,4 @@ class Registry:
         self.__logger.info(data.head())
         self.__logger.info('Registry (Above)\n%s\n\n', data.info())
 
-        return data
+        return data, self.__metadata()
