@@ -43,6 +43,21 @@ class Bucket:
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
+    def empty(self) -> bool:
+        """
+        Delete a bucket's objects
+
+        :return:
+        """
+
+        try:
+            state = self.__bucket.objects.delete()
+            if not state['Deleted']['DeleteMarker']:
+                raise state['Errors']['Message']
+            return True or False
+        except botocore.exceptions.ClientError as err:
+            raise Exception(err) from err
+
     def delete(self) -> bool:
         """
         https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/objects.html
@@ -52,15 +67,10 @@ class Bucket:
         :return:
         """
 
-        # Foremost, delete the bucket's objects
-        try:
-            state = self.__bucket.objects.delete()
-            if not state['Deleted']['DeleteMarker']:
-                raise state['Errors']['Message']
-        except botocore.exceptions.ClientError as err:
-            raise Exception(err) from err
+        # Ensure the bucket is empty.
+        self.empty()
 
-        # Subsequently, delete the bucket
+        # Subsequently, delete the bucket.
         try:
             self.__bucket.delete()
             self.__bucket.wait_until_not_exists()
