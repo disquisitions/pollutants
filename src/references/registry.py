@@ -101,7 +101,7 @@ class Registry:
         data.rename(columns=self.__rename, inplace=True)
         data = data.copy().astype(dtype=self.__dtype)
         data = self.__feature_engineering(blob=data)
-        self.__logger.info(data.head())
+
         self.__logger.info('Registry (Above)\n%s\n\n', data.info())
 
         return data, self.__metadata()
