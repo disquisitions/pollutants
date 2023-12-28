@@ -32,6 +32,7 @@ class Objects:
     def filter(self, prefix: str):
 
         items = list(self.__bucket.objects.filter(Prefix=prefix))
+        self.__logger.info(items)
 
         return len(items)
 
@@ -42,5 +43,6 @@ class Objects:
         """
 
         items = list(self.__bucket.objects.all())
+        self.__logger.info(items)
 
         return len(items)
