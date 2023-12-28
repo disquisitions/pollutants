@@ -4,5 +4,5 @@ parameters:
   location_constraint: '{region_name}'
   access_control_list: 'private'
   bucket_name: 'pollutants'
-  data_path: 'points/'
-  references_path: 'references/'
+  points_: 'points/'
+  references_: 'references/'
