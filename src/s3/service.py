@@ -7,8 +7,8 @@ import boto3
 
 import src.elements.parameters
 import src.elements.service
-import src.s3.parameters
 import src.functions.profile
+import src.s3.parameters
 
 
 class Service:
@@ -36,7 +36,8 @@ class Service:
 
         # The parameters and the S3 resource
         self.__parameters: src.elements.parameters.Parameters = src.s3.parameters.Parameters().exc()
-        self.__s3_resource: boto3.session.Session.resource = boto3.resource(service_name='s3', region_name=self.__parameters.region_name)
+        self.__s3_resource: boto3.session.Session.resource = boto3.resource(
+            service_name='s3', region_name=self.__parameters.region_name)
 
         # Hence, the collection
         self.service = src.elements.service.Service(
