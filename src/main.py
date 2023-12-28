@@ -53,8 +53,8 @@ if __name__ == '__main__':
     service = src.s3.service.Service().service
 
     # Restart?
-    # In production, False
-    # If the number of objects within references/ is != 3, True (Empty the project's S3 bucket)
+    #   * In production, False
+    #   * If the number of objects within references/ is != 3, True (Empty the project's S3 bucket)
     restart = True
 
     main()
