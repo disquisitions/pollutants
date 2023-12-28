@@ -11,7 +11,7 @@ import src.elements.parameters
 
 class Service(typing.NamedTuple):
     """
-    The data type class Interface
+    The data type class -> Service
     """
 
     parameters: src.elements.parameters
