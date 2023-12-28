@@ -95,5 +95,8 @@ class Interface:
 
         frame = registry.merge(stations, how='left', on='station_id')
         frame = frame.copy().merge(substances, how='left', on='pollutant_id')
+        conditionals = frame['longitude'].isna() | frame['latitude'].isna()
+        frame = frame.copy().loc[~conditionals, :]
 
+        logging.log(level=logging.INFO, msg=frame.info())
         logging.log(level=logging.INFO, msg=frame)
