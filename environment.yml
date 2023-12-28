@@ -1,18 +1,8 @@
-name: miscellaneous
+name: pollutants
 channels:
   - conda-forge
 dependencies:
-  - python==3.11.*
+  - python==3.11.7
   - pip
-  - dask
-  - scikit-learn
-  - numpy>=1.25.*
-  - pandas>=2.0.*
-  - scipy>=1.11.*
-  - pyyaml
-  - requests
-  - pytest
-  - coverage
-  - pylint
-  - pytest-cov
-  - flake8
+  - pip:
+    - -r requirements.txt
