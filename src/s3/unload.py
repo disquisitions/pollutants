@@ -14,7 +14,8 @@ class Unload:
         """
 
         self.__parameters: src.elements.parameters.Parameters = service.parameters
-        self.__s3_resource: boto3.session.Session.resource = service.s3_resource
+        self.__s3_resource = service.s3_resource
+        self.__s3_client = service.s3_client
 
     def exc(self, key_name: str):
         """
@@ -23,7 +24,7 @@ class Unload:
         :return:
         """
 
-        data = io.BytesIO()
+        blob = self.__s3_client.get_object(Bucket=self.__parameters.bucket_name, Key=key_name)
+        buffer = io.StringIO(blob['Body'].read().decode('utf-8'))
 
-        return self.__s3_resource.Bucket(name=self.__parameters.bucket_name).download_fileobj(
-            Key=key_name, Fileobj=data)
+        return buffer
