@@ -1,5 +1,5 @@
 """
-Module list.py
+Module objects.py
 """
 import logging
 import boto3
@@ -8,9 +8,9 @@ import src.elements.parameters
 import src.elements.service
 
 
-class List:
+class Objects:
     """
-    Class List
+    Class Objects
 
     Will list all the S3 objects associated with this machine's active AWS CLI profile
     """
