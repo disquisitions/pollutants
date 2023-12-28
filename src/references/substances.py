@@ -99,7 +99,7 @@ class Substances:
         data.rename(columns=self.__rename, inplace=True)
         data = self.__casting(blob=data)
         data = self.__extra_fields(blob=data)
-        self.__logger.info(data.head())
+
         self.__logger.info('Substances (Above)\n%s\n\n', data.info())
 
         return data, self.__metadata()
