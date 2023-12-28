@@ -1,4 +1,5 @@
 """Module interface.py"""
+import logging
 import os.path
 
 import pandas as pd
@@ -29,38 +30,56 @@ class Interface:
         self.__restart = restart
         self.__service = service
 
-        # Amazon S3 Settings
+        # Amazon S3 Settings & Interactions Instances
         self.__parameters: src.elements.parameters.Parameters = self.__service.parameters
-
-        # Amazon S3 interactions instances
         self.__unload = src.s3.unload.Unload(service=self.__service)
         self.__upload = src.s3.upload.Upload(service=self.__service)
 
-    def __stations(self):
+    def __stations(self) -> pd.DataFrame:
         """
 
         :return:
         """
 
+        key_name = f'{self.__parameters.references_}stations.csv'
+
         if self.__restart:
             data: pd.DataFrame
             metadata: dict
             data, metadata = src.references.stations.Stations().exc()
-            # self.__upload.bytes(data=data, metadata=metadata, key_name=f'{self.__parameters.references_}stations.csv')
+            self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
         else:
-            data = self.__unload.exc(key_name=f'{self.__parameters.references_}stations.csv')
+            data = self.__unload.exc(key_name=key_name)
 
         return data
 
-    @staticmethod
-    def __substances():
+    def __substances(self) -> pd.DataFrame:
 
-        return src.references.substances.Substances().exc()
+        key_name = f'{self.__parameters.references_}substances.csv'
 
-    @staticmethod
-    def __registry():
+        if self.__restart:
+            data: pd.DataFrame
+            metadata: dict
+            data, metadata = src.references.substances.Substances().exc()
+            self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
+        else:
+            data = self.__unload.exc(key_name=key_name)
 
-        src.references.registry.Registry().exc()
+        return data
+
+    def __registry(self) -> pd.DataFrame:
+
+        key_name = f'{self.__parameters.references_}registry.csv'
+
+        if self.__restart:
+            data: pd.DataFrame
+            metadata: dict
+            data, metadata = src.references.registry.Registry().exc()
+            self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
+        else:
+            data = self.__unload.exc(key_name=key_name)
+
+        return data
 
     def exc(self) -> None:
         """
@@ -68,6 +87,8 @@ class Interface:
         :return:
         """
 
-        self.__registry()
-        self.__stations()
-        self.__substances()
+        frame = self.__registry().copy().merge(self.__stations().copy(), how='left', on='station_id')
+        substances = self.__substances().copy()[['pollutant_id', 'substance', 'notation']]
+        frame = frame.copy().merge(substances, how='left', on='pollutant_id')
+
+        logging.log(level=logging.INFO, msg=frame)
