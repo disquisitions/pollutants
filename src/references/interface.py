@@ -46,7 +46,7 @@ class Interface:
             data: pd.DataFrame
             metadata: dict
             data, metadata = src.references.stations.Stations().exc()
-            self.__upload.bytes(data=data, metadata=metadata, key_name=f'{self.__parameters.references_}stations.csv')
+            # self.__upload.bytes(data=data, metadata=metadata, key_name=f'{self.__parameters.references_}stations.csv')
         else:
             data = self.__unload.exc(key_name=f'{self.__parameters.references_}stations.csv')
 
