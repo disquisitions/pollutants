@@ -3,3 +3,6 @@ parameters:
   region_name: 'eu-west-1'
   location_constraint: '{region_name}'
   access_control_list: 'private'
+  bucket_name: 'pollutants'
+  data_path: 'points/'
+  references_path: 'references/'
