@@ -26,7 +26,7 @@ def main():
     logger.info(hazards)
 
     # Try
-    src.references.interface.Interface(service=service).exc()
+    src.references.interface.Interface(service=service, restart=restart).exc()
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
