@@ -1,6 +1,5 @@
 """Module interface.py"""
 import logging
-import io
 
 import pandas as pd
 
@@ -50,7 +49,7 @@ class Interface:
             self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
         else:
             chunk = self.__unload.exc(key_name=key_name)
-            data = pd.read_csv(io.BytesIO(chunk))
+            data = pd.read_csv(chunk)
 
         return data
 
@@ -65,7 +64,7 @@ class Interface:
             self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
         else:
             chunk = self.__unload.exc(key_name=key_name)
-            data = pd.read_csv(io.BytesIO(chunk))
+            data = pd.read_csv(chunk)
 
         return data
 
@@ -80,8 +79,7 @@ class Interface:
             self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
         else:
             chunk = self.__unload.exc(key_name=key_name)
-            print(chunk)
-            data = pd.read_csv(io.BytesIO(chunk))
+            data = pd.read_csv(chunk)
 
         return data
 
