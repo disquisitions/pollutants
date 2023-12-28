@@ -74,6 +74,7 @@ class Stations:
         # Hence, structuring, and renaming the fields in line with field naming conventions and ontology standards.
         data: pd.DataFrame = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
+        self.__logger.info(data.head())
         self.__logger.info('Stations (Above)\n%s\n\n', data.info())
 
         return data, self.__metadata()
