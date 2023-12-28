@@ -38,7 +38,9 @@ class Service:
         self.__parameters: src.elements.parameters.Parameters = src.s3.parameters.Parameters().exc()
         self.__s3_resource: boto3.session.Session.resource = boto3.resource(
             service_name='s3', region_name=self.__parameters.region_name)
+        self.__s3_client: boto3.session.Session.client = boto3.client(
+            service_name='s3', region_name=self.__parameters.region_name)
 
         # Hence, the collection
         self.service = src.elements.service.Service(
-            parameters=self.__parameters, s3_resource=self.__s3_resource)
+            parameters=self.__parameters, s3_resource=self.__s3_resource, s3_client=self.__s3_client)
