@@ -52,4 +52,7 @@ if __name__ == '__main__':
     # Service
     service = src.s3.service.Service().service
 
+    # Restart?  The default state will be False
+    restart = True
+
     main()
