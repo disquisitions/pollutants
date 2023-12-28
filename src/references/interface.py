@@ -1,6 +1,5 @@
 """Module interface.py"""
 import logging
-import os.path
 
 import pandas as pd
 
