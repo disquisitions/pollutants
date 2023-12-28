@@ -6,7 +6,7 @@ import typing
 
 class Parameters(typing.NamedTuple):
     """
-    The data type class Parameters
+    The data type class -> Parameters
 
     :parameter:
       region_name: The Amazon Web Services region code
