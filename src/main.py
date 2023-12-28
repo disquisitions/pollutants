@@ -25,10 +25,7 @@ def main():
     logger.info(hazards)
 
     # Try
-    logger.info('Does the bucket <pollutants> exists? %s',
-                src.s3.bucket.Bucket(service=service, bucket_name='pollutants').exists())
-    logger.info('List of Buckets:\n%s',
-                src.s3.list.List(service=service).exc())
+    src.references.interface.Interface(service=service).exc()
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
@@ -48,8 +45,7 @@ if __name__ == '__main__':
     
     # Modules
     import src.functions.cache
-    import src.s3.bucket
-    import src.s3.list
+    import src.references.interface
     import src.s3.service
 
     # Service
