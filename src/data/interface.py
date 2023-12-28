@@ -7,7 +7,7 @@ import pandas as pd
 import src.data.points
 import src.elements.sequence
 import src.functions.directories
-import src.references.sequences
+import src.references.registry
 
 
 class Interface:
@@ -32,7 +32,7 @@ class Interface:
         :return:
         """
 
-        sequences = src.references.sequences.Sequences().exc()
+        sequences = src.references.registry.Registry().exc()
         instances: pd.DataFrame = sequences.loc[sequences['pollutant_id'].isin(self.__hazards), :]
         structures: list[dict] = instances.to_dict(orient='records')
 
