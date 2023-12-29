@@ -15,9 +15,11 @@ class Bucket:
 
     def __init__(self, service: sr.Service, parameters: pr.Parameters):
         """
+        Constructor
 
-        :param service: The service objects provides (a) overarching S3 parameters settings, e.g.,
-        region code name, etc., and (b) a S3 resource instance, which has Amazon S3 interactions settings.
+        :param service: The service objects are for Amazon S3 interactions.
+        :param parameters: The overarching S3 parameters settings of this project, e.g., region code
+                           name, bucket name, etc.
         """
 
         self.__parameters: pr.Parameters = parameters
@@ -26,12 +28,15 @@ class Bucket:
         # A bucket instance
         self.__bucket = self.__s3_resource.Bucket(name=self.__parameters.bucket_name)
 
-    def create(self):
+    def create(self) -> bool:
         """
         https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/create.html
 
         :return:
         """
+
+        if self.exists():
+            return True
 
         create_bucket_configuration = {
             'LocationConstraint': self.__parameters.location_constraint
@@ -40,6 +45,7 @@ class Bucket:
             self.__bucket.create(ACL=self.__parameters.access_control_list,
                                  CreateBucketConfiguration=create_bucket_configuration)
             self.__bucket.wait_until_exists()
+            return True or False
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
@@ -49,6 +55,9 @@ class Bucket:
 
         :return:
         """
+
+        if not self.exists():
+            return True
 
         try:
             state = self.__bucket.objects.delete()
@@ -67,11 +76,12 @@ class Bucket:
         :return:
         """
 
-        # Ensure the bucket is empty.
-        self.empty()
+        if not self.exists():
+            return True
 
-        # Subsequently, delete the bucket.
+        # Ensure the bucket is empty.  Subsequently, delete the bucket.
         try:
+            self.empty()
             self.__bucket.delete()
             self.__bucket.wait_until_not_exists()
             return True or False
