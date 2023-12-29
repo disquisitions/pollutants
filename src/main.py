@@ -29,6 +29,8 @@ def main():
         service=service, parameters=parameters, hazards=configurations.hazards).exc(restart=restart)
     logger.info('Sequences\n%s', sequences)
 
+    # src.data.interface.Interface(sequences=sequences, warehouse=configurations.warehouse).exc(datestr_=datestr_)
+
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
     
