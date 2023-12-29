@@ -1,5 +1,6 @@
 """Module substances.py"""
 import logging
+import typing
 
 import pandas as pd
 
@@ -82,10 +83,13 @@ class Substances:
             'recommended_unit_of_measure': 'The recommended unit of measure'
         }
 
-    def exc(self) -> (pd.DataFrame, dict):
+    def exc(self) -> typing.Tuple[pd.DataFrame, dict]:
         """
 
-        :return:
+        :return
+          data: A descriptive inventory of substances/pollutants.
+
+          metadata: The metadata of <data>; for a data catalogue.
         """
 
         # Reading-in the JSON data of substances
