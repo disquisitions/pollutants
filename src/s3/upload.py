@@ -7,8 +7,8 @@ import boto3
 import botocore.exceptions
 import pandas as pd
 
-import src.elements.parameters
-import src.elements.service
+import src.elements.parameters as pr
+import src.elements.service as sr
 
 
 class Upload:
@@ -21,13 +21,13 @@ class Upload:
           * https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/Object.html
     """
 
-    def __init__(self, service: src.elements.service.Service):
+    def __init__(self, service: sr.Service, parameters: pr.Parameters):
         """
 
         :param service:
         """
 
-        self.__parameters: src.elements.parameters.Parameters = service.parameters
+        self.__parameters: pr.Parameters = parameters
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
 
     def bytes(self, data: pd.DataFrame, metadata: dict, key_name: str) -> bool:
