@@ -1,5 +1,6 @@
 """Module stations.py"""
 import logging
+import typing
 import pandas as pd
 
 import src.elements.parameters
@@ -61,10 +62,13 @@ class Stations:
                 'longitude': 'The x geographic coordinate.',
                 'latitude': 'The y geographic coordinate.'}
 
-    def exc(self) -> (pd.DataFrame, dict):
+    def exc(self) -> typing.Tuple[pd.DataFrame, dict]:
         """
 
-        :return:
+        :return
+          data: A descriptive inventory of substances/pollutants.
+
+          metadata: The metadata of <data>; for a data catalogue.
         """
 
         # Reading-in the JSON data of telemetric device stations
