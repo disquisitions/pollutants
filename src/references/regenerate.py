@@ -24,7 +24,7 @@ class Regenerate:
         self.__parameters: pr.Parameters = parameters
 
         # S3 Upload Instance
-        self.__upload = src.s3.upload.Upload(service=self.__service)
+        self.__upload = src.s3.upload.Upload(service=self.__service, parameters=self.__parameters)
 
     def __registry(self) -> pd.DataFrame:
         """
