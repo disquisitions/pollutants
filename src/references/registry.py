@@ -1,5 +1,6 @@
 """Module sequences.py"""
 import logging
+import typing
 
 import pandas as pd
 
@@ -85,10 +86,13 @@ class Registry:
                 'station_id': 'The identification code of the station that hosts the telemetric device.',
                 'pollutant_id': 'The identification code of the pollutant the telemetric device measures.'}
 
-    def exc(self) -> (pd.DataFrame, dict):
+    def exc(self) -> typing.Tuple[pd.DataFrame, dict]:
         """
 
-        :return:
+        :return
+          data: A descriptive inventory of substances/pollutants.
+
+          metadata: The metadata of <data>; for a data catalogue.
         """
 
         # Reads-in the metadata
