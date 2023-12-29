@@ -1,19 +1,19 @@
 import io
 import boto3
 
-import src.elements.parameters
-import src.elements.service
+import src.elements.parameters as pr
+import src.elements.service as sr
 
 
 class Unload:
 
-    def __init__(self, service: src.elements.service.Service):
+    def __init__(self, service: sr.Service, parameters: pr.Parameters):
         """
 
         :param service:
         """
 
-        self.__parameters: src.elements.parameters.Parameters = service.parameters
+        self.__parameters: pr.Parameters = parameters
         self.__s3_resource = service.s3_resource
         self.__s3_client = service.s3_client
 
