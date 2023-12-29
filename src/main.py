@@ -17,16 +17,10 @@ def main():
 
     # Dates
     date = pd.Timestamp.today().date() - pd.Timedelta('1 day')
+    logger.info(str(date))
     values = pd.date_range(start=date - pd.Timedelta('28 days'), end=date, freq='D').to_list()
     datestr_ = [str(value.date()) for value in values]
     logger.info(datestr_)
-
-    # Pollutants - Sulphur Dioxide, Particulate Matter
-    hazards = [1, 5]
-    logger.info(hazards)
-
-    # Try
-    src.references.interface.Interface(service=service, restart=restart).exc()
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
@@ -45,16 +39,23 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
     
     # Modules
+    import src.setup
+    import config
     import src.functions.cache
     import src.references.interface
+    import src.s3.parameters
     import src.s3.service
 
-    # Service
-    service = src.s3.service.Service().service
-
-    # Restart?
-    #   * In production, False
-    #   * If the number of objects within references/ is != 3, True (Empty the project's S3 bucket)
+    # Upcoming arguments
     restart = False
+
+    # Parameters & Service
+    parameters = src.s3.parameters.Parameters().exc()
+    service = src.s3.service.Service(parameters=parameters).exc()
+
+    # Setting-up
+    configurations = config.Config()
+    restart = src.setup.Setup(service=service, parameters=parameters, warehouse=configurations.warehouse).exc(
+        restart=restart)
 
     main()
