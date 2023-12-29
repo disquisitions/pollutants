@@ -1,7 +1,6 @@
 """
 Module service.py
 """
-import logging
 
 import boto3
 
@@ -25,22 +24,29 @@ class Service:
             html#boto3.session.Session.resource
     """
 
-    def __init__(self):
+    def __init__(self, parameters: src.elements.parameters.Parameters):
         """
-        Constructor
+
+        :param parameters: The S3 parameters settings for this project
         """
+
+        self.__parameters: src.elements.parameters.Parameters = parameters
 
         # Profile/Auto-login
         profile = src.functions.profile.Profile().exc()
         boto3.setup_default_session(profile_name=profile)
 
-        # The parameters and the S3 resource
-        self.__parameters: src.elements.parameters.Parameters = src.s3.parameters.Parameters().exc()
+        # The S3 resource, client, etc.
         self.__s3_resource: boto3.session.Session.resource = boto3.resource(
             service_name='s3', region_name=self.__parameters.region_name)
         self.__s3_client: boto3.session.Session.client = boto3.client(
             service_name='s3', region_name=self.__parameters.region_name)
 
+    def exc(self) -> src.elements.service.Service:
+        """
+
+        :return:
+        """
+
         # Hence, the collection
-        self.service = src.elements.service.Service(
-            parameters=self.__parameters, s3_resource=self.__s3_resource, s3_client=self.__s3_client)
+        return src.elements.service.Service(s3_resource=self.__s3_resource, s3_client=self.__s3_client)
