@@ -1,3 +1,5 @@
+import typing
+
 import pandas as pd
 
 import src.elements.parameters as pr
@@ -36,13 +38,13 @@ class Read:
         except ImportError as err:
             raise Exception(err) from err
 
-    def exc(self) -> (pd.DataFrame, pd.DataFrame, pd.DataFrame):
+    def exc(self) -> typing.Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         """
 
         :return:
-            registry: pandas.DataFrame
-            stations: pandas.DataFrame
-            substances: pandas.DataFrame
+          registry: DataFrame
+          stations: DataFrame
+          substances: DataFrame
         """
 
         registry = self.__read(filename='registry.csv')
