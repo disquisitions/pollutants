@@ -14,28 +14,24 @@ class Interface:
     Class Interface
     """
 
-    def __init__(self, sequences: list[sq.Sequence]):
+    def __init__(self, sequences: list[sq.Sequence], warehouse: str):
         """
 
         :param sequences
+        :param warehouse
         """
 
         self.__sequences = sequences
-        self.__storage = os.path.join(os.getcwd(), 'warehouse', 'pollutants', 'points')
+        self.__storage = os.path.join(warehouse, 'pollutants', 'points')
+        src.data.depositories.Depositories(
+            sequences=self.__sequences, storage=self.__storage).exc()
 
-    def exc(self, datestr_: list[str], restart: bool):
+    def exc(self, datestr_: list[str]):
         """
 
         :param datestr_:
-        :param restart
         :return:
         """
-
-        if restart:
-            src.functions.directories.Directories().cleanup(self.__storage)
-
-        src.data.depositories.Depositories(
-            sequences=self.__sequences, storage=self.__storage).exc()
 
         # Retrieving data per date, but for several stations in parallel
         points = src.data.points.Points(sequences=self.__sequences, storage=self.__storage)
