@@ -5,6 +5,7 @@ import dask
 import pandas as pd
 
 import src.data.api
+import src.data.deposit
 import src.elements.parameters as pr
 import src.elements.service as sr
 import src.elements.sequence as sq
@@ -36,12 +37,8 @@ class Points:
         self.__api = src.data.api.API()
         self.__objects = src.functions.objects.Objects()
         self.__streams = src.functions.streams.Streams()
-        self.__upload = src.s3.upload.Upload(service=self.__service, parameters=self.__parameters)
-
-        self.__metadata = {'epoch_ms': 'The unix epoch time, in milliseconds, when the measure was recorded',
-                           'measure': 'The unit of measure of the pollutant under measure',
-                           'timestamp': 'The timestamp of the measure', 'date': 'The date the measure was recorded',
-                           'sequence_id': 'The identification code of the sequence this record is part of.'}
+        self.__deposit = src.data.deposit.Deposit(
+            service=self.__service, parameters=self.__parameters, storage=self.__storage)
 
     @dask.delayed
     def __url(self, sequence_id: int, datestr: str) -> str:
@@ -55,7 +52,7 @@ class Points:
         return self.__api.exc(sequence_id=sequence_id, datestr=datestr)
 
     @dask.delayed
-    def __read(self, url: str) -> dict:
+    def __reading(self, url: str) -> dict:
         """
 
         :param url:
@@ -68,7 +65,7 @@ class Points:
         return dictionary
 
     @dask.delayed
-    def __build(self, dictionary: dict, sequence_id: int) -> pd.DataFrame:
+    def __building(self, dictionary: dict, sequence_id: int) -> pd.DataFrame:
         """
 
         :param dictionary:
@@ -84,7 +81,7 @@ class Points:
         return data
 
     @dask.delayed
-    def __write(self, blob: pd.DataFrame, datestr: str, sequence: sq.Sequence) -> str:
+    def __depositing(self, blob: pd.DataFrame, datestr: str, sequence: sq.Sequence) -> str:
         """
 
         :param blob:
@@ -93,23 +90,7 @@ class Points:
         :return:
         """
 
-        basename = os.path.join(self.__storage, str(sequence.pollutant_id), str(sequence.station_id))
-
-        return self.__streams.write(blob=blob, path=os.path.join(basename, f'{datestr}.csv'))
-
-    def __deliver(self, blob: pd.DataFrame, datestr: str, sequence: sq.Sequence) -> bool:
-        """
-        
-        :param blob:
-        :param datestr:
-        :param sequence:
-        :return:
-        """
-
-        key_name = f'{self.__parameters.points_}/{str(sequence.pollutant_id)}/{str(sequence.station_id)}/{datestr}.csv'
-
-        return self.__upload.bytes(data=blob, metadata=self.__metadata, key_name=key_name)
-
+        return self.__deposit.exc(blob=blob, datestr=datestr, sequence=sequence)
 
     def exc(self, datestr: str):
         """
@@ -121,9 +102,9 @@ class Points:
         computations = []
         for sequence in self.__sequences:
             url = self.__url(sequence_id=sequence.sequence_id, datestr=datestr)
-            dictionary = self.__read(url=url)
-            data = self.__build(dictionary=dictionary, sequence_id=sequence.sequence_id)
-            message = self.__write(blob=data, datestr=datestr, station_id=sequence.station_id)
+            dictionary = self.__reading(url=url)
+            data = self.__building(dictionary=dictionary, sequence_id=sequence.sequence_id)
+            message = self.__depositing(blob=data, datestr=datestr, station_id=sequence.station_id)
             computations.append(message)
         messages = dask.compute(computations, scheduler='threads')[0]
 
