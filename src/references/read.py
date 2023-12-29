@@ -21,7 +21,7 @@ class Read:
         self.__parameters: pr.Parameters = parameters
 
         # S3 Unload Instance
-        self.__unload = src.s3.unload.Unload(service=self.__service)
+        self.__unload = src.s3.unload.Unload(service=self.__service, parameters=self.__parameters)
 
     def __read(self, filename: str) -> pd.DataFrame:
         """
