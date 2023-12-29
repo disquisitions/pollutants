@@ -18,16 +18,15 @@ def main():
     # Dates
     date = pd.Timestamp.today().date() - pd.Timedelta('1 day')
     if restart:
-        values = pd.date_range(start=date - pd.Timedelta('28 days'), end=date, freq='D').to_list()
+        values = pd.date_range(start=date - pd.Timedelta(configurations.span), end=date, freq='D').to_list()
         datestr_ = [str(value.date()) for value in values]
     else:
         datestr_ = [str(date)]
     logger.info('Dates\n%s', datestr_)
 
     # Sequences
-    sequences = src.references.interface.Interface(service=service, parameters=parameters, hazards=configurations.hazards).exc(
-        restart=restart
-    )
+    sequences = src.references.interface.Interface(
+        service=service, parameters=parameters, hazards=configurations.hazards).exc(restart=restart)
     logger.info('Sequences\n%s', sequences)
 
     # Deleting __pycache__
