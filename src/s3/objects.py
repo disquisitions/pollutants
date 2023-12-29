@@ -4,8 +4,8 @@ Module objects.py
 import logging
 import boto3
 
-import src.elements.parameters
-import src.elements.service
+import src.elements.parameters as pr
+import src.elements.service as sr
 
 
 class Objects:
@@ -15,12 +15,12 @@ class Objects:
     Will list all the S3 objects associated with this machine's active AWS CLI profile
     """
 
-    def __init__(self, service: src.elements.service.Service):
+    def __init__(self, service: sr.Service, parameters: pr.Parameters):
         """
         Constructor
         """
 
-        self.__parameters: src.elements.parameters.Parameters = service.parameters
+        self.__parameters: pr.Parameters = parameters
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
         self.__bucket = self.__s3_resource.Bucket(name=self.__parameters.bucket_name)
 
