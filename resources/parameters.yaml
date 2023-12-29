@@ -6,3 +6,4 @@ parameters:
   bucket_name: 'pollutants'
   points_: 'points/'
   references_: 'references/'
+  n_references: 3
