@@ -17,4 +17,5 @@ class Config:
         """
 
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
+        self.span = '5 days'
         self.hazards = [1, 5]
