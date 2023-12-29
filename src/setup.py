@@ -1,3 +1,4 @@
+import logging
 
 import src.elements.parameters as pr
 import src.elements.service as sr
@@ -30,6 +31,11 @@ class Setup:
         self.__objects = src.s3.objects.Objects(
             service=self.__service, parameters=self.__parameters)
 
+        # logging
+        logging.basicConfig(level=logging.INFO, format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
+                            datefmt='%Y-%m-%d %H:%M:%S')
+        self.__logger = logging.getLogger(__name__)
+
     def __setup(self, restart: bool) -> bool:
         """
 
@@ -38,6 +44,7 @@ class Setup:
         """
 
         n_references = self.__objects.filter(prefix=self.__parameters.references_)
+        self.__logger.info('The are %s reference documents within Amazon S3', n_references)
 
         # Ascertaining the states of depositories
         if not self.__bucket.exists():
