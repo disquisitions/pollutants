@@ -32,7 +32,7 @@ class Depositories:
         return self.__directories.create(
             path=os.path.join(self.__storage, str(sequence.pollutant_id), str(sequence.station_id)))
 
-    def exc(self):
+    def exc(self) -> list[str]:
         """
 
         :return:
@@ -42,3 +42,6 @@ class Depositories:
         for sequence in self.__sequences:
             message = self.__local(sequence=sequence)
             computation.append(message)
+        messages = dask.compute(computation, scheduler='threads')[0]
+
+        return messages
