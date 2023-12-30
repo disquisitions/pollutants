@@ -29,7 +29,8 @@ class Deposit:
 
         self.__metadata = {'epoch_ms': 'The unix epoch time, in milliseconds, when the measure was recorded',
                            'measure': 'The unit of measure of the pollutant under measure',
-                           'timestamp': 'The timestamp of the measure', 'date': 'The date the measure was recorded',
+                           'timestamp': 'The timestamp of the measure',
+                           'date': 'The date the measure was recorded',
                            'sequence_id': 'The identification code of the sequence this record is part of.'}
 
     def __local(self, blob: pd.DataFrame, datestr: str, sequence: sq.Sequence) -> str:
@@ -57,7 +58,7 @@ class Deposit:
             boolean -> Was the item uploaded?
         """
 
-        key_name = f'{self.__parameters.points_}/{str(sequence.pollutant_id)}/{str(sequence.station_id)}/{datestr}.csv'
+        key_name = f'{self.__parameters.points_}{str(sequence.pollutant_id)}/{str(sequence.station_id)}/{datestr}.csv'
 
         return self.__upload.bytes(data=blob, metadata=self.__metadata, key_name=key_name)
 
@@ -70,7 +71,10 @@ class Deposit:
         :return:
         """
 
-        local = self.__local(blob=blob, datestr=datestr, sequence=sequence)
-        s3 = self.__s3(blob=blob, datestr=datestr, sequence=sequence)
+        if blob.empty:
+            return f'{sequence.sequence_id} -> empty'
+        else:
+            local = self.__local(blob=blob, datestr=datestr, sequence=sequence)
+            s3 = self.__s3(blob=blob, datestr=datestr, sequence=sequence)
 
-        return f'{sequence.sequence_id} -> {local}|Uploaded: {s3}'
+            return f'{sequence.sequence_id} -> {local}|Uploaded: {s3}'
