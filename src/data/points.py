@@ -20,12 +20,12 @@ class Points:
     Retrieves telemetric device's data points by date
     """
 
-    def __init__(self, sequences: list[sq.Sequence], service: sr.Service, parameters: pr.Parameters, storage: str):
+    def __init__(self, service: sr.Service, parameters: pr.Parameters, sequences: list[sq.Sequence], storage: str):
         """
 
-        :param sequences:
         :param service:
         :param parameters:
+        :param sequences:
         :param storage:
         """
 
@@ -73,10 +73,13 @@ class Points:
         :return:
         """
 
-        data = pd.DataFrame(data=dictionary, columns=['epoch_ms', 'measure'])
-        data.loc[:, 'timestamp'] = pd.to_datetime(data.loc[:, 'epoch_ms'].array, unit='ms', origin='unix')
-        data.loc[:, 'date'] = data.loc[:, 'timestamp'].dt.date.array
-        data.loc[: 'sequence_id'] = sequence_id
+        if not bool(dictionary):
+            data = pd.DataFrame()
+        else:
+            data = pd.DataFrame(data=dictionary, columns=['epoch_ms', 'measure'])
+            data.loc[:, 'timestamp'] = pd.to_datetime(data.loc[:, 'epoch_ms'].array, unit='ms', origin='unix')
+            data.loc[:, 'date'] = data.loc[:, 'timestamp'].dt.date.array
+            data.loc[:, 'sequence_id'] = sequence_id
 
         return data
 
@@ -104,7 +107,7 @@ class Points:
             url = self.__url(sequence_id=sequence.sequence_id, datestr=datestr)
             dictionary = self.__reading(url=url)
             data = self.__building(dictionary=dictionary, sequence_id=sequence.sequence_id)
-            message = self.__depositing(blob=data, datestr=datestr, station_id=sequence.station_id)
+            message = self.__depositing(blob=data, datestr=datestr, sequence=sequence)
             computations.append(message)
         messages = dask.compute(computations, scheduler='threads')[0]
 
