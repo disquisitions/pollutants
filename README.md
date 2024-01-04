@@ -4,6 +4,20 @@
 
 <br>
 
+
+
+## Upcoming
+
+Automate:
+
+* From local machine to GitHub to Amazon Elastic Container Registry (Via GitHub Actions) .  This requires a few more settings 
+  * [OpenID](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
+  * [News of Changes](https://github.com/marketplace/actions/configure-aws-credentials-action-for-github-actions#oidc)
+  * [Cf. old approach](https://towardsaws.com/build-push-docker-image-to-aws-ecr-using-github-actions-8396888a8f9e), and 
+   the approach used for the planets project.
+  * [Cf. a rather different approach](https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/build-and-push-docker-images-to-amazon-ecr-using-github-actions-and-terraform.html),  which is infeasible because Terraform is not an open source product anymore.
+
+
 ## Remote & Local Environments
 
 <br>
