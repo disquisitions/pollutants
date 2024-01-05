@@ -4,6 +4,7 @@ import os
 
 import src.data.depositories
 import src.data.points
+import src.elements.profile as po
 import src.elements.parameters as pr
 import src.elements.sequence as sq
 import src.functions.directories
@@ -17,12 +18,12 @@ class Interface:
     """
 
     def __init__(self, parameters: pr.Parameters, sequences: list[sq.Sequence],
-                 profile: str, warehouse: str, restart: bool):
+                 profile: po.Profile, warehouse: str, restart: bool):
         """
 
         :param parameters: The S3 parameters settings for this project
         :param sequences: Each list item is the detail of a sequence, in collection form.
-        :param profile: The developer's Amazon Web Services Profile
+        :param profile: The developer's Amazon Web Services profile details
         :param warehouse: The local warehouse, for outputs
         :param restart: Restart?  If yes, it means all previous cloud data
                         will be, has been, deleted during this run.
