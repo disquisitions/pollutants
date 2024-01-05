@@ -1,6 +1,7 @@
 import subprocess
 import platform
 
+
 class Sync:
 
     def __init__(self, restart: bool):
@@ -19,6 +20,11 @@ class Sync:
 
         :return:
         """
+
+        # {} source
+        # s3://{} destination
+        # profile
+        subprocess.run('aws s3 syn {} s3://{} --profile {}')
 
 
 
