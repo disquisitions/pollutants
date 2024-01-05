@@ -32,7 +32,7 @@ class Sync:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def exc(self, source: str, destination: str, metadata: dict):
+    def exc(self, source: str, destination: str, metadata: str):
         """
 
         :param source: The local directory
@@ -46,16 +46,7 @@ class Sync:
         else:
             action = 'cp'
 
-        cheat = '"epoch_ms"="The milliseconds unix epoch time when the measure was recorded",' + \
-                '"measure"="The unit of measure of the pollutant under measure",' + \
-                '"timestamp"="The timestamp of the measure",' + \
-                '"date"="The date the measure was recorded",' + \
-                '"sequence_id"="The identification code of the sequence this record is part of."'
-
-        self.__logger.info(f"""aws s3 {action} {source} {destination} """ +
-                           f"""--metadata '{json.dumps(metadata)}' --profile {self.__profile}""")
-
         message = subprocess.run(f"""aws s3 {action} {source} {destination} """ +
-                                 f"""--metadata {cheat} --profile {self.__profile}""",
+                                 f"""--metadata {metadata} --profile {self.__profile}""",
                                  shell=self.__shell, capture_output=True)
         self.__logger.info(message)
