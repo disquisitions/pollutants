@@ -28,8 +28,8 @@ def main():
     sequences = src.references.interface.Interface(service=service, parameters=parameters,
                                                    hazards=configurations.hazards).exc(restart=restart)
 
-    src.data.interface.Interface(parameters=parameters, sequences=sequences,
-        profile=profile, warehouse=configurations.warehouse, restart=restart).exc(datestr_=datestr_)
+    src.data.interface.Interface(parameters=parameters, sequences=sequences, profile=profile,
+                                 warehouse=configurations.warehouse, restart=restart).exc(datestr_=datestr_)
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
@@ -50,6 +50,7 @@ if __name__ == '__main__':
     # Modules
     import config
     import src.data.interface
+    import src.elements.profile
     import src.functions.cache
     import src.functions.profile
     import src.references.interface
@@ -62,7 +63,7 @@ if __name__ == '__main__':
 
     # Parameters & Service
     parameters = src.s3.parameters.Parameters().exc()
-    profile = src.functions.profile.Profile().exc()
+    profile: src.elements.profile.Profile = src.functions.profile.Profile().exc()
     service = src.s3.service.Service(parameters=parameters, profile=profile).exc()
 
     # Setting-up
