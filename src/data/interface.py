@@ -62,7 +62,7 @@ class Interface:
         """
 
         self.__sync.exc(source=self.__storage,
-                        destination=f's3://{self.__parameters.bucket_name}',
+                        destination=f's3://{self.__parameters.bucket_name}/{self.__parameters.points_}',
                         metadata=self.__metadata())
 
     def exc(self, datestr_: list[str]):
