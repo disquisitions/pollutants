@@ -6,7 +6,6 @@ import src.data.depositories
 import src.data.points
 import src.elements.parameters as pr
 import src.elements.sequence as sq
-import src.elements.service as sr
 import src.functions.directories
 import src.references.registry
 import src.s3.sync
@@ -17,19 +16,18 @@ class Interface:
     Class Interface
     """
 
-    def __init__(self, service: sr.Service, parameters: pr.Parameters, sequences: list[sq.Sequence],
+    def __init__(self, parameters: pr.Parameters, sequences: list[sq.Sequence],
                  profile: str, warehouse: str, restart: bool):
         """
 
-        :param service:
-        :param parameters:
-        :param sequences:
-        :param profile
-        :param warehouse:
-        :param restart:
+        :param parameters: The S3 parameters settings for this project
+        :param sequences: Each list item is the detail of a sequence, in collection form.
+        :param profile: The developer's Amazon Web Services Profile
+        :param warehouse: The local warehouse, for outputs
+        :param restart: Restart?  If yes, it means all previous cloud data
+                        will be, has been, deleted during this run.
         """
 
-        self.__service = service
         self.__parameters = parameters
         self.__sequences = sequences
 
@@ -44,7 +42,7 @@ class Interface:
     def __metadata() -> str:
         """
 
-        :return: The metadata of the points
+        :return: The metadata of the data points being transferred to Amazon S3
         """
 
         metadata = '"epoch_ms"="The milliseconds unix epoch time  when the measure was recorded",' + \
@@ -57,6 +55,7 @@ class Interface:
 
     def __s3(self):
         """
+        Bulk transfer of files to Amazon S3
 
         :return:
         """
@@ -68,13 +67,12 @@ class Interface:
     def exc(self, datestr_: list[str]):
         """
 
-        :param datestr_:
+        :param datestr_: Data is extracted, from Scottish Air Quality, for each date in the list <datestr_>
         :return:
         """
 
         # Retrieving data per date, but for several stations & pollutants in parallel
-        points = src.data.points.Points(
-            service=self.__service, parameters=self.__parameters, sequences=self.__sequences, storage=self.__storage)
+        points = src.data.points.Points(sequences=self.__sequences, storage=self.__storage)
         for datestr in datestr_:
             messages = points.exc(datestr=datestr)
             logging.log(level=logging.INFO, msg=messages)
