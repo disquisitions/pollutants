@@ -44,7 +44,7 @@ class Deposit:
                        {file stem}: empty
         """
 
-        basename = os.path.join(self.__storage, str(sequence.pollutant_id), str(sequence.station_id))
+        basename = os.path.join(self.__storage, f'pollutant_{sequence.pollutant_id}', f'station_{sequence.station_id}')
 
         return self.__streams.write(blob=blob, path=os.path.join(basename, f'{datestr}.csv'))
 
@@ -58,7 +58,7 @@ class Deposit:
             boolean -> Was the item uploaded?
         """
 
-        key_name = f'{self.__parameters.points_}{str(sequence.pollutant_id)}/{str(sequence.station_id)}/{datestr}.csv'
+        key_name = f'{self.__parameters.points_}pollutant_{sequence.pollutant_id}/station_{sequence.station_id}/{datestr}.csv'
 
         return self.__upload.bytes(data=blob, metadata=self.__metadata, key_name=key_name)
 
