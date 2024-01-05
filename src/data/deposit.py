@@ -75,6 +75,5 @@ class Deposit:
             return f'{sequence.sequence_id} -> empty'
         else:
             local = self.__local(blob=blob, datestr=datestr, sequence=sequence)
-            s3 = self.__s3(blob=blob, datestr=datestr, sequence=sequence)
 
-            return f'{sequence.sequence_id} -> {local}|Uploaded: {s3}'
+            return f'{sequence.sequence_id} -> {local}'
