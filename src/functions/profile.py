@@ -2,6 +2,8 @@
 import os
 import yaml
 
+import src.elements.profile
+
 
 class Profile:
     """
@@ -15,7 +17,7 @@ class Profile:
 
         self.__uri = os.path.join(os.getcwd(), 'resources', 'profile.yaml')
 
-    def __get_name(self) -> dict:
+    def __get_dictionary(self) -> dict:
         """
 
         :return:
@@ -27,14 +29,14 @@ class Profile:
             except yaml.YAMLError as err:
                 raise Exception(err) from err
 
-        return blob['profile']['name']
+        return blob['profile']
 
-    def exc(self) -> str:
+    def exc(self) -> src.elements.profile.Profile:
         """
 
         :return:
         """
 
-        name = self.__get_name()
+        dictionary = self.__get_dictionary()
 
-        return str(name)
+        return src.elements.profile.Profile(**dictionary)

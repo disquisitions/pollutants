@@ -1,5 +1,6 @@
 """Module substances.py"""
 import logging
+import typing
 
 import pandas as pd
 
@@ -65,10 +66,30 @@ class Substances:
 
         return data
 
-    def exc(self) -> pd.DataFrame:
+    @staticmethod
+    def __metadata() -> dict:
         """
 
         :return:
+        """
+
+        return {
+            'pollutant_id': 'The identification code of a pollutant.',
+            'uri': 'The European Environment Information and Observation Network (EIONET) page of a pollutant',
+            'substance': 'The name, and more, of the pollutant.',
+            'notation': 'The chemical formula of the pollutant.',
+            'status': 'Denotes whether a substance is still a valid pollutant.',
+            'accepted_date': 'Probably the date the substance was accepted as a pollutant.',
+            'recommended_unit_of_measure': 'The recommended unit of measure'
+        }
+
+    def exc(self) -> typing.Tuple[pd.DataFrame, dict]:
+        """
+
+        :return
+          data: A descriptive inventory of substances/pollutants.
+
+          metadata: The metadata of <data>; for a data catalogue.
         """
 
         # Reading-in the JSON data of substances
@@ -82,6 +103,5 @@ class Substances:
         data.rename(columns=self.__rename, inplace=True)
         data = self.__casting(blob=data)
         data = self.__extra_fields(blob=data)
-        self.__logger.info('Substances (Above)\n%s\n\n', data.info())
 
-        return data
+        return data, self.__metadata()

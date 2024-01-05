@@ -4,9 +4,27 @@
 
 <br>
 
-## Remote & Local Environments
+## Upcoming
+
+Automation:
+
+* From local machine to GitHub to Amazon Elastic Container Registry (Via GitHub Actions) .  This requires a few more settings 
+  * [OpenID](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
+  * [News of Changes](https://github.com/marketplace/actions/configure-aws-credentials-action-for-github-actions#oidc)
+  * [Cf. old approach](https://towardsaws.com/build-push-docker-image-to-aws-ecr-using-github-actions-8396888a8f9e), and 
+   the approach used for the planets project.
+  * [Cf. a rather different approach](https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/build-and-push-docker-images-to-amazon-ecr-using-github-actions-and-terraform.html),  which is infeasible because Terraform is not an open source product anymore.
+* Amazon Glue & Data Catalogues
+* Code Analysis & GitHub Actions
+
+Usage Notes:
+
+* Explanatory usage notes
+* Resources files
 
 <br>
+
+## Remote & Local Environments
 
 ### Remote
 
@@ -39,88 +57,21 @@ A developer may attach an IDE (independent development environment) application 
 Similarly, Visual Studio Code as its container attachment instructions; study [Attach Container](https://code.visualstudio.com/docs/devcontainers/attach-container).
 
 
-
-<br>
-
 ### Local
 
-Building development environments.  Beforehand update the `base` **`conda`** environment
+Beforehand update the `base` **`conda`** environment
 
 ```shell
 conda update -n base -c anaconda conda
 ```
 
-An environment might be built via **environment.yml**
+The local virtual environment can be built via **environment.yml**
 
 ```shell
 conda env create --file environment.yml -p /opt/miniconda3/envs/pollutants
 ```
 
-or via **requirements.txt**
-
-```shell
-prefix=/opt/miniconda3/envs/pollutants
-conda create -y --prefix $prefix python==3.11.7
-conda install -y --prefix $prefix -c anaconda --file requirements.txt
-```
-
-In this case, it is quite possible that one or more packages are only available via `pip`, hence the directives
-
-```shell
-conda activate pollutants
-pip install ... --no-cache-dir
-conda deactivate
-```
-
-might be necessary.
-
-<br>
-
-## Development
-
-The directive
-
-```shell
-pylint --generate-rcfile > .pylintrc
-```
-
-generates the dotfile `.pylintrc` of the static code analyser [pylint](https://pylint.pycqa.org/en/latest/user_guide/checkers/features.html).  Subsequently, analyse via
-
-```shell
-python -m pylint --rcfile .pylintrc ...
-```
-
-
-<br>
-
-## References
-
-* [Docker Official Images: Python](https://hub.docker.com/_/python/)
-* [Image Comparisons](https://pythonspeed.com/articles/base-image-python-docker-images/)
-* [`man` reference](https://linux.die.net)
-* [NumFocus Sponsored Projects](https://numfocus.org/sponsored-projects)
-  * [pandas](https://pandas.pydata.org)
-* Amazon Web Services
-  * [Get started with Amazon S3 buckets and objects using an AWS SDK](https://docs.aws.amazon.com/AmazonS3/latest/userguide/example_s3_Scenario_GettingStarted_section.html)
-  * [Getting IAM Identity Center user credentials for the AWS CLI or AWS SDKs](https://docs.aws.amazon.com/singlesignon/latest/userguide/howtogetcredentials.html)
-  * [AWS SDKs and Tools Reference Guide](https://docs.aws.amazon.com/sdkref/latest/guide/overview.html)
-  * [AWS security credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/security-creds.html)
-  * [Using temporary credentials with AWS resources](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html)
-  * [Using temporary security credentials with the AWS SDKs](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html#using-temp-creds-sdk)
-  * [Switching to an IAM role (AWS API)](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-api.html)
-
-  * [AWS managed policies](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/policy-list.html)
-  * [Regional and Zonal Endpoints](https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html)
-  * [Configuring Tokens](https://docs.aws.amazon.com/cli/latest/userguide/sso-configure-profile-token.html#sso-configure-profile-token-auto-sso)
-
-<br>
-
-## Special
-
-| focus          | resource                                                                                                            | client                                                                                                                      |
-|:---------------|:--------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------|
-| create         | [create](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/create.html)          | [create](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/create_bucket.html)           |
-| delete objects | [delete objects](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/objects.html) | [delete objects](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/delete_objects.html#) |
+which uses the same **requirements.txt** as Dockerfile.
 
 <br>
 <br>

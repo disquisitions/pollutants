@@ -1,11 +1,12 @@
-"""Module points"""
+"""Module points.py"""
 import os
 
 import dask
 import pandas as pd
 
 import src.data.api
-import src.elements.sequence
+import src.data.deposit
+import src.elements.sequence as sq
 import src.functions.objects
 import src.functions.streams
 
@@ -13,10 +14,11 @@ import src.functions.streams
 class Points:
     """
     Class Points
-    Retrieves telemetric device's data points by date
+
+    Retrieves telemetric device's data points by date, structures the data sets, and saves them.
     """
 
-    def __init__(self, sequences: list[src.elements.sequence.Sequence], storage: str):
+    def __init__(self, sequences: list[sq.Sequence], storage: str):
         """
 
         :param sequences:
@@ -42,7 +44,7 @@ class Points:
         return self.__api.exc(sequence_id=sequence_id, datestr=datestr)
 
     @dask.delayed
-    def __read(self, url: str) -> dict:
+    def __reading(self, url: str) -> dict:
         """
 
         :param url:
@@ -55,21 +57,26 @@ class Points:
         return dictionary
 
     @dask.delayed
-    def __build(self, dictionary: dict) -> pd.DataFrame:
+    def __building(self, dictionary: dict, sequence_id: int) -> pd.DataFrame:
         """
 
         :param dictionary:
+        :param sequence_id:
         :return:
         """
 
-        data = pd.DataFrame(data=dictionary, columns=['epoch_ms', 'measure'])
-        data.loc[:, 'timestamp'] = pd.to_datetime(data.loc[:, 'epoch_ms'].array, unit='ms', origin='unix')
-        data.loc[:, 'date'] = data.loc[:, 'timestamp'].dt.date.array
+        if not bool(dictionary):
+            data = pd.DataFrame()
+        else:
+            data = pd.DataFrame(data=dictionary, columns=['epoch_ms', 'measure'])
+            data.loc[:, 'timestamp'] = pd.to_datetime(data.loc[:, 'epoch_ms'].array, unit='ms', origin='unix')
+            data.loc[:, 'date'] = data.loc[:, 'timestamp'].dt.date.array
+            data.loc[:, 'sequence_id'] = sequence_id
 
         return data
 
     @dask.delayed
-    def __write(self, blob: pd.DataFrame, datestr: str, sequence: src.elements.sequence.Sequence) -> str:
+    def __depositing(self, blob: pd.DataFrame, datestr: str, sequence: sq.Sequence) -> str:
         """
 
         :param blob:
@@ -78,9 +85,11 @@ class Points:
         :return:
         """
 
-        basename = os.path.join(self.__storage, str(sequence.pollutant_id), str(sequence.station_id))
-
-        return self.__streams.write(blob=blob, path=os.path.join(basename, f'{datestr}.csv'))
+        if blob.empty:
+            return f'{sequence.sequence_id} -> empty'
+        else:
+            basename = os.path.join(self.__storage, f'pollutant_{sequence.pollutant_id}', f'station_{sequence.station_id}')
+            return self.__streams.write(blob=blob, path=os.path.join(basename, f'{datestr}.csv'))
 
     def exc(self, datestr: str):
         """
@@ -92,9 +101,9 @@ class Points:
         computations = []
         for sequence in self.__sequences:
             url = self.__url(sequence_id=sequence.sequence_id, datestr=datestr)
-            dictionary = self.__read(url=url)
-            data = self.__build(dictionary=dictionary)
-            message = self.__write(blob=data, datestr=datestr, station_id=sequence.station_id)
+            dictionary = self.__reading(url=url)
+            data = self.__building(dictionary=dictionary, sequence_id=sequence.sequence_id)
+            message = self.__depositing(blob=data, datestr=datestr, sequence=sequence)
             computations.append(message)
         messages = dask.compute(computations, scheduler='threads')[0]
 

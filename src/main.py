@@ -17,16 +17,19 @@ def main():
 
     # Dates
     date = pd.Timestamp.today().date() - pd.Timedelta('1 day')
-    values = pd.date_range(start=date - pd.Timedelta('28 days'), end=date, freq='D').to_list()
-    datestr_ = [str(value.date()) for value in values]
-    logger.info(datestr_)
+    if restart:
+        values = pd.date_range(start=date - pd.Timedelta(configurations.span), end=date, freq='D').to_list()
+        datestr_ = [str(value.date()) for value in values]
+    else:
+        datestr_ = [str(date)]
+    logger.info('Dates\n%s', datestr_)
 
-    # Pollutants - Sulphur Dioxide, Particulate Matter
-    hazards = [1, 5]
-    logger.info(hazards)
+    # Sequences
+    sequences = src.references.interface.Interface(service=service, parameters=parameters,
+                                                   hazards=configurations.hazards).exc(restart=restart)
 
-    # Try
-    src.references.interface.Interface(service=service).exc()
+    src.data.interface.Interface(parameters=parameters, sequences=sequences, profile=profile,
+                                 warehouse=configurations.warehouse, restart=restart).exc(datestr_=datestr_)
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
@@ -45,11 +48,27 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
     
     # Modules
+    import config
+    import src.data.interface
+    import src.elements.profile
     import src.functions.cache
+    import src.functions.profile
     import src.references.interface
+    import src.s3.parameters
     import src.s3.service
+    import src.setup
 
-    # Service
-    service = src.s3.service.Service().service
+    # Upcoming arguments
+    restart = True
+
+    # Parameters & Service
+    parameters = src.s3.parameters.Parameters().exc()
+    profile: src.elements.profile.Profile = src.functions.profile.Profile().exc()
+    service = src.s3.service.Service(parameters=parameters, profile=profile).exc()
+
+    # Setting-up
+    configurations = config.Config()
+    restart = src.setup.Setup(service=service, parameters=parameters, warehouse=configurations.warehouse).exc(
+        restart=restart)
 
     main()

@@ -1,14 +1,13 @@
 """
 Module service.py
 """
-import logging
 
 import boto3
 
-import src.elements.parameters
-import src.elements.service
+import src.elements.profile as po
+import src.elements.parameters as pr
+import src.elements.service as sr
 import src.s3.parameters
-import src.functions.profile
 
 
 class Service:
@@ -25,19 +24,29 @@ class Service:
             html#boto3.session.Session.resource
     """
 
-    def __init__(self):
+    def __init__(self, parameters: pr.Parameters, profile: po.Profile):
         """
-        Constructor
+
+        :param parameters: The S3 parameters settings for this project
+        :param profile: The developer's Amazon Web Services Profile
         """
+
+        self.__parameters: pr.Parameters = parameters
 
         # Profile/Auto-login
-        profile = src.functions.profile.Profile().exc()
-        boto3.setup_default_session(profile_name=profile)
+        boto3.setup_default_session(profile_name=profile.name)
 
-        # The parameters and the S3 resource
-        self.__parameters: src.elements.parameters.Parameters = src.s3.parameters.Parameters().exc()
-        self.__s3_resource: boto3.session.Session.resource = boto3.resource(service_name='s3', region_name=self.__parameters.region_name)
+        # The S3 resource, client, etc.
+        self.__s3_resource: boto3.session.Session.resource = boto3.resource(
+            service_name='s3', region_name=self.__parameters.region_name)
+        self.__s3_client: boto3.session.Session.client = boto3.client(
+            service_name='s3', region_name=self.__parameters.region_name)
+
+    def exc(self) -> src.elements.service.Service:
+        """
+
+        :return:
+        """
 
         # Hence, the collection
-        self.service = src.elements.service.Service(
-            parameters=self.__parameters, s3_resource=self.__s3_resource)
+        return src.elements.service.Service(s3_resource=self.__s3_resource, s3_client=self.__s3_client)

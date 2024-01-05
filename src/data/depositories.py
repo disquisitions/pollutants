@@ -2,48 +2,46 @@
 import os
 import dask
 
-import src.elements.sequence
+import src.elements.sequence as sq
 import src.functions.directories
 
 
 class Depositories:
 
-    def __init__(self, storage: str):
+    def __init__(self, sequences: list[sq.Sequence], storage: str):
         """
 
+        :param sequences:
+        :param storage:
         """
 
+        self.__sequences = sequences
         self.__storage = storage
+
+        # Instances
         self.__directories = src.functions.directories.Directories()
 
-    def __s3(self):
-        """
-
-        :return:
-        """
-
     @dask.delayed
-    def __local(self, sequence: src.elements.sequence.Sequence) -> bool:
+    def __local(self, sequence: sq.Sequence) -> bool:
         """
 
+        :param sequence:
         :return:
         """
 
         return self.__directories.create(
-            path=os.path.join(self.__storage, str(sequence.pollutant_id), str(sequence.station_id)))
+            path=os.path.join(self.__storage, f'pollutant_{sequence.pollutant_id}', f'station_{sequence.station_id}'))
 
-    def exc(self, sequences: list[src.elements.sequence.Sequence], restart: bool):
+    def exc(self) -> list[str]:
         """
 
-        :param sequences:
-        :param restart:
         :return:
         """
 
-        if restart:
-            self.__directories.cleanup(self.__storage)
-
         computation = []
-        for sequence in sequences:
+        for sequence in self.__sequences:
             message = self.__local(sequence=sequence)
             computation.append(message)
+        messages = dask.compute(computation, scheduler='threads')[0]
+
+        return messages

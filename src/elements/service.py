@@ -11,8 +11,8 @@ import src.elements.parameters
 
 class Service(typing.NamedTuple):
     """
-    The data type class Interface
+    The data type class -> Service
     """
 
-    parameters: src.elements.parameters
-    s3_resource: boto3.resource
+    s3_resource: boto3.session.Session.resource
+    s3_client: boto3.session.Session.client

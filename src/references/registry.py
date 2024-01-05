@@ -1,14 +1,15 @@
 """Module sequences.py"""
 import logging
+import typing
 
 import pandas as pd
 
 import src.functions.objects
 
 
-class Sequences:
+class Registry:
     """
-    Class Sequences
+    Class Registry
     Reads-in the metadata of each telemetric device's data
     """
 
@@ -73,10 +74,25 @@ class Sequences:
 
         return data
 
-    def exc(self) -> pd.DataFrame:
+    @staticmethod
+    def __metadata() -> dict:
         """
 
         :return:
+        """
+
+        return {'sequence_id': 'The identification code of the sequence the telemetric device records.',
+                'unit_of_measure': 'The unit of measure of the recordings',
+                'station_id': 'The identification code of the station that hosts the telemetric device.',
+                'pollutant_id': 'The identification code of the pollutant the telemetric device measures.'}
+
+    def exc(self) -> typing.Tuple[pd.DataFrame, dict]:
+        """
+
+        :return
+          data: A descriptive inventory of substances/pollutants.
+
+          metadata: The metadata of <data>; for a data catalogue.
         """
 
         # Reads-in the metadata
@@ -89,6 +105,5 @@ class Sequences:
         data.rename(columns=self.__rename, inplace=True)
         data = data.copy().astype(dtype=self.__dtype)
         data = self.__feature_engineering(blob=data)
-        self.__logger.info('Sequences (Above)\n%s\n\n', data.info())
 
-        return data
+        return data, self.__metadata()
