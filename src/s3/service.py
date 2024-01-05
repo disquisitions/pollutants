@@ -6,7 +6,6 @@ import boto3
 
 import src.elements.parameters
 import src.elements.service
-import src.functions.profile
 import src.s3.parameters
 
 
@@ -24,16 +23,16 @@ class Service:
             html#boto3.session.Session.resource
     """
 
-    def __init__(self, parameters: src.elements.parameters.Parameters):
+    def __init__(self, parameters: src.elements.parameters.Parameters, profile: str):
         """
 
         :param parameters: The S3 parameters settings for this project
+        :param profile: The developer's Amazon Web Services Profile
         """
 
         self.__parameters: src.elements.parameters.Parameters = parameters
 
         # Profile/Auto-login
-        profile = src.functions.profile.Profile().exc()
         boto3.setup_default_session(profile_name=profile)
 
         # The S3 resource, client, etc.
