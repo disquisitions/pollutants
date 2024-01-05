@@ -51,6 +51,7 @@ if __name__ == '__main__':
     import config
     import src.data.interface
     import src.functions.cache
+    import src.functions.profile
     import src.references.interface
     import src.s3.parameters
     import src.s3.service
@@ -61,7 +62,8 @@ if __name__ == '__main__':
 
     # Parameters & Service
     parameters = src.s3.parameters.Parameters().exc()
-    service = src.s3.service.Service(parameters=parameters).exc()
+    profile = src.functions.profile.Profile().exc()
+    service = src.s3.service.Service(parameters=parameters, profile=profile).exc()
 
     # Setting-up
     configurations = config.Config()
