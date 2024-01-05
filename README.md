@@ -10,9 +10,6 @@
 
 Automate:
 
-* subprocess.run()
-  * Use system commands to securely transfer files to Amazon S3; via `aws s3 sync` or `aws s3 cp`, depending on the context.
-
 * From local machine to GitHub to Amazon Elastic Container Registry (Via GitHub Actions) .  This requires a few more settings 
   * [OpenID](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
   * [News of Changes](https://github.com/marketplace/actions/configure-aws-credentials-action-for-github-actions#oidc)
