@@ -20,10 +20,9 @@ Automate:
    the approach used for the planets project.
   * [Cf. a rather different approach](https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/build-and-push-docker-images-to-amazon-ecr-using-github-actions-and-terraform.html),  which is infeasible because Terraform is not an open source product anymore.
 
+<br>
 
 ## Remote & Local Environments
-
-<br>
 
 ### Remote
 
