@@ -19,7 +19,7 @@ class Config:
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
 
         # After the development phase, '732 days', i.e., 2 years.
-        self.span = '5 days'
+        self.span = '2 days'
 
         # 1 Sulphur Dioxide
         # 5 Particulate matter < 10 µm (aerosol)
