@@ -1,4 +1,4 @@
-"""Module points"""
+"""Module points.py"""
 import os
 
 import dask
@@ -6,39 +6,31 @@ import pandas as pd
 
 import src.data.api
 import src.data.deposit
-import src.elements.parameters as pr
-import src.elements.service as sr
 import src.elements.sequence as sq
 import src.functions.objects
 import src.functions.streams
-import src.s3.upload
 
 
 class Points:
     """
     Class Points
-    Retrieves telemetric device's data points by date
+
+    Retrieves telemetric device's data points by date, structures the data sets, and saves them.
     """
 
-    def __init__(self, service: sr.Service, parameters: pr.Parameters, sequences: list[sq.Sequence], storage: str):
+    def __init__(self, sequences: list[sq.Sequence], storage: str):
         """
 
-        :param service:
-        :param parameters:
         :param sequences:
         :param storage:
         """
 
         self.__sequences = sequences
-        self.__service = service
-        self.__parameters = parameters
         self.__storage = storage
 
         self.__api = src.data.api.API()
         self.__objects = src.functions.objects.Objects()
         self.__streams = src.functions.streams.Streams()
-        self.__deposit = src.data.deposit.Deposit(
-            service=self.__service, parameters=self.__parameters, storage=self.__storage)
 
     @dask.delayed
     def __url(self, sequence_id: int, datestr: str) -> str:
@@ -93,7 +85,11 @@ class Points:
         :return:
         """
 
-        return self.__deposit.exc(blob=blob, datestr=datestr, sequence=sequence)
+        if blob.empty:
+            return f'{sequence.sequence_id} -> empty'
+        else:
+            basename = os.path.join(self.__storage, f'pollutant_{sequence.pollutant_id}', f'station_{sequence.station_id}')
+            return self.__streams.write(blob=blob, path=os.path.join(basename, f'{datestr}.csv'))
 
     def exc(self, datestr: str):
         """
