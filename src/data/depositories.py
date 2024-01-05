@@ -30,7 +30,7 @@ class Depositories:
         """
 
         return self.__directories.create(
-            path=os.path.join(self.__storage, str(sequence.pollutant_id), str(sequence.station_id)))
+            path=os.path.join(self.__storage, f'pollutant_{sequence.pollutant_id}', f'station_{sequence.station_id}'))
 
     def exc(self) -> list[str]:
         """
