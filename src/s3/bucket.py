@@ -61,8 +61,7 @@ class Bucket:
 
         try:
             state = self.__bucket.objects.delete()
-            if state[0]['ResponseMetadata']['HTTPStatusCode'] == 200:
-                return True or False
+            return True if not state else False
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
