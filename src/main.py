@@ -28,8 +28,7 @@ def main():
     sequences = src.references.interface.Interface(service=service, parameters=parameters,
                                                    hazards=configurations.hazards).exc(restart=restart)
 
-    src.data.interface.Interface(
-        service=service, parameters=parameters, sequences=sequences,
+    src.data.interface.Interface(parameters=parameters, sequences=sequences,
         profile=profile, warehouse=configurations.warehouse, restart=restart).exc(datestr_=datestr_)
 
     # Deleting __pycache__
