@@ -25,11 +25,11 @@ def main():
     logger.info('Dates\n%s', datestr_)
 
     # Sequences
-    # sequences = src.references.interface.Interface(service=service, parameters=parameters,
-    #                                                hazards=configurations.hazards).exc(restart=restart)
+    sequences = src.references.interface.Interface(service=service, parameters=parameters,
+                                                   hazards=configurations.hazards).exc(restart=restart)
 
-    # src.data.interface.Interface(service=service, parameters=parameters,
-    #                              sequences=sequences, warehouse=configurations.warehouse).exc(datestr_=datestr_)
+    src.data.interface.Interface(service=service, parameters=parameters,
+                                 sequences=sequences, warehouse=configurations.warehouse).exc(datestr_=datestr_)
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
