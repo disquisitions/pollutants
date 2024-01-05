@@ -99,5 +99,4 @@ class Bucket:
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
-        if 'BucketRegion' in state.keys():
-            return True or False
+        return True if 'BucketRegion' in state.keys() else False
