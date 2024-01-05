@@ -41,17 +41,19 @@ class Interface:
             sequences=self.__sequences, storage=self.__storage).exc()
 
     @staticmethod
-    def __metadata():
+    def __metadata() -> str:
         """
 
         :return: The metadata of the points
         """
 
-        return {'epoch_ms': 'The unix epoch time, in milliseconds, when the measure was recorded',
-                'measure': 'The unit of measure of the pollutant under measure',
-                'timestamp': 'The timestamp of the measure',
-                'date': 'The date the measure was recorded',
-                'sequence_id': 'The identification code of the sequence this record is part of.'}
+        metadata = '"epoch_ms"="The milliseconds unix epoch time  when the measure was recorded",' + \
+                   '"measure"="The unit of measure of the pollutant under measure",' + \
+                   '"timestamp"="The timestamp of the measure",' + \
+                   '"date"="The date the measure was recorded",' + \
+                   '"sequence_id"="The identification code of the sequence this record is part of."'
+
+        return metadata
 
     def __s3(self):
         """
