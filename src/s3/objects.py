@@ -3,6 +3,7 @@ Module objects.py
 """
 import logging
 import boto3
+import botocore.exceptions
 
 import src.elements.parameters as pr
 import src.elements.service as sr
@@ -22,6 +23,7 @@ class Objects:
 
         self.__parameters: pr.Parameters = parameters
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
+        self.__s3_client = service.s3_client
         self.__bucket = self.__s3_resource.Bucket(name=self.__parameters.bucket_name)
 
         # Logging
@@ -29,20 +31,42 @@ class Objects:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger: logging.Logger = logging.getLogger(__name__)
 
-    def filter(self, prefix: str):
-
-        items = list(self.__bucket.objects.filter(Prefix=prefix))
-        self.__logger.info(items)
-
-        return len(items)
-
-    def all(self):
+    def prefix_exist(self, key: str) -> bool:
         """
 
+        :param key:
         :return:
         """
 
+        try:
+            dictionary = self.__s3_client.head_object(Bucket=self.__parameters.bucket_name, Key=key)
+            return True if dictionary else False
+        except self.__s3_client.exceptions.NoSuchKey:
+            return False
+        except botocore.exceptions.ClientError:
+            return False
+
+    def filter(self, prefix: str) -> int:
+        """
+        Determines the number of items within a specified folder of the bucket
+
+        :param prefix: The folder
+        :return:
+            The number of items within a specified folder of the bucket
+        """
+
+        items = list(self.__bucket.objects.filter(Prefix=prefix))
+
+        return len(items)
+
+    def all(self) -> int:
+        """
+        Determines the number of items within the bucket
+
+        :return:
+            The number of items within the bucket
+        """
+
         items = list(self.__bucket.objects.all())
-        self.__logger.info(items)
 
         return len(items)
