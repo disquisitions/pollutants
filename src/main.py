@@ -3,8 +3,6 @@ import logging
 import os
 import sys
 
-import pandas as pd
-
 
 def main():
     """
@@ -14,6 +12,7 @@ def main():
 
     # Logging
     logger: logging.Logger = logging.getLogger(__name__)
+    logger.info('Pollutants')
 
     # The dates
     datestr_ = src.algorithms.dates.Dates().exc(restart=restart)
