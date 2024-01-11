@@ -25,8 +25,7 @@ def main():
     logger.info('Dates\n%s', datestr_)
 
     # Sequences
-    sequences = src.references.interface.Interface(
-        service=service, parameters=parameters, hazards=configurations.hazards).exc(restart=restart)
+    sequences = src.references.interface.Interface(service=service, parameters=parameters).exc(restart=restart)
 
     src.data.interface.Interface(
         parameters=parameters, sequences=sequences, profile=profile, restart=restart).exc(datestr_=datestr_)
