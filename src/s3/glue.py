@@ -82,8 +82,9 @@ class Glue:
 
         try:
             glue_client.start_crawler(Name=self.__glue_parameters.crawler_name)
+            logging.log(level=logging.INFO, msg='The glue crawler is now running ...')
         except glue_client.exceptions.CrawlerRunningException:
-            logging.log(level=logging.INFO, msg='The client is running.')
+            logging.log(level=logging.INFO, msg='The glue crawler is already running ...')
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
