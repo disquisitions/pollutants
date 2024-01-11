@@ -15,14 +15,8 @@ def main():
     # Logging
     logger: logging.Logger = logging.getLogger(__name__)
 
-    # Dates
-    date = pd.Timestamp.today().date() - pd.Timedelta('1 day')
-    if restart:
-        values = pd.date_range(start=date - pd.Timedelta(configurations.span), end=date, freq='D').to_list()
-        datestr_ = [str(value.date()) for value in values]
-    else:
-        datestr_ = [str(date)]
-    logger.info('Dates\n%s', datestr_)
+    # The dates
+    datestr_ = src.algorithms.dates.Dates().exc(restart=restart)
 
     # Sequences
     sequences = src.references.interface.Interface(service=service, parameters=parameters).exc(restart=restart)
@@ -48,6 +42,7 @@ if __name__ == '__main__':
     
     # Modules
     import config
+    import src.algorithms.dates
     import src.data.interface
     import src.elements.profile
     import src.functions.cache
@@ -57,7 +52,8 @@ if __name__ == '__main__':
     import src.s3.service
     import src.setup
 
-    # Upcoming arguments
+    # Upcoming arguments:
+    # If restart then all the pollutants data retrieved thus far will be deleted from the cloud depository.
     restart = True
 
     # Parameters & Service
