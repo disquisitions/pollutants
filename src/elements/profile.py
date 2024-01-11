@@ -6,11 +6,12 @@ import typing
 
 class Profile(typing.NamedTuple):
     """
-    The data type class -> Sequence
+    The data type class -> Profile
 
-    :var:
-      profile: The identification code of the sequence the telemetric device records.
-      account_id: The unit of measure of the recordings.
+    Attributes
+    ----------
+    name: The profile name.
+    account_id: The Account ID of the profile.
     """
 
     name: str
