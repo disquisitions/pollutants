@@ -4,8 +4,8 @@ Module service.py
 
 import boto3
 
-import src.elements.profile as po
 import src.elements.parameters as pr
+import src.elements.profile as po
 import src.elements.service as sr
 import src.s3.parameters
 
@@ -31,21 +31,20 @@ class Service:
         :param profile: The developer's Amazon Web Services Profile
         """
 
-        self.__parameters: pr.Parameters = parameters
-
         # Profile/Auto-login
         boto3.setup_default_session(profile_name=profile.name)
 
         # The S3 resource, client, etc.
         self.__s3_resource: boto3.session.Session.resource = boto3.resource(
-            service_name='s3', region_name=self.__parameters.region_name)
+            service_name='s3', region_name=parameters.region_name)
         self.__s3_client: boto3.session.Session.client = boto3.client(
-            service_name='s3', region_name=self.__parameters.region_name)
+            service_name='s3', region_name=parameters.region_name)
 
     def exc(self) -> src.elements.service.Service:
         """
 
         :return:
+            A collection of Amazon S3 (Simple Storage Service) services
         """
 
         # Hence, the collection
