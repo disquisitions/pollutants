@@ -17,6 +17,7 @@ class Config:
         """
 
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
+        self.points_storage = os.path.join(self.warehouse, 'environment', 'pollutants', 'points')
 
         # After the development phase, '732 days', i.e., 2 years.
         self.span = '2 days'
