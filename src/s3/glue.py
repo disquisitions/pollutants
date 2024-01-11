@@ -13,8 +13,14 @@ class Glue:
 
         # Create a glue YAML for database, table, crawler, etc., names
         boto3.client('glue').create_crawler(
-            Name='environment',
+            Name='',
             Role='',
-            DatabaseName='environment',
-            Description='The database for environmental analytics data'
+            DatabaseName='',
+            Description='',
+            Targets={'S3Targets': [
+                {
+                    'Path': ''
+                },
+            ]},
+            TablePrefix=''
         )
