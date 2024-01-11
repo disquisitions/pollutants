@@ -1,7 +1,18 @@
+"""
+Module serial.py
+"""
 import yaml
 
 
 class Serial:
+    """
+    Class Serial
+
+    Description
+    -----------
+
+    At present this class reads-in local YAML files.
+    """
 
     def __init__(self):
         """
