@@ -90,11 +90,12 @@ class Glue:
 
     def exc(self):
         """
-        
+
         :return:
         """
 
         # Create a glue YAML for database, table, crawler, etc., names
-        glue_client: botocore.client.BaseClient = boto3.client('glue')
+        glue_client: botocore.client.BaseClient = boto3.client(
+            service_name='s3', region_name=self.__parameters.region_name)
         glue_client = self.__create_crawler(glue_client=glue_client)
         self.__start_crawler(glue_client=glue_client)
