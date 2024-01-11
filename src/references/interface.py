@@ -8,6 +8,7 @@ import src.elements.sequence as sq
 import src.elements.service as sr
 import src.references.read
 import src.references.regenerate
+import config
 
 
 class Interface:
@@ -15,17 +16,16 @@ class Interface:
     Class Interface
     """
 
-    def __init__(self, service: sr.Service, parameters: pr.Parameters, hazards: list[int]):
+    def __init__(self, service: sr.Service, parameters: pr.Parameters):
         """
 
         :param service:
         :param parameters
-        :param hazards:
         """
 
-        self.__service = service
-        self.__parameters = parameters
-        self.__hazards = hazards
+        self.__service: sr.Service = service
+        self.__parameters: pr.Parameters = parameters
+        self.__hazards: list[int] = config.Config().hazards
 
     @staticmethod
     def __integrate(registry: pd.DataFrame, stations: pd.DataFrame, substances: pd.DataFrame) -> pd.DataFrame:
