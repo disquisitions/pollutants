@@ -1,0 +1,5 @@
+parameters:
+  'crawler_name': 'environment'
+  'database': 'pollutants'
+  'description': 'The database for environmental analytics data.'
+  'table_prefix': 'pol_'
