@@ -43,8 +43,11 @@ class Setup:
         :return:
         """
 
-        n_references = self.__objects.filter(prefix=self.__parameters.references_)
-        self.__logger.info('The are %s reference documents within Amazon S3', n_references)
+        if self.__bucket.exists() & self.__objects.prefix_exist(self.__parameters.references_):
+            n_references = self.__objects.filter(prefix=self.__parameters.references_)
+        else:
+            n_references = 0
+        self.__logger.info('There are %s reference documents within Amazon S3', n_references)
 
         # Ascertaining the states of depositories
         if not self.__bucket.exists():
