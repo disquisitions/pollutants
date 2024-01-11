@@ -24,6 +24,7 @@ class Bucket:
 
         self.__parameters: pr.Parameters = parameters
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
+        self.__s3_client: boto3.session.Session.client = service.s3_client
 
         # A bucket instance
         self.__bucket = self.__s3_resource.Bucket(name=self.__parameters.bucket_name)
@@ -42,8 +43,7 @@ class Bucket:
             'LocationConstraint': self.__parameters.location_constraint
         }
         try:
-            self.__bucket.create(ACL=self.__parameters.access_control_list,
-                                 CreateBucketConfiguration=create_bucket_configuration)
+            self.__bucket.create(CreateBucketConfiguration=create_bucket_configuration)
             self.__bucket.wait_until_exists()
             return True or False
         except botocore.exceptions.ClientError as err:
@@ -96,7 +96,8 @@ class Bucket:
 
         try:
             state: dict = self.__bucket.meta.client.head_bucket(Bucket=self.__bucket.name)
-        except botocore.exceptions.ClientError as err:
-            raise Exception(err) from err
-
-        return True if 'BucketRegion' in state.keys() else False
+            return True if state else False
+        except self.__bucket.meta.client.exceptions.NoSuchBucket:
+            return False
+        except botocore.exceptions.ClientError:
+            return False
