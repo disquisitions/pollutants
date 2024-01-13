@@ -9,11 +9,9 @@
 Automation:
 
 * From local machine to GitHub to Amazon Elastic Container Registry (Via GitHub Actions) .  This requires a few more settings 
-  * [OpenID](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
-  * [News of Changes](https://github.com/marketplace/actions/configure-aws-credentials-action-for-github-actions#oidc)
-  * [Cf. old approach](https://towardsaws.com/build-push-docker-image-to-aws-ecr-using-github-actions-8396888a8f9e), and 
-   the approach used for the planets project.
-  * [Cf. a rather different approach](https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/build-and-push-docker-images-to-amazon-ecr-using-github-actions-and-terraform.html),  which is infeasible because Terraform is not an open source product anymore.
+  * [Open Identity](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services); also study the [news of changes](https://github.com/marketplace/actions/configure-aws-credentials-action-for-github-actions#oidc)
+  * Re-visit the [old approach](https://towardsaws.com/build-push-docker-image-to-aws-ecr-using-github-actions-8396888a8f9e), and 
+   the approach used for the planets project.  In relation the new approach [study this example](https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/build-and-push-docker-images-to-amazon-ecr-using-github-actions-and-terraform.html), which is infeasible because Terraform is not an open source product anymore.
 * Amazon Glue & Data Catalogues
 * Code Analysis & GitHub Actions
 
@@ -72,22 +70,6 @@ conda env create --file environment.yml -p /opt/miniconda3/envs/pollutants
 ```
 
 which uses the same **requirements.txt** as Dockerfile.
-
-<br>
-
-## Snippets
-
-Determining the operating system/platform $\ldots$
-
-```python
-import logging
-import os
-import platform
-
-# Environment
-logging.log(level=logging.INFO, msg=f'Operating System Name (posix or nt): {os.name}')
-logging.log(level=logging.INFO, msg=f'Platform: {platform.system()}')
-```
 
 <br>
 <br>
