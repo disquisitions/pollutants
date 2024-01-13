@@ -1,13 +1,13 @@
-"""Module parameters.py"""
+"""Module s3_parameters.py"""
 import os
 
-import src.elements.parameters
+import src.elements.s3_parameters as s3p
 import src.functions.serial
 
 
 class Parameters:
     """
-    Class Parameters
+    Class S3Parameters
 
     Description
     -----------
@@ -38,7 +38,7 @@ class Parameters:
         return blob['parameters']
 
     @staticmethod
-    def __build_collection(dictionary: dict) -> src.elements.parameters.Parameters:
+    def __build_collection(dictionary: dict) -> s3p.S3Parameters:
         """
 
         :param dictionary:
@@ -46,15 +46,15 @@ class Parameters:
             A re-structured form of the parameters.
         """
 
-        parameters = src.elements.parameters.Parameters(**dictionary)
+        s3_parameters = s3p.S3Parameters(**dictionary)
 
         # Parsing variables
-        location_constraint = parameters.location_constraint.format(region_name=parameters.region_name)
-        parameters = parameters._replace(location_constraint=location_constraint)
+        location_constraint = s3_parameters.location_constraint.format(region_name=s3_parameters.region_name)
+        s3_parameters = s3_parameters._replace(location_constraint=location_constraint)
 
-        return parameters
+        return s3_parameters
 
-    def exc(self) -> src.elements.parameters.Parameters:
+    def exc(self) -> s3p.S3Parameters:
         """
 
         :return:
