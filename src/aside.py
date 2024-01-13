@@ -21,7 +21,7 @@ def main():
     logger.info(msg=f'Platform: {platform.system()}')
 
     # Crawl
-    crawler = src.glue.crawler.Crawler(service=service, parameters=parameters)
+    crawler = src.glue.crawler.Crawler(service=service, s3_parameters=s3_parameters)
     database = src.glue.database.Database(service=service)
 
     crawler.delete_crawler(name='hygiene')
@@ -43,7 +43,7 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     # Classes
-    import src.elements.parameters as pr
+    import src.elements.s3_parameters as pr
     import src.elements.profile as po
     import src.elements.service as sr
     import src.functions.profile
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     # Instances
     profile: po.Profile = src.functions.profile.Profile().exc()
-    parameters: pr.Parameters = src.s3.parameters.Parameters().exc()
-    service: sr.Service = src.functions.service.Service(parameters=parameters, profile=profile).exc()
+    s3_parameters: pr.S3Parameters = src.s3.parameters.Parameters().exc()
+    service: sr.Service = src.functions.service.Service(s3_parameters=s3_parameters, profile=profile).exc()
 
     main()
