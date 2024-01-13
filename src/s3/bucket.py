@@ -17,9 +17,9 @@ class Bucket:
         """
         Constructor
 
-        :param service: The service objects are for Amazon S3 interactions.
+        :param service: A suite of services for interacting with Amazon Web Services.
         :param s3_parameters: The overarching S3 parameters settings of this project, e.g., region code
-                           name, bucket name, etc.
+                              name, bucket name, etc.
         """
 
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
