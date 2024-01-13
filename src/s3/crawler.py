@@ -62,7 +62,6 @@ class Crawler:
     def create_crawler(self):
         """
 
-        :param glue_client:
         :return:
         """
 
@@ -86,7 +85,6 @@ class Crawler:
     def start_crawler(self):
         """
 
-        :param glue_client:
         :return:
         """
 
