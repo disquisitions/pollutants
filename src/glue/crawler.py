@@ -31,6 +31,7 @@ class Crawler:
         :param profile:
         """
 
+        # An instance for reading YAML data
         self.__serial = src.functions.serial.Serial()
 
         # Amazon S3 (Simple Storage Service) parameters
@@ -52,6 +53,7 @@ class Crawler:
 
     def __get_dictionary(self, uri: str) -> dict:
         """
+        Reads the data of a YAML file
 
         :param uri:
         :return:
