@@ -38,7 +38,7 @@ class Crawler:
 
         # Crawler Parameters
         dictionary: dict = self.__get_dictionary(
-            uri=os.path.join(os.getcwd(), 'resources', 'project', 'glue.yaml'))['parameters']
+            uri=os.path.join(os.getcwd(), 'resources', 'project', 'glue_parameters.yaml'))['parameters']
         self.__glue_parameters: gp.GlueParameters = gp.GlueParameters(**dictionary)
 
     @staticmethod
