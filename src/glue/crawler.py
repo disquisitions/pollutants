@@ -26,8 +26,8 @@ class Crawler:
     def __init__(self, service: sr.Service, parameters: pr.Parameters):
         """
 
-        :param service: A suite of services for interacting with Amazon Web Services
-        :param parameters: The collection of S3 parameters
+        :param service: A suite of services for interacting with Amazon Web Services.
+        :param parameters: A collection of S3 parameters.
         """
 
         self.__parameters: pr.Parameters = parameters
@@ -37,7 +37,8 @@ class Crawler:
         self.__glue_arn: str = service.glue_arn
 
         # Crawler Parameters
-        dictionary: dict = self.__get_dictionary(uri=os.path.join(os.getcwd(), 'resources', 'project', 'glue.yaml'))['parameters']
+        dictionary: dict = self.__get_dictionary(
+            uri=os.path.join(os.getcwd(), 'resources', 'project', 'glue.yaml'))['parameters']
         self.__glue_parameters: gp.GlueParameters = gp.GlueParameters(**dictionary)
 
     @staticmethod
