@@ -3,6 +3,7 @@ Module service.py
 """
 
 import boto3
+import botocore.client
 
 import src.elements.parameters as pr
 import src.elements.profile as po
@@ -39,6 +40,8 @@ class Service:
             service_name='s3', region_name=parameters.region_name)
         self.__s3_client: boto3.session.Session.client = boto3.client(
             service_name='s3', region_name=parameters.region_name)
+        self.__glue_client: botocore.client.BaseClient = boto3.client(
+            service_name='glue', region_name=parameters.region_name)
 
     def exc(self) -> src.elements.service.Service:
         """
@@ -48,4 +51,6 @@ class Service:
         """
 
         # Hence, the collection
-        return src.elements.service.Service(s3_resource=self.__s3_resource, s3_client=self.__s3_client)
+        return src.elements.service.Service(s3_resource=self.__s3_resource,
+                                            s3_client=self.__s3_client,
+                                            glue_client=self.__glue_client)
