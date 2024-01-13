@@ -2,12 +2,10 @@
 Module database.py
 """
 
-import boto3
 import botocore.client
 import botocore.exceptions
 
-import src.elements.parameters as pr
-import src.elements.profile as po
+import src.elements.service as sr
 
 
 class Database:
@@ -19,20 +17,14 @@ class Database:
         https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/python/example_code/glue#code-examples
     """
 
-    def __init__(self, parameters: pr.Parameters, profile: po.Profile):
+    def __init__(self, service: sr.Service):
         """
 
-        :param parameters:
-        :param profile:
+        :param service: A suite of services for interacting with Amazon Web Services
         """
 
-        # Amazon S3 (Simple Storage Service) parameters
-        self.__parameters = parameters
-
-        # Profile/Auto-login
-        boto3.setup_default_session(profile_name=profile.name)
-        self.__glue_client: botocore.client.BaseClient = boto3.client(
-            service_name='glue', region_name=self.__parameters.region_name)
+        # Glue Client
+        self.__glue_client: botocore.client.BaseClient = service.glue_client
 
     def delete_database(self, name: str):
         """
