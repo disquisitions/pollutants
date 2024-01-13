@@ -1,9 +1,9 @@
 """Module stations.py"""
 import logging
 import typing
+
 import pandas as pd
 
-import src.elements.parameters
 import src.functions.objects
 
 
