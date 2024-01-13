@@ -3,7 +3,6 @@ Module aside.py
 """
 import logging
 import os
-import platform
 import sys
 
 
