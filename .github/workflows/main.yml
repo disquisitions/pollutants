@@ -20,28 +20,52 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install flake8 pytest
+          python -m pip install --upgrade pi
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
       - name: Lint with flake8
         run: |
           printf "\n"
           echo "============================= flake8 session starts =============================="
           printf "\n"
           
+          
           # stop the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          printf "\n"
+          echo "Issues in relation to logic (F7), syntax (Python E9, Flake F7), mathematical
+          formulae symbols (F63), undefined variable names (F82):"
+          
+          printf "\n src/algorithms"
+          flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/algorithms
+          
           
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          printf "\n"
+          echo "Complexity issues:"
+          
+          printf "\n src/algorithms"
+          flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/algorithms
+
+      - name: Lint with pylint
+        run: |
+          printf "\n"
+          echo "============================= pylint session starts =============================="
+
+          printf "\n Package src/algorithms"
+          pylint --rcfile .pylintrc src/algorithms
+
       - name: Test with pytest
         run: |
           printf "\n"
           echo "============================= pytest session starts =============================="
+          
           printf "\n"
+          printf "Upcoming ... pytest -o python_files=test_*.py"
 
-          printf "Upcoming ..."
-          # pytest -o python_files=test_*.py
-
-
-
+      - name: Coverage with pytest-cov
+        run: |
+          printf "\n"
+          echo "============================= coverage session starts =============================="
+          
+          printf "\n"
+          printf "Upcoming ... pytest --cov-report term-missing  --cov src/algorithms/ tests/algorithms/"
