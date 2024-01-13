@@ -1,12 +1,12 @@
 """
-This is data type Parameters
+This is data type S3Parameters
 """
 import typing
 
 
-class Parameters(typing.NamedTuple):
+class S3Parameters(typing.NamedTuple):
     """
-    The data type class -> Parameters
+    The data type class -> S3Parameters
 
     Attributes
     ----------
