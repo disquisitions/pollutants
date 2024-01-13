@@ -21,6 +21,9 @@ def main():
     crawler.create_crawler()
     crawler.start_crawler()
 
+    # Deleting __pycache__
+    src.functions.cache.Cache().delete()
+
 
 if __name__ == '__main__':
     # Paths
@@ -37,6 +40,7 @@ if __name__ == '__main__':
     import src.elements.s3_parameters as s3p
     import src.elements.profile as po
     import src.elements.service as sr
+    import src.functions.cache
     import src.functions.profile
     import src.functions.service
     import src.glue.crawler
