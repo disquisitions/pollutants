@@ -42,14 +42,14 @@ if __name__ == '__main__':
     import config
     import src.algorithms.dates
     import src.data.interface
-    import src.elements.profile as po
     import src.elements.parameters as pr
+    import src.elements.profile as po
     import src.elements.service as sr
     import src.functions.cache
     import src.functions.profile
+    import src.functions.service
     import src.references.interface
     import src.s3.parameters
-    import src.s3.service
     import src.setup
 
     # Upcoming arguments:
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     # Parameters & Service
     parameters: pr.Parameters = src.s3.parameters.Parameters().exc()
     profile: po.Profile = src.functions.profile.Profile().exc()
-    service: sr.Service = src.s3.service.Service(parameters=parameters, profile=profile).exc()
+    service: sr.Service = src.functions.service.Service(parameters=parameters, profile=profile).exc()
 
     # Setting-up
     configurations = config.Config()
