@@ -32,18 +32,13 @@ class Crawler:
 
         self.__parameters: pr.Parameters = parameters
 
-        # Glue Client
+        # Glue Client & Amazon Resource Name (ARN)
         self.__glue_client: botocore.client.BaseClient = service.glue_client
+        self.__glue_arn: str = service.glue_arn
 
         # Crawler Parameters
-        dictionary: dict = self.__get_dictionary(uri=os.path.join(os.getcwd(), 'resources', 'project', 'glue.yaml'))[
-            'parameters']
+        dictionary: dict = self.__get_dictionary(uri=os.path.join(os.getcwd(), 'resources', 'project', 'glue.yaml'))['parameters']
         self.__glue_parameters: gp.GlueParameters = gp.GlueParameters(**dictionary)
-
-        # Amazon Resource Name (ARN)
-        # self.__glue_arn: str = self.__get_dictionary(uri=os.path.join(os.getcwd(), 'resources', 'arn.yaml'))['arn']['glue']
-        # self.__glue_arn: str = self.__glue_arn.format(account_id=profile.account_id)
-        self.__glue_arn: str = service.glue_arn
 
     @staticmethod
     def __get_dictionary(uri: str) -> dict:
