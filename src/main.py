@@ -18,9 +18,10 @@ def main():
     datestr_ = src.algorithms.dates.Dates().exc(restart=restart)
 
     # Sequences
-    sequences = src.references.interface.Interface(service=service, parameters=parameters).exc(restart=restart)
+    sequences = src.references.interface.Interface(
+        service=service, s3_parameters=s3_parameters).exc(restart=restart)
     src.data.interface.Interface(
-        parameters=parameters, sequences=sequences, profile=profile, restart=restart).exc(datestr_=datestr_)
+        s3_parameters=s3_parameters, sequences=sequences, profile=profile, restart=restart).exc(datestr_=datestr_)
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
@@ -42,7 +43,7 @@ if __name__ == '__main__':
     import config
     import src.algorithms.dates
     import src.data.interface
-    import src.elements.parameters as pr
+    import src.elements.s3_parameters as s3p
     import src.elements.profile as po
     import src.elements.service as sr
     import src.functions.cache
@@ -56,14 +57,14 @@ if __name__ == '__main__':
     # If restart then all the pollutants data retrieved thus far will be deleted from the cloud depository.
     restart = True
 
-    # Parameters & Service
-    parameters: pr.Parameters = src.s3.parameters.Parameters().exc()
+    # S3Parameters & Service
+    s3_parameters: s3p.S3Parameters = src.s3.parameters.Parameters().exc()
     profile: po.Profile = src.functions.profile.Profile().exc()
-    service: sr.Service = src.functions.service.Service(parameters=parameters, profile=profile).exc()
+    service: sr.Service = src.functions.service.Service(s3_parameters=s3_parameters, profile=profile).exc()
 
     # Setting-up
     configurations = config.Config()
-    restart = src.setup.Setup(service=service, parameters=parameters, warehouse=configurations.warehouse).exc(
+    restart = src.setup.Setup(service=service, s3_parameters=s3_parameters, warehouse=configurations.warehouse).exc(
         restart=restart)
 
     main()
