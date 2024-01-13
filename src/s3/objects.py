@@ -5,7 +5,7 @@ import logging
 import boto3
 import botocore.exceptions
 
-import src.elements.parameters as pr
+import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 
 
@@ -16,15 +16,15 @@ class Objects:
     Will list all the S3 objects associated with this machine's active AWS CLI profile
     """
 
-    def __init__(self, service: sr.Service, parameters: pr.Parameters):
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
         Constructor
         """
 
-        self.__parameters: pr.Parameters = parameters
+        self.__s3_parameters: s3p.S3Parameters = s3_parameters
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
         self.__s3_client = service.s3_client
-        self.__bucket = self.__s3_resource.Bucket(name=self.__parameters.bucket_name)
+        self.__bucket = self.__s3_resource.Bucket(name=self.__s3_parameters.bucket_name)
 
         # Logging
         logging.basicConfig(level=logging.INFO, format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
@@ -39,7 +39,7 @@ class Objects:
         """
 
         try:
-            dictionary = self.__s3_client.head_object(Bucket=self.__parameters.bucket_name, Key=key)
+            dictionary = self.__s3_client.head_object(Bucket=self.__s3_parameters.bucket_name, Key=key)
             return True if dictionary else False
         except self.__s3_client.exceptions.NoSuchKey:
             return False
