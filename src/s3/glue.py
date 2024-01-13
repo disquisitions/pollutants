@@ -10,28 +10,36 @@ import botocore.exceptions
 
 import src.elements.glue_parameters as gp
 import src.elements.parameters as pr
+import src.elements.profile as po
 import src.functions.serial
 
 
 class Glue:
     """
     Class Glue
-    """
 
-    def __init__(self, parameters: pr.Parameters):
-        """
-        Constructor
-
-        In progress ...
+    In progress ...
         https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/glue/client/create_crawler.html#
         https://docs.aws.amazon.com/glue/latest/dg/example_glue_CreateCrawler_section.html
         https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/python/example_code/glue#code-examples
+    """
+
+    def __init__(self, parameters: pr.Parameters, profile: po.Profile):
+        """
+
+        :param parameters:
+        :param profile:
         """
 
         self.__serial = src.functions.serial.Serial()
 
         # Amazon S3 (Simple Storage Service) parameters
         self.__parameters = parameters
+
+        # Profile/Auto-login
+        boto3.setup_default_session(profile_name=profile.name)
+        self.__glue_client: botocore.client.BaseClient = boto3.client(
+            service_name='glue', region_name=self.__parameters.region_name)
 
         # Glue Parameters
         dictionary: dict = self.__get_dictionary(uri=os.path.join(os.getcwd(), 'resources', 'project', 'glue.yaml'))[
@@ -40,6 +48,7 @@ class Glue:
 
         # Amazon Resource Name (ARN)
         self.__glue_arn: str = self.__get_dictionary(uri=os.path.join(os.getcwd(), 'resources', 'arn.yaml'))['arn']['glue']
+        self.__glue_arn: str = self.__glue_arn.format(account_id=profile.account_id)
 
     def __get_dictionary(self, uri: str) -> dict:
         """
@@ -58,7 +67,7 @@ class Glue:
         """
 
         try:
-            glue_client.create_crawler(
+            return glue_client.create_crawler(
                 Name=self.__glue_parameters.crawler_name,
                 Role=self.__glue_arn,
                 DatabaseName=self.__glue_parameters.database_name,
@@ -68,7 +77,8 @@ class Glue:
                         'Path': f's3://{self.__parameters.bucket_name}'
                     },
                 ]},
-                TablePrefix=self.__glue_parameters.table_prefix
+                TablePrefix=self.__glue_parameters.table_prefix,
+                Schedule=self.__glue_parameters.schedule
             )
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
@@ -94,8 +104,6 @@ class Glue:
         :return:
         """
 
-        # Create a glue YAML for database, table, crawler, etc., names
-        glue_client: botocore.client.BaseClient = boto3.client(
-            service_name='s3', region_name=self.__parameters.region_name)
-        glue_client = self.__create_crawler(glue_client=glue_client)
-        self.__start_crawler(glue_client=glue_client)
+        # Crawling ...
+        self.__create_crawler(glue_client=self.__glue_client)
+        self.__start_crawler(glue_client=self.__glue_client)
