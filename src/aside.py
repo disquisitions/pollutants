@@ -47,14 +47,14 @@ if __name__ == '__main__':
     import src.elements.profile as po
     import src.elements.service as sr
     import src.functions.profile
+    import src.functions.service
     import src.glue.crawler
     import src.glue.database
     import src.s3.parameters
-    import src.s3.service
-
+    
     # Instances
     profile: po.Profile = src.functions.profile.Profile().exc()
     parameters: pr.Parameters = src.s3.parameters.Parameters().exc()
-    service: sr.Service = src.s3.service.Service(parameters=parameters, profile=profile).exc()
+    service: sr.Service = src.functions.service.Service(parameters=parameters, profile=profile).exc()
 
     main()
