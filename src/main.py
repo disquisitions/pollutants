@@ -19,7 +19,6 @@ def main():
 
     # Sequences
     sequences = src.references.interface.Interface(service=service, parameters=parameters).exc(restart=restart)
-
     src.data.interface.Interface(
         parameters=parameters, sequences=sequences, profile=profile, restart=restart).exc(datestr_=datestr_)
 
@@ -43,7 +42,9 @@ if __name__ == '__main__':
     import config
     import src.algorithms.dates
     import src.data.interface
-    import src.elements.profile
+    import src.elements.profile as po
+    import src.elements.parameters as pr
+    import src.elements.service as sr
     import src.functions.cache
     import src.functions.profile
     import src.references.interface
@@ -56,9 +57,9 @@ if __name__ == '__main__':
     restart = True
 
     # Parameters & Service
-    parameters = src.s3.parameters.Parameters().exc()
-    profile: src.elements.profile.Profile = src.functions.profile.Profile().exc()
-    service = src.s3.service.Service(parameters=parameters, profile=profile).exc()
+    parameters: pr.Parameters = src.s3.parameters.Parameters().exc()
+    profile: po.Profile = src.functions.profile.Profile().exc()
+    service: sr.Service = src.s3.service.Service(parameters=parameters, profile=profile).exc()
 
     # Setting-up
     configurations = config.Config()
