@@ -15,10 +15,7 @@ def main():
     """
 
     logger = logging.getLogger(__name__)
-
-    # Environment
-    logger.info(msg=f'Operating System Name (posix or nt): {os.name}')
-    logger.info(msg=f'Platform: {platform.system()}')
+    logger.info(msg='Crawl')
 
     # Crawl
     crawler = src.glue.crawler.Crawler(service=service, s3_parameters=s3_parameters)
