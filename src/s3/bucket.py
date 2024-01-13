@@ -4,7 +4,7 @@ Module bucket.py
 import boto3
 import botocore.exceptions
 
-import src.elements.parameters as pr
+import src.elements.s3_parameters as pr
 import src.elements.service as sr
 
 
@@ -13,21 +13,21 @@ class Bucket:
     https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/index.html
     """
 
-    def __init__(self, service: sr.Service, parameters: pr.Parameters):
+    def __init__(self, service: sr.Service, s3_parameters: pr.S3Parameters):
         """
         Constructor
 
         :param service: The service objects are for Amazon S3 interactions.
-        :param parameters: The overarching S3 parameters settings of this project, e.g., region code
+        :param s3_parameters: The overarching S3 parameters settings of this project, e.g., region code
                            name, bucket name, etc.
         """
 
-        self.__parameters: pr.Parameters = parameters
+        self.__s3_parameters: pr.S3Parameters = s3_parameters
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
         self.__s3_client: boto3.session.Session.client = service.s3_client
 
         # A bucket instance
-        self.__bucket = self.__s3_resource.Bucket(name=self.__parameters.bucket_name)
+        self.__bucket = self.__s3_resource.Bucket(name=self.__s3_parameters.bucket_name)
 
     def create(self) -> bool:
         """
@@ -40,7 +40,7 @@ class Bucket:
             return True
 
         create_bucket_configuration = {
-            'LocationConstraint': self.__parameters.location_constraint
+            'LocationConstraint': self.__s3_parameters.location_constraint
         }
         try:
             self.__bucket.create(CreateBucketConfiguration=create_bucket_configuration)
