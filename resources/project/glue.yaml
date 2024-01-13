@@ -1,5 +1,6 @@
 parameters:
-  'crawler_name': 'environment'
+  'crawler_name': 'hygiene'
   'database_name': 'pollutants'
   'description': 'The database for environmental analytics data.'
   'table_prefix': 'pol_'
+  'schedule': "cron(0 1 ? * SAT#2 *)"
