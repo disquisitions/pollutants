@@ -1,7 +1,6 @@
 """
 Module aside.py
 """
-import json
 import logging
 import os
 import platform
@@ -18,12 +17,11 @@ def main():
     logger = logging.getLogger(__name__)
 
     # Environment
-    logger.info('Operating System Name (posix or nt): %s', os.name)
+    logger.info(msg=f'Operating System Name (posix or nt): {os.name}')
     logger.info(msg=f'Platform: {platform.system()}')
 
-    # Ensuring double quotes are retained
-    text: str = json.dumps(dictionary)
-    logger.info(f"""{text}""")
+    # Crawl
+    src.s3.glue.Glue(parameters=parameters, profile=profile).exc()
 
 
 if __name__ == '__main__':
@@ -37,10 +35,16 @@ if __name__ == '__main__':
                         format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
                         datefmt='%Y-%m-%d %H:%M:%S')
 
-    dictionary = {'epoch_ms': 'The unix epoch time, in milliseconds, when the measure was recorded',
-                  'measure': 'The unit of measure of the pollutant under measure',
-                  'timestamp': 'The timestamp of the measure',
-                  'date': 'The date the measure was recorded',
-                  'sequence_id': 'The identification code of the sequence this record is part of.'}
+    # Classes
+    import src.elements.parameters as pr
+    import src.elements.profile as po
+    import src.functions.profile
+    import src.s3.glue
+    import src.s3.parameters
+
+    # Instances
+    profile: po.Profile = src.functions.profile.Profile().exc()
+    parameters: pr.Parameters = src.s3.parameters.Parameters().exc()
+
 
     main()
