@@ -1,5 +1,5 @@
 """
-Module glue.py
+Module crawler.py
 """
 import logging
 import os
@@ -14,9 +14,9 @@ import src.elements.profile as po
 import src.functions.serial
 
 
-class Glue:
+class Crawler:
     """
-    Class Glue
+    Class Crawler
 
     In progress ...
         https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/glue/client/create_crawler.html#
@@ -41,7 +41,7 @@ class Glue:
         self.__glue_client: botocore.client.BaseClient = boto3.client(
             service_name='glue', region_name=self.__parameters.region_name)
 
-        # Glue Parameters
+        # Crawler Parameters
         dictionary: dict = self.__get_dictionary(uri=os.path.join(os.getcwd(), 'resources', 'project', 'glue.yaml'))[
             'parameters']
         self.__glue_parameters: gp.GlueParameters = gp.GlueParameters(**dictionary)
@@ -115,6 +115,3 @@ class Glue:
             return False
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
-
-
-
