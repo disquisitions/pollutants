@@ -1,6 +1,7 @@
 """
 Module service.py
 """
+import os
 
 import boto3
 import botocore.client
@@ -8,6 +9,7 @@ import botocore.client
 import src.elements.parameters as pr
 import src.elements.profile as po
 import src.elements.service as sr
+import src.functions.serial
 import src.s3.parameters
 
 
@@ -32,8 +34,11 @@ class Service:
         :param profile: The developer's Amazon Web Services Profile
         """
 
+        # Profile
+        self.__profile = profile
+
         # Profile/Auto-login
-        boto3.setup_default_session(profile_name=profile.name)
+        boto3.setup_default_session(profile_name=self.__profile.name)
 
         # The S3 resource, client, etc.
         self.__s3_resource: boto3.session.Session.resource = boto3.resource(
@@ -42,6 +47,19 @@ class Service:
             service_name='s3', region_name=parameters.region_name)
         self.__glue_client: botocore.client.BaseClient = boto3.client(
             service_name='glue', region_name=parameters.region_name)
+
+    def __glue_arn(self) -> str:
+        """
+
+        :return:
+        """
+
+        serial = src.functions.serial.Serial()
+
+        # Amazon Resource Name (ARN)
+        glue_arn: str = serial.get_dictionary(uri=os.path.join(os.getcwd(), 'resources', 'arn.yaml'))['arn']['glue']
+
+        return glue_arn.format(account_id=self.__profile.account_id)
 
     def exc(self) -> src.elements.service.Service:
         """
@@ -53,4 +71,5 @@ class Service:
         # Hence, the collection
         return src.elements.service.Service(s3_resource=self.__s3_resource,
                                             s3_client=self.__s3_client,
-                                            glue_client=self.__glue_client)
+                                            glue_client=self.__glue_client,
+                                            glue_arn=self.__glue_arn())
