@@ -31,7 +31,8 @@ class Service:
         """
 
         :param parameters: The S3 parameters settings for this project
-        :param profile: The developer's Amazon Web Services Profile
+        :param profile: The developer's Amazon Web Services (AWS) profile detail, which allows
+                        for programmatic interaction with AWS.
         """
 
         # Profile
