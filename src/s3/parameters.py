@@ -24,7 +24,7 @@ class Parameters:
         Constructor
         """
 
-        self.__uri = os.path.join(os.getcwd(), 'resources', 'parameters.yaml')
+        self.__uri = os.path.join(os.getcwd(), 'resources', 's3_parameters.yaml')
 
     def __get_dictionary(self) -> dict:
         """
