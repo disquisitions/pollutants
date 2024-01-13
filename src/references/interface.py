@@ -78,10 +78,10 @@ class Interface:
         # Observation Network depositories, or (b) structured references saved in Amazon S3?
         if restart:
             registry, stations, substances = src.references.regenerate.Regenerate(
-                service=self.__service, parameters=self.__s3_parameters).exc()
+                service=self.__service, s3_parameters=self.__s3_parameters).exc()
         else:
             registry, stations, substances = src.references.read.Read(
-                service=self.__service, parameters=self.__s3_parameters).exc()
+                service=self.__service, s3_parameters=self.__s3_parameters).exc()
 
         # Merge and structure the references
         data = self.__integrate(registry=registry, stations=stations, substances=substances)
