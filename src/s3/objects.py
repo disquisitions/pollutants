@@ -18,7 +18,10 @@ class Objects:
 
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
-        Constructor
+
+        :param service: A suite of services for interacting with Amazon Web Services.
+        :param s3_parameters: The overarching S3 parameters settings of this project, e.g., region code
+                              name, bucket name, etc.
         """
 
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
