@@ -6,7 +6,7 @@ import os
 import boto3
 import botocore.client
 
-import src.elements.parameters as pr
+import src.elements.s3_parameters as pr
 import src.elements.profile as po
 import src.elements.service as sr
 import src.functions.serial
@@ -27,7 +27,7 @@ class Service:
             html#boto3.session.Session.resource
     """
 
-    def __init__(self, parameters: pr.Parameters, profile: po.Profile):
+    def __init__(self, parameters: pr.S3Parameters, profile: po.Profile):
         """
 
         :param parameters: The S3 parameters settings for this project
