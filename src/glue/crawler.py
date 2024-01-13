@@ -9,7 +9,6 @@ import botocore.exceptions
 
 import src.elements.glue_parameters as gp
 import src.elements.parameters as pr
-import src.elements.profile as po
 import src.elements.service as sr
 import src.functions.serial
 
@@ -24,14 +23,11 @@ class Crawler:
         https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/python/example_code/glue#code-examples
     """
 
-    def __init__(self, service: sr.Service, parameters: pr.Parameters, profile: po.Profile):
+    def __init__(self, service: sr.Service, parameters: pr.Parameters):
         """
 
         :param service: A suite of services for interacting with Amazon Web Services
         :param parameters: The collection of S3 parameters
-        :param profile: The developer's Amazon Web Services (AWS) profile detail, which allows
-                        for programmatic interaction with AWS.
-        with
         """
 
         self.__parameters: pr.Parameters = parameters
@@ -45,8 +41,9 @@ class Crawler:
         self.__glue_parameters: gp.GlueParameters = gp.GlueParameters(**dictionary)
 
         # Amazon Resource Name (ARN)
-        self.__glue_arn: str = self.__get_dictionary(uri=os.path.join(os.getcwd(), 'resources', 'arn.yaml'))['arn']['glue']
-        self.__glue_arn: str = self.__glue_arn.format(account_id=profile.account_id)
+        # self.__glue_arn: str = self.__get_dictionary(uri=os.path.join(os.getcwd(), 'resources', 'arn.yaml'))['arn']['glue']
+        # self.__glue_arn: str = self.__glue_arn.format(account_id=profile.account_id)
+        self.__glue_arn: str = service.glue_arn
 
     @staticmethod
     def __get_dictionary(uri: str) -> dict:
