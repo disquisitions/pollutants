@@ -59,7 +59,7 @@ class Glue:
 
         return self.__serial.get_dictionary(uri=uri)
 
-    def __create_crawler(self, glue_client):
+    def create_crawler(self):
         """
 
         :param glue_client:
@@ -67,7 +67,7 @@ class Glue:
         """
 
         try:
-            return glue_client.create_crawler(
+            return self.__glue_client.create_crawler(
                 Name=self.__glue_parameters.crawler_name,
                 Role=self.__glue_arn,
                 DatabaseName=self.__glue_parameters.database_name,
@@ -83,7 +83,7 @@ class Glue:
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
-    def __start_crawler(self, glue_client):
+    def start_crawler(self):
         """
 
         :param glue_client:
@@ -91,19 +91,30 @@ class Glue:
         """
 
         try:
-            glue_client.start_crawler(Name=self.__glue_parameters.crawler_name)
+            self.__glue_client.start_crawler(Name=self.__glue_parameters.crawler_name)
             logging.log(level=logging.INFO, msg='The glue crawler is now running ...')
-        except glue_client.exceptions.CrawlerRunningException:
+        except self.__glue_client.exceptions.CrawlerRunningException:
             logging.log(level=logging.INFO, msg='The glue crawler is already running ...')
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
-    def exc(self):
+    def delete_crawler(self, name: str):
         """
 
+        :param name:
         :return:
         """
 
-        # Crawling ...
-        self.__create_crawler(glue_client=self.__glue_client)
-        self.__start_crawler(glue_client=self.__glue_client)
+        try:
+            self.__glue_client.delete_crawler(Name=name)
+            return True
+        except self.__glue_client.exceptions.EntityNotFoundException:
+            return True
+        except self.__glue_client.exceptions.CrawlerRunningException:
+            logging.log(level=logging.INFO, msg='The glue crawler is running ...')
+            return False
+        except botocore.exceptions.ClientError as err:
+            raise Exception(err) from err
+
+
+
