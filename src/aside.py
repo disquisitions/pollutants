@@ -15,10 +15,7 @@ def main():
     """
 
     logger = logging.getLogger(__name__)
-
-    # Environment
-    logger.info(msg=f'Operating System Name (posix or nt): {os.name}')
-    logger.info(msg=f'Platform: {platform.system()}')
+    logger.info(msg='Playground')
 
     # Crawl
     crawler = src.glue.crawler.Crawler(service=service, s3_parameters=s3_parameters)
@@ -26,9 +23,6 @@ def main():
 
     crawler.delete_crawler(name='hygiene')
     database.delete_database(name='pollutants')
-
-    crawler.create_crawler()
-    crawler.start_crawler()
 
 
 if __name__ == '__main__':
@@ -43,7 +37,7 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     # Classes
-    import src.elements.s3_parameters as pr
+    import src.elements.s3_parameters as s3p
     import src.elements.profile as po
     import src.elements.service as sr
     import src.functions.profile
@@ -54,7 +48,7 @@ if __name__ == '__main__':
 
     # Instances
     profile: po.Profile = src.functions.profile.Profile().exc()
-    s3_parameters: pr.S3Parameters = src.s3.parameters.Parameters().exc()
+    s3_parameters: s3p.S3Parameters = src.s3.parameters.Parameters().exc()
     service: sr.Service = src.functions.service.Service(s3_parameters=s3_parameters, profile=profile).exc()
 
     main()
