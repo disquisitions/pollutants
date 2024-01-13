@@ -23,3 +23,4 @@ class Service(typing.NamedTuple):
     s3_resource: boto3.session.Session.resource
     s3_client: boto3.session.Session.client
     glue_client: botocore.client.BaseClient
+    glue_arn: str
