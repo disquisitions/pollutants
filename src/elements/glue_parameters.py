@@ -13,3 +13,4 @@ class GlueParameters(typing.NamedTuple):
     database_name: str
     description: str
     table_prefix: str
+    schedule: str
