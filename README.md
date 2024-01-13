@@ -74,6 +74,22 @@ conda env create --file environment.yml -p /opt/miniconda3/envs/pollutants
 which uses the same **requirements.txt** as Dockerfile.
 
 <br>
+
+## Snippets
+
+Determining the operating system/platform $\ldots$
+
+```python
+import logging
+import os
+import platform
+
+# Environment
+logging.log(level=logging.INFO, msg=f'Operating System Name (posix or nt): {os.name}')
+logging.log(level=logging.INFO, msg=f'Platform: {platform.system()}')
+```
+
+<br>
 <br>
 
 <br>
