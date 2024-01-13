@@ -4,7 +4,7 @@ Module bucket.py
 import boto3
 import botocore.exceptions
 
-import src.elements.s3_parameters as pr
+import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 
 
@@ -13,7 +13,7 @@ class Bucket:
     https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/index.html
     """
 
-    def __init__(self, service: sr.Service, s3_parameters: pr.S3Parameters):
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
         Constructor
 
@@ -22,7 +22,7 @@ class Bucket:
                            name, bucket name, etc.
         """
 
-        self.__s3_parameters: pr.S3Parameters = s3_parameters
+        self.__s3_parameters: s3p.S3Parameters = s3_parameters
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
         self.__s3_client: boto3.session.Session.client = service.s3_client
 
