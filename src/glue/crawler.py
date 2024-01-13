@@ -57,9 +57,7 @@ class Crawler:
         :return:
         """
 
-        serial = src.functions.serial.Serial()
-
-        return serial.get_dictionary(uri=uri)
+        return src.functions.serial.Serial().get_dictionary(uri=uri)
 
     def create_crawler(self):
         """
