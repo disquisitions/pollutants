@@ -8,7 +8,11 @@ import requests
 
 class Objects:
     """
-        Class Objects
+    Class Objects
+
+    Description
+    -----------
+    This class reads & writes JSON (JavaScript Object Notation) objects
     """
 
     def __init__(self):
