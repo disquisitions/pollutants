@@ -8,7 +8,7 @@ import botocore.client
 import botocore.exceptions
 
 import src.elements.glue_parameters as gp
-import src.elements.parameters as pr
+import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.functions.serial
 
@@ -23,20 +23,20 @@ class Crawler:
         https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/python/example_code/glue#code-examples
     """
 
-    def __init__(self, service: sr.Service, parameters: pr.Parameters):
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
 
         :param service: A suite of services for interacting with Amazon Web Services.
-        :param parameters: A collection of S3 parameters.
+        :param s3_parameters: A collection of S3 parameters.
         """
 
-        self.__parameters: pr.Parameters = parameters
+        self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
         # Glue Client & Amazon Resource Name (ARN)
         self.__glue_client: botocore.client.BaseClient = service.glue_client
         self.__glue_arn: str = service.glue_arn
 
-        # Crawler Parameters
+        # Crawler S3Parameters
         dictionary: dict = self.__get_dictionary(
             uri=os.path.join(os.getcwd(), 'resources', 'glue_parameters.yaml'))['parameters']
         self.__glue_parameters: gp.GlueParameters = gp.GlueParameters(**dictionary)
@@ -66,7 +66,7 @@ class Crawler:
                 Description=self.__glue_parameters.description,
                 Targets={'S3Targets': [
                     {
-                        'Path': f's3://{self.__parameters.bucket_name}'
+                        'Path': f's3://{self.__s3_parameters.bucket_name}'
                     },
                 ]},
                 TablePrefix=self.__glue_parameters.table_prefix,
