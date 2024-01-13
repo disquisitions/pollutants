@@ -5,8 +5,7 @@ This is the data type Interface
 import typing
 
 import boto3
-
-import src.elements.parameters
+import botocore.client
 
 
 class Service(typing.NamedTuple):
@@ -23,3 +22,4 @@ class Service(typing.NamedTuple):
 
     s3_resource: boto3.session.Session.resource
     s3_client: boto3.session.Session.client
+    glue_client: botocore.client.BaseClient
