@@ -10,8 +10,7 @@ class Serial:
 
     Description
     -----------
-
-    At present this class reads-in local YAML files.
+    At present this class reads-in local YAML data files; YAML is a data serialisation language.
     """
 
     def __init__(self):
