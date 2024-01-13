@@ -1,4 +1,6 @@
-
+"""
+Module depositories.py
+"""
 import os
 import dask
 
@@ -7,6 +9,9 @@ import src.functions.directories
 
 
 class Depositories:
+    """
+    Class Depositories
+    """
 
     def __init__(self, sequences: list[sq.Sequence], storage: str):
         """
