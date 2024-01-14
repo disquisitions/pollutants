@@ -3,7 +3,7 @@ import typing
 
 import pandas as pd
 
-import src.elements.parameters as pr
+import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.references.registry
 import src.references.stations
@@ -13,18 +13,18 @@ import src.s3.upload
 
 class Regenerate:
 
-    def __init__(self, service: sr.Service, parameters: pr.Parameters):
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
 
         :param service:
-        :param parameters:
+        :param s3_parameters:
         """
 
         self.__service: sr.Service = service
-        self.__parameters: pr.Parameters = parameters
+        self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
         # S3 Upload Instance
-        self.__upload = src.s3.upload.Upload(service=self.__service, parameters=self.__parameters)
+        self.__upload = src.s3.upload.Upload(service=self.__service, s3_parameters=self.__s3_parameters)
 
     def __registry(self) -> pd.DataFrame:
         """
@@ -32,7 +32,7 @@ class Regenerate:
         :return:
         """
 
-        key_name = f'{self.__parameters.references_}registry.csv'
+        key_name = f'{self.__s3_parameters.references_}registry.csv'
         data, metadata = src.references.registry.Registry().exc()
         self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
 
@@ -44,14 +44,14 @@ class Regenerate:
         :return:
         """
 
-        key_name = f'{self.__parameters.references_}stations.csv'
+        key_name = f'{self.__s3_parameters.references_}stations.csv'
         data, metadata = src.references.stations.Stations().exc()
         self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
 
         return data
 
     def __substances(self) -> pd.DataFrame:
-        key_name = f'{self.__parameters.references_}substances.csv'
+        key_name = f'{self.__s3_parameters.references_}substances.csv'
         data, metadata = src.references.substances.Substances().exc()
         self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
 

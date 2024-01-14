@@ -3,7 +3,6 @@ Module aside.py
 """
 import logging
 import os
-import platform
 import sys
 
 
@@ -15,14 +14,12 @@ def main():
     """
 
     logger = logging.getLogger(__name__)
-    logger.info(msg='Playground')
+    logger.info(msg='Crawl')
 
     # Crawl
     crawler = src.glue.crawler.Crawler(service=service, s3_parameters=s3_parameters)
-    database = src.glue.database.Database(service=service)
-
-    crawler.delete_crawler(name='hygiene')
-    database.delete_database(name='pollutants')
+    crawler.create_crawler()
+    crawler.start_crawler()
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
@@ -47,7 +44,6 @@ if __name__ == '__main__':
     import src.functions.profile
     import src.functions.service
     import src.glue.crawler
-    import src.glue.database
     import src.s3.parameters
 
     # Instances

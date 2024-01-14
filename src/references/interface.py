@@ -3,11 +3,12 @@ import logging
 
 import pandas as pd
 
-import src.elements.parameters as pr
+import src.elements.s3_parameters as s3p
 import src.elements.sequence as sq
 import src.elements.service as sr
 import src.references.read
 import src.references.regenerate
+import config
 
 
 class Interface:
@@ -15,17 +16,16 @@ class Interface:
     Class Interface
     """
 
-    def __init__(self, service: sr.Service, parameters: pr.Parameters, hazards: list[int]):
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
 
         :param service:
-        :param parameters
-        :param hazards:
+        :param s3_parameters
         """
 
-        self.__service = service
-        self.__parameters = parameters
-        self.__hazards = hazards
+        self.__service: sr.Service = service
+        self.__s3_parameters: s3p.S3Parameters = s3_parameters
+        self.__hazards: list[int] = config.Config().hazards
 
     @staticmethod
     def __integrate(registry: pd.DataFrame, stations: pd.DataFrame, substances: pd.DataFrame) -> pd.DataFrame:
@@ -78,10 +78,10 @@ class Interface:
         # Observation Network depositories, or (b) structured references saved in Amazon S3?
         if restart:
             registry, stations, substances = src.references.regenerate.Regenerate(
-                service=self.__service, parameters=self.__parameters).exc()
+                service=self.__service, s3_parameters=self.__s3_parameters).exc()
         else:
             registry, stations, substances = src.references.read.Read(
-                service=self.__service, parameters=self.__parameters).exc()
+                service=self.__service, s3_parameters=self.__s3_parameters).exc()
 
         # Merge and structure the references
         data = self.__integrate(registry=registry, stations=stations, substances=substances)

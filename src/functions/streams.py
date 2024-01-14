@@ -11,6 +11,9 @@ import requests
 class Streams:
     """
     Class Streams
+
+    Description
+    -----------
     Reads 'csv' files, and exports data frames to 'csv' files.
     """
 
