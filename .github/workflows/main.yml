@@ -76,6 +76,8 @@ jobs:
           printf "\n"
           echo "============================= coverage session starts =============================="
           
-          printf "\n"
-          printf "Upcoming ... pytest --cov-report term-missing  --cov src/algorithms/ tests/algorithms/"
-          printf "Upcoming ... pytest --cov-report term-missing  --cov src/elements/ tests/elements/"
+          printf "\nCoverage tests/algorithms/"
+          printf "\n Upcoming ... pytest --cov-report term-missing  --cov src/algorithms/ tests/algorithms/"
+          
+          printf "\nCoverage tests/elements/"
+          printf "\n Upcoming ... pytest --cov-report term-missing  --cov src/elements/ tests/elements/"
