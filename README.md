@@ -36,8 +36,6 @@ To delete an Amazon Glue Crawler or Amazon Glue Database
 
 wherein {item} is an Amazon Glue item, at present {item} = <span style="color: #722f37">crawler</span> or <span style="color: #722f37">database</span>, and {instance} is the name of a crawler or a database. 
 
-
-
 <br>
 
 ## Remote & Local Environments
