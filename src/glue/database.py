@@ -2,6 +2,8 @@
 Module database.py
 """
 
+import logging
+
 import botocore.client
 import botocore.exceptions
 
@@ -35,9 +37,13 @@ class Database:
 
         try:
             self.__glue_client.delete_database(Name=name)
+            logging.log(level=logging.INFO, msg=f'Database {name} has been deleted.')
+            return True
         except self.__glue_client.exceptions.EntityNotFoundException:
+            logging.log(level=logging.INFO, msg=f'Database {name} does not exist.')
             return True
         except self.__glue_client.exceptions.OperationTimeoutException:
+            logging.log(level=logging.INFO, msg='Time out.')
             return False
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
