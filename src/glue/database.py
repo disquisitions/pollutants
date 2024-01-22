@@ -26,11 +26,18 @@ class Database:
         # Glue Client
         self.__glue_client: botocore.client.BaseClient = service.glue_client
 
-    def delete_database(self, name: str):
+    def delete_database(self, name: str) -> bool:
         """
 
         :param name:
         :return:
         """
 
-        self.__glue_client.delete_database(Name=name)
+        try:
+            self.__glue_client.delete_database(Name=name)
+        except self.__glue_client.exceptions.EntityNotFoundException:
+            return True
+        except self.__glue_client.exceptions.OperationTimeoutException:
+            return False
+        except botocore.exceptions.ClientError as err:
+            raise Exception(err) from err
