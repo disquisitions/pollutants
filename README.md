@@ -14,6 +14,8 @@ Automation:
    the approach used for the planets project.  In relation the new approach [study this example](https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/build-and-push-docker-images-to-amazon-ecr-using-github-actions-and-terraform.html), which is infeasible because Terraform is not an open source product anymore.
 * Amazon Glue & Data Catalogues
 * Code Analysis & GitHub Actions
+* The Dockerfile for production state; [a production set-up example](https://github.
+  com/discourses/augmentation/blob/master/Dockerfile).
 
 Usage Notes:
 
