@@ -1,20 +1,23 @@
+"""
+Module src/glue/delete/main.py
+"""
+import argparse
 import logging
 import os
 import sys
 
-import argparse
-
 
 def main():
     """
+    For deleting Amazon Glue items.
 
     :return:
     """
 
     logger = logging.getLogger(__name__)
-    logger.info(item)
-    logger.info(instance)
+    logger.info('Deleting a Amazon Glue item ... ')
 
+    # Cases
     match item:
         case 'crawler':
             src.glue.crawler.Crawler(service=service, s3_parameters=s3_parameters).delete_crawler(name=instance)
@@ -22,6 +25,9 @@ def main():
             src.glue.database.Database(service=service).delete_database(name=instance)
         case _:
             return f'{item} is not an option.'
+
+    # Deleting __pycache__
+    src.functions.cache.Cache().delete()
 
 
 if __name__ == '__main__':
