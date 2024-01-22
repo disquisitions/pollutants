@@ -6,6 +6,10 @@ import argparse
 
 
 def main():
+    """
+
+    :return:
+    """
 
     logger = logging.getLogger(__name__)
     logger.info(item)
