@@ -100,6 +100,7 @@ class Crawler:
             self.__glue_client.delete_crawler(Name=name)
             return True
         except self.__glue_client.exceptions.EntityNotFoundException:
+            logging.log(level=logging.INFO, msg=f'A glue crawler named {name} does not exist.')
             return True
         except self.__glue_client.exceptions.CrawlerRunningException:
             logging.log(level=logging.INFO, msg='The glue crawler is running ...')
