@@ -33,9 +33,21 @@ if __name__ == '__main__':
     import src.glue.delete.arguments
     import src.s3.parameters
 
+    # Arguments
     arguments = src.glue.delete.arguments.Arguments()
     parser = argparse.ArgumentParser()
 
+    parser.add_argument('item',
+                        type=arguments.item,
+                        help='The Amazon Glue item, i.e., <crawler> or <database> of interest.')
+    parser.add_argument('instance', type=arguments.instance,
+                        help='The name of the instance, i.e., crawler name or database name, '
+                             'being deleted within a Glue item.')
+
+    # Get the data parameters encoded by the input
+    args = parser.parse_args()
+    item = args.item
+    instance = args.instance
 
     # Instances
     profile = src.functions.profile.Profile().exc()
@@ -43,3 +55,4 @@ if __name__ == '__main__':
     service = src.functions.service.Service(s3_parameters=s3_parameters, profile=profile).exc()
 
     main()
+    
