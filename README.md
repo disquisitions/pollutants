@@ -28,7 +28,7 @@ Mathematics:
 
 ## Explanatory Notes
 
-To delete an Amazon Glue Crawler
+To delete an Amazon Glue Crawler or Amazon Glue Database
 
 > ```shell
 > python src/glue/delete/main.py {item} {instance}
