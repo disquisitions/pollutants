@@ -11,6 +11,11 @@ def main():
     logger.info(item)
     logger.info(instance)
 
+    return {
+        'crawler': src.glue.crawler.Crawler(service=service, s3_parameters=s3_parameters).delete_crawler(name=instance),
+        'database': src.glue.database.Database(service=service).delete_database(name=instance)
+    }.get(item, LookupError(f'{item} is not an option.'))
+
 
 if __name__ == '__main__':
     # Paths
