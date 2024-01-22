@@ -8,6 +8,8 @@ import argparse
 def main():
 
     logger = logging.getLogger(__name__)
+    logger.info(item)
+    logger.info(instance)
 
 
 if __name__ == '__main__':
@@ -33,10 +35,9 @@ if __name__ == '__main__':
     import src.glue.delete.arguments
     import src.s3.parameters
 
-    # Arguments
+    # Arguments: Strings by default
     arguments = src.glue.delete.arguments.Arguments()
     parser = argparse.ArgumentParser()
-
     parser.add_argument('item',
                         type=arguments.item,
                         help='The Amazon Glue item, i.e., <crawler> or <database> of interest.')
@@ -55,4 +56,3 @@ if __name__ == '__main__':
     service = src.functions.service.Service(s3_parameters=s3_parameters, profile=profile).exc()
 
     main()
-    
