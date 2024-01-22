@@ -29,9 +29,6 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     # Classes
-    import src.elements.s3_parameters as s3p
-    import src.elements.profile as po
-    import src.elements.service as sr
     import src.functions.cache
     import src.functions.profile
     import src.functions.service
