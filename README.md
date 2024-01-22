@@ -20,6 +20,10 @@ Usage Notes:
 * Explanatory usage notes
 * Resources files
 
+Mathematics:
+
+* [Manifolds](https://scikit-learn.org/stable/modules/manifold.html)
+
 <br>
 
 ## Remote & Local Environments
@@ -53,7 +57,6 @@ A developer may attach an IDE (independent development environment) application 
 <br>
 
 Similarly, Visual Studio Code as its container attachment instructions; study [Attach Container](https://code.visualstudio.com/docs/devcontainers/attach-container).
-
 
 ### Local
 
