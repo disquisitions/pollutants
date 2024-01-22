@@ -57,7 +57,7 @@ if __name__ == '__main__':
     # If restart then all the pollutants data retrieved thus far will be deleted from the cloud depository.
     restart = True
 
-    # S3Parameters & Service
+    # S3 Parameters, Profile, Service Instance
     s3_parameters: s3p.S3Parameters = src.s3.parameters.Parameters().exc()
     profile: po.Profile = src.functions.profile.Profile().exc()
     service: sr.Service = src.functions.service.Service(s3_parameters=s3_parameters, profile=profile).exc()
