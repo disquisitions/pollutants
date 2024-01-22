@@ -15,7 +15,6 @@ class Database:
     Class Database
 
     In progress ...
-        https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/glue/client/delete_database.html
         https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/python/example_code/glue#code-examples
     """
 
@@ -30,6 +29,7 @@ class Database:
 
     def delete_database(self, name: str) -> bool:
         """
+        https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/glue/client/delete_database.html
 
         :param name:
         :return:
