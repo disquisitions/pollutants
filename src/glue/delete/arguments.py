@@ -2,6 +2,7 @@
 Module arguments:
     Parses the input arguments
 """
+import numpy as np
 
 
 class Arguments:
@@ -22,13 +23,14 @@ class Arguments:
         :return: 
         """
 
-        items = {'crawler', 'database'}
-        assert items.intersection({name}), 'The item options are <crawler> & <database>'
+        items = ['crawler', 'database']
+        print(name in items)
+        assert (name in items), 'The item options are <crawler> & <database>'
 
         return name
 
     @staticmethod
-    def instance(name: str) -> str:
+    def instance(name) -> str:
         """
 
         :param name: The name of the instance, i.e., crawler name or database name, being
@@ -36,7 +38,7 @@ class Arguments:
         :return:
         """
 
-        assert isinstance(name, str), 'The instance name must be a string'
+        assert len(name) > 0 & len(name) < 256, 'The instance name length must be within (0  256)'
 
         return name
         
