@@ -32,6 +32,7 @@ class Arguments:
     @staticmethod
     def instance(name) -> str:
         """
+        https://docs.aws.amazon.com/glue/latest/webapi/WebAPI_Welcome.html
 
         :param name: The name of the instance, i.e., crawler name or database name, being
                      deleted within a Glue item
