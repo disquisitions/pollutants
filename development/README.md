@@ -1,9 +1,10 @@
 <br>
 
-Notes
+* [Remote & Local Environments](#remote--local-environments)
+* [Development Notes](#development-notes)
+* [Snippets](#snippets)
 
 <br>
-
 
 ## Remote & Local Environments
 
@@ -54,8 +55,6 @@ conda env create --file environment.yml -p /opt/miniconda3/envs/pollutants
 ```
 
 which uses the same **requirements.txt** as Dockerfile.
-
-
 
 
 
