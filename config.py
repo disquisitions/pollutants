@@ -20,7 +20,7 @@ class Config:
         self.points_storage = os.path.join(self.warehouse, 'environment', 'pollutants', 'points')
 
         # After the development phase, '732 days', i.e., 2 years.
-        self.span = '183 days'
+        self.span = '21 days'
 
         # 1 Sulphur Dioxide
         # 5 Particulate matter < 10 µm (aerosol)
