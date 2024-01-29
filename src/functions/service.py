@@ -73,5 +73,6 @@ class Service:
         # Hence, the collection
         return src.elements.service.Service(s3_resource=self.__s3_resource,
                                             s3_client=self.__s3_client,
+                                            secrets_manager=self.__secrets_manager,
                                             glue_client=self.__glue_client,
                                             glue_arn=self.__glue_arn())
