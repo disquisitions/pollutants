@@ -46,6 +46,8 @@ class Service:
             service_name='s3', region_name=s3_parameters.region_name)
         self.__s3_client: boto3.session.Session.client = boto3.client(
             service_name='s3', region_name=s3_parameters.region_name)
+        self.__secrets_manager = boto3.client(
+            service_name='secretsmanager', region_name=s3_parameters.region_name)
         self.__glue_client: botocore.client.BaseClient = boto3.client(
             service_name='glue', region_name=s3_parameters.region_name)
 
