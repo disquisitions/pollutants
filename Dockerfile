@@ -13,7 +13,6 @@ RUN pip install --requirement /app/requirements.txt --no-cache-dir && mkdir /app
 
 # Specific COPY
 COPY src /app/
-COPY resources/glue_parameters.yaml /app/resources/
 COPY resources/s3_parameters.yaml /app/resources/
 COPY config.py /app/config.py
 
