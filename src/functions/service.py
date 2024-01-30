@@ -39,16 +39,18 @@ class Service:
         self.__profile = profile
 
         # Profile/Auto-login
-        boto3.setup_default_session(profile_name=self.__profile.name)
+        # boto3.setup_default_session(profile_name=self.__profile.name)
+        connector = boto3.session.Session()
+        print(f'name: {connector.profile_name}')
 
         # The S3 resource, client, etc.
-        self.__s3_resource: boto3.session.Session.resource = boto3.resource(
+        self.__s3_resource: boto3.session.Session.resource = connector.resource(
             service_name='s3', region_name=s3_parameters.region_name)
-        self.__s3_client: boto3.session.Session.client = boto3.client(
+        self.__s3_client: boto3.session.Session.client = connector.client(
             service_name='s3', region_name=s3_parameters.region_name)
-        self.__secrets_manager = boto3.client(
+        self.__secrets_manager = connector.client(
             service_name='secretsmanager', region_name=s3_parameters.region_name)
-        self.__glue_client: botocore.client.BaseClient = boto3.client(
+        self.__glue_client: botocore.client.BaseClient = connector.client(
             service_name='glue', region_name=s3_parameters.region_name)
 
     def __glue_arn(self) -> str:
