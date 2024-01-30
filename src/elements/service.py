@@ -20,12 +20,8 @@ class Service(typing.NamedTuple):
         The boto3.client instance, with service & region name settings.
     secrets_manager: boto3.session.Session.client
         A boto3.client instance for secrets
-    glue_client
-    glue_arn
     """
 
     s3_resource: boto3.session.Session.resource
     s3_client: boto3.session.Session.client
     secrets_manager: boto3.session.Session.client
-    glue_client: botocore.client.BaseClient
-    glue_arn: str
