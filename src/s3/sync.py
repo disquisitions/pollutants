@@ -5,8 +5,6 @@ import logging
 import platform
 import subprocess
 
-import src.elements.profile as po
-
 
 class Sync:
     """
@@ -17,17 +15,15 @@ class Sync:
         * https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-s3-requests
     """
 
-    def __init__(self, restart: bool, profile: po.Profile):
+    def __init__(self, restart: bool):
         """
 
         :param restart: Restart?  If yes, it means all previous cloud data
                         will be, has been, deleted during this run.
-        :param profile: The developer's Amazon Web Services profile details
         """
 
         self.__restart: bool = restart
         self.__shell = False if platform.system().lower() == 'windows' else True
-        self.__profile_name = profile.name
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -50,6 +46,6 @@ class Sync:
             action = 'cp'
 
         message = subprocess.run(f"""aws s3 {action} {source} {destination} """ +
-                                 f"""--metadata {metadata} --profile {self.__profile_name}""",
+                                 f"""--metadata {metadata}""",
                                  shell=self.__shell, capture_output=True)
         self.__logger.info(message)
