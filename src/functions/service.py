@@ -39,9 +39,7 @@ class Service:
         self.__profile = profile
 
         # Profile/Auto-login
-        # boto3.setup_default_session(profile_name=self.__profile.name)
         connector = boto3.session.Session()
-        print(f'name: {connector.profile_name}')
 
         # The S3 resource, client, etc.
         self.__s3_resource: boto3.session.Session.resource = connector.resource(
