@@ -29,3 +29,4 @@ class Sequence(typing.NamedTuple):
     latitude: float
     substance: str
     notation: str
+    datestr: str
