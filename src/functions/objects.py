@@ -53,9 +53,9 @@ class Objects:
         try:
             response = requests.get(url=url, timeout=35)
             response.raise_for_status()
-        except requests.exceptions.Timeout:
+        except requests.exceptions.Timeout as err:
             logging.log(level=logging.INFO, msg=f"TIME OUT: {url.split('timeseries')[1]}")
-            return {'data': {}}
+            raise err from err
         except requests.exceptions.HTTPError as err:
             raise f'HTTP Error: {err}' from err
         except Exception as err:
