@@ -52,7 +52,7 @@ if __name__ == '__main__':
     import src.functions.service
 
     import src.references.interface
-    import src.s3.parameters
+    import src.s3.s3_parameters
     import src.setup
 
     '''
@@ -62,9 +62,9 @@ if __name__ == '__main__':
     restart = True
 
     '''
-    S3 Parameters, Service Instance
+    S3 S3Parameters, Service Instance
     '''
-    s3_parameters: s3p.S3Parameters = src.s3.parameters.Parameters().exc()
+    s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters().exc()
     service: sr.Service = src.functions.service.Service().exc()
 
     '''
