@@ -91,7 +91,7 @@ class Points:
             basename = os.path.join(self.__storage, f'pollutant_{sequence.pollutant_id}', f'station_{sequence.station_id}')
             return self.__streams.write(blob=blob, path=os.path.join(basename, f'{datestr}.csv'))
 
-    def exc(self, datestr: str):
+    def exc(self):
         """
 
         :param datestr:
@@ -100,10 +100,10 @@ class Points:
 
         computations = []
         for sequence in self.__sequences:
-            url = self.__url(sequence_id=sequence.sequence_id, datestr=datestr)
+            url = self.__url(sequence_id=sequence.sequence_id, datestr=sequence.datestr)
             dictionary = self.__reading(url=url)
             data = self.__building(dictionary=dictionary, sequence_id=sequence.sequence_id)
-            message = self.__depositing(blob=data, datestr=datestr, sequence=sequence)
+            message = self.__depositing(blob=data, datestr=sequence.datestr, sequence=sequence)
             computations.append(message)
         messages = dask.compute(computations, scheduler='threads')[0]
 

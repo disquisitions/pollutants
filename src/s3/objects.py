@@ -12,8 +12,6 @@ import src.elements.service as sr
 class Objects:
     """
     Class Objects
-
-    Will list all the S3 objects associated with this machine's active AWS CLI profile
     """
 
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):

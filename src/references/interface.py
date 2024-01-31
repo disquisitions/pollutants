@@ -4,7 +4,6 @@ import logging
 import pandas as pd
 
 import src.elements.s3_parameters as s3p
-import src.elements.sequence as sq
 import src.elements.service as sr
 import src.references.read
 import src.references.regenerate
@@ -16,16 +15,21 @@ class Interface:
     Class Interface
     """
 
-    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters, restart: bool):
         """
 
-        :param service:
-        :param s3_parameters
+        :param service: A collection of Amazon services
+        :param s3_parameters: Amazon S3 parameters
+        :param restart: Restart?
         """
 
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
+        self.__restart = restart
+
+        # Config
         self.__hazards: list[int] = config.Config().hazards
+        self.__sequence_id_filter: list[int] = config.Config().sequence_id_filter
 
     @staticmethod
     def __integrate(registry: pd.DataFrame, stations: pd.DataFrame, substances: pd.DataFrame) -> pd.DataFrame:
@@ -45,7 +49,7 @@ class Interface:
 
         return frame
 
-    def __sequences(self, blob: pd.DataFrame) -> list[sq.Sequence]:
+    def __excerpt(self, blob: pd.DataFrame) -> pd.DataFrame:
         """
 
         :param blob:
@@ -59,24 +63,19 @@ class Interface:
         #  * Extract the records in focus
         conditionals = data['longitude'].isna() | data['latitude'].isna()
         excerpt: pd.DataFrame = data.copy().loc[~conditionals, :]
-        excerpt = excerpt.copy().loc[excerpt['pollutant_id'].isin(self.__hazards), :]
+        excerpt = excerpt.copy().loc[excerpt['sequence_id'].isin(self.__sequence_id_filter), :]
 
-        # Structuring
-        structures: list[dict] = excerpt.to_dict(orient='records')
+        return excerpt
 
-        return [src.elements.sequence.Sequence(**structure)
-                for structure in structures]
-
-    def exc(self, restart: bool) -> list[sq.Sequence]:
+    def exc(self) -> pd.DataFrame:
         """
 
-        :param restart:
         :return:
         """
 
         # Retrieve (a) raw references data from Scottish Air & European Environment Information and
         # Observation Network depositories, or (b) structured references saved in Amazon S3?
-        if restart:
+        if self.__restart:
             registry, stations, substances = src.references.regenerate.Regenerate(
                 service=self.__service, s3_parameters=self.__s3_parameters).exc()
         else:
@@ -85,6 +84,6 @@ class Interface:
 
         # Merge and structure the references
         data = self.__integrate(registry=registry, stations=stations, substances=substances)
-        sequences = self.__sequences(blob=data)
+        excerpt = self.__excerpt(blob=data)
 
-        return sequences
+        return excerpt
