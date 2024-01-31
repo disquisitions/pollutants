@@ -21,10 +21,9 @@ def main():
     excerpt = src.references.interface.Interface(
         service=service, s3_parameters=s3_parameters, restart=restart).exc()
 
-    # Sequences
+    # A parallel execution matrix: (metadata of sequences ⊗ dates), i.e., outer product
     sequences = src.algorithms.vectors.Vectors(
         excerpt=excerpt, datestr_=datestr_).exc()
-    logger.info(sequences)
 
     # Execute
     src.data.interface.Interface(
