@@ -37,7 +37,7 @@ class Dates:
         :return:
         """
 
-        date = pd.Timestamp.today().date() - pd.Timedelta('60 day')
+        date = pd.Timestamp.today().date() - pd.Timedelta('2 day')
 
         if self.__restart:
             values = pd.date_range(start=date - pd.Timedelta(self.__configurations.span), end=date, freq='D').to_list()
