@@ -17,15 +17,18 @@ def main():
     # The dates
     datestr_ = src.algorithms.dates.Dates(restart=restart).exc()
 
-    # Sequences
-    sequences = src.references.interface.Interface(
+    # Excerpt of metadata of sequences
+    excerpt = src.references.interface.Interface(
         service=service, s3_parameters=s3_parameters, restart=restart).exc()
 
-    # Distribution
+    # Sequences
+    sequences = src.algorithms.vectors.Vectors(
+        excerpt=excerpt, datestr_=datestr_).exc()
+    logger.info(sequences)
 
     # Execute
-    # src.data.interface.Interface(
-    #    s3_parameters=s3_parameters, sequences=sequences, restart=restart).exc(datestr_=datestr_)
+    src.data.interface.Interface(
+       s3_parameters=s3_parameters, sequences=sequences, restart=restart).exc(datestr_=datestr_)
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
@@ -48,6 +51,7 @@ if __name__ == '__main__':
     '''
     import config
     import src.algorithms.dates
+    import src.algorithms.vectors
     import src.data.interface
 
     import src.elements.s3_parameters as s3p
