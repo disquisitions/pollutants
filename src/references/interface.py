@@ -49,7 +49,7 @@ class Interface:
 
         return frame
 
-    def __sequences(self, blob: pd.DataFrame) -> pd.DataFrame:
+    def __excerpt(self, blob: pd.DataFrame) -> pd.DataFrame:
         """
 
         :param blob:
@@ -63,7 +63,6 @@ class Interface:
         #  * Extract the records in focus
         conditionals = data['longitude'].isna() | data['latitude'].isna()
         excerpt: pd.DataFrame = data.copy().loc[~conditionals, :]
-        excerpt = excerpt.copy().loc[excerpt['pollutant_id'].isin(self.__hazards), :]
         excerpt = excerpt.copy().loc[excerpt['sequence_id'].isin(self.__sequence_id_filter), :]
 
         return excerpt
@@ -85,6 +84,6 @@ class Interface:
 
         # Merge and structure the references
         data = self.__integrate(registry=registry, stations=stations, substances=substances)
-        sequences = self.__sequences(blob=data)
+        excerpt = self.__excerpt(blob=data)
 
-        return sequences
+        return excerpt
