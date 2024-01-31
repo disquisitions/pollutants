@@ -1,12 +1,26 @@
-import dask
+"""
+Module vectors.py
+"""
 import functools
 import operator
+
+import dask
 import pandas as pd
 
 import src.elements.sequence as sq
 
 
 class Vectors:
+    """
+    Class Vectors
+
+    Notes
+    -----
+    For parallel execution purposes, this class creates a vector of collections
+    whereby each collection denotes the data retrieval parameters of a device, i.e.,
+    pollutant, for a particular day.
+
+    """
 
     def __init__(self, excerpt: pd.DataFrame, datestr_: list[str]):
         """
