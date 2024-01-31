@@ -22,7 +22,11 @@ class Config:
         # After the development phase, '732 days', i.e., 2 years.
         self.span = '2 days'
 
-        # 1 Sulphur Dioxide
+        # 1 Sulphur Dioxide [SO2]
         # 5 Particulate matter < 10 µm (aerosol)
-        # 8 Nitrogen Dioxide (air)
-        self.hazards = [1, 8]
+        # 8 Nitrogen Dioxide (air) [NO2]
+        # 38 Nitrogen Monoxide [NO]
+        self.hazards = [1, 38]
+
+        # Devices in focus, via their series codes
+        self.sequence_id_filter = [907, 900, 1013]
