@@ -19,8 +19,8 @@ class Interface:
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
 
-        :param service:
-        :param s3_parameters
+        :param service: A collection of Amazon services
+        :param s3_parameters: Amazon S3 parameters
         """
 
         self.__service: sr.Service = service
