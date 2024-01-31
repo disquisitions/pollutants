@@ -7,7 +7,6 @@ import boto3
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.functions.serial
-import src.s3.parameters
 
 
 class Service:
