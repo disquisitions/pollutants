@@ -5,7 +5,6 @@ This is the data type Interface
 import typing
 
 import boto3
-import botocore.client
 
 
 class Service(typing.NamedTuple):
