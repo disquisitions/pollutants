@@ -29,4 +29,5 @@ class Config:
         self.hazards = [1, 38]
 
         # Devices in focus, via their series codes
-        self.sequence_id_filter = [907, 900, 1013]
+        # station: 907, sequence 161 | station: 900, sequence 154 | station: 1013, sequence 530 |
+        self.sequence_id_filter = [161, 154, 530]
