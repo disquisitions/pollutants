@@ -26,10 +26,6 @@ class Service:
 
     def __init__(self):
         """
-
-        Describe
-        --------
-
         The constructor.
         """
 
