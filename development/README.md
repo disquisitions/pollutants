@@ -87,8 +87,6 @@ logging.log(level=logging.INFO, msg=f'Operating System Name (posix or nt): {os.n
 logging.log(level=logging.INFO, msg=f'Platform: {platform.system()}')
 ```
 
-
-
 <br>
 <br>
 
