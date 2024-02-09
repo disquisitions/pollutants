@@ -101,6 +101,10 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Login to Amazon ECR
+        run: |
+          printf "\n"
+          echo "If this repository is moved to a different GitHub Organization, remember to update the 
+          trust policy of the IAM role, i.e., of secrets.AWS_ARN_ECR_ACTIONS"
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
