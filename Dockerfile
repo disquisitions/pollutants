@@ -12,8 +12,8 @@ RUN pip install --requirement /app/requirements.txt --no-cache-dir && mkdir /app
     mkdir /app/resources
 
 # Specific COPY
-COPY src /app/
-COPY resources/s3_parameters.yaml /app/resources/
+COPY src /app/src
+COPY resources /app/resources
 COPY config.py /app/config.py
 
 # Port
