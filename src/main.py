@@ -72,7 +72,7 @@ if __name__ == '__main__':
     S3 S3Parameters, Service Instance
     '''
     s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters().exc()
-    service: sr.Service = src.functions.service.Service().exc()
+    service: sr.Service = src.functions.service.Service(region_name=s3_parameters.region_name).exc()
 
     '''
     Setting-up
