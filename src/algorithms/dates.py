@@ -3,6 +3,8 @@ Module dates.py
 """
 import logging
 
+import datetime
+
 import pandas as pd
 
 import config
@@ -37,13 +39,16 @@ class Dates:
         :return:
         """
 
-        date = pd.Timestamp.today().date() - pd.Timedelta('2 day')
+        # Settings
+        ending = datetime.datetime.today()
+        starting = datetime.datetime.today() - datetime.timedelta(days=self.__configurations.span)
 
+        # A series of dates wherein each date is the date of the first day of a month
         if self.__restart:
-            values = pd.date_range(start=date - pd.Timedelta(self.__configurations.span), end=date, freq='D').to_list()
+            values = pd.date_range(start=starting, end=ending, freq='MS').to_list()
             datestr_ = [str(value.date()) for value in values]
         else:
-            datestr_ = [str(date)]
+            datestr_ = [str(ending.replace(day=1).date())]
 
         self.__logger.info('Dates\n%s', datestr_)
 
