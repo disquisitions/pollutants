@@ -16,6 +16,7 @@ def main():
 
     # The dates
     datestr_ = src.algorithms.dates.Dates(restart=restart).exc()
+    logger.info(datestr_)
 
     # Excerpt of metadata of sequences
     excerpt = src.references.interface.Interface(
