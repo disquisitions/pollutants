@@ -3,6 +3,7 @@
 * [Remote & Local Environments](#remote--local-environments)
 * [Development Notes](#development-notes)
 * [Snippets](#snippets)
+* [References](#references)
 
 <br>
 
@@ -37,8 +38,6 @@ A developer may attach an IDE (independent development environment) application 
 <br>
 
 Similarly, Visual Studio Code as its container attachment instructions; study [Attach Container](https://code.visualstudio.com/docs/devcontainers/attach-container).
-
-<br>
 
 ### Local
 
@@ -86,6 +85,11 @@ import platform
 logging.log(level=logging.INFO, msg=f'Operating System Name (posix or nt): {os.name}')
 logging.log(level=logging.INFO, msg=f'Platform: {platform.system()}')
 ```
+
+## References
+
+* [Epoch Time](https://unixtime.org)
+
 
 <br>
 <br>
