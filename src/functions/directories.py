@@ -37,6 +37,8 @@ class Directories:
                          for base, directories, _ in os.walk(path, topdown=False)
                          for directory in directories
                          if os.path.exists(os.path.join(base, directory))]
+        elements = [directory for _, directories, _ in os.walk(path) for directory in directories]
+        assert len(elements) == 0, f'Unable to delete all directories within path {path}'
 
         # Hence
         try:
