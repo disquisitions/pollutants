@@ -117,7 +117,7 @@ jobs:
           REPOSITORY: ${{ github.repository }}
           IMAGE_TAG: ${{ steps.meta.outputs.tags }}
         run: |
-          docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.ref_name }}
+          docker push "${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.ref_name }}"
 
   docker:
     runs-on: ubuntu-latest
