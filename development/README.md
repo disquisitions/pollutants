@@ -57,7 +57,11 @@ which uses the same **requirements.txt** as Dockerfile.
 
 
 
+
+
 ## Development Notes
+
+### Code Analysis
 
 The directive
 
@@ -70,6 +74,26 @@ generates the dotfile `.pylintrc` of the static code analyser [pylint](https://p
 ```shell
 python -m pylint --rcfile .pylintrc ...
 ```
+
+### GitHub Actions & Container Registry Packages
+
+**Case** _"permission denied"_, the `packages` section of [main.yml](/.github/workflows/main.yml) is probably missing
+
+```yaml
+permissions:
+  contents: read
+  packages: write
+```
+
+**Case** _"... image does not exist locally with the tag: ghcr.io... "_, probably forgot
+
+```shell
+docker build . --file Dockerfile --tag ...
+```
+
+within the `packages` section of [main.yml](/.github/workflows/main.yml).
+
+
 
 
 ## Snippets
