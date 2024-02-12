@@ -96,11 +96,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+
       - name: Build & Push
         env:
           REGISTRY: ghcr.io
-          REPOSITORY: 'environment'
-          IMAGE_TAG: ${{ github.event.repository.name }}
+          REPOSITORY: ${{ github.repository }}
+          IMAGE_TAG: 'latest' # ${{ steps.meta.outputs.tags }}
         run: |
           docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
 
