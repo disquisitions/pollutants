@@ -8,7 +8,7 @@ RUN pip install --upgrade pip
 # file of each step separately; and RUN the file immediately after COPY
 WORKDIR /app
 COPY requirements.txt /app
-RUN pip install --requirement /app/requirements.txt --no-cache-dir && \
+RUN pip install --requirement /app/requirements.txt --no-cache-dir && mkdir /app/warehouse && \
     mkdir /app/resources
 
 # Specific COPY
@@ -20,7 +20,7 @@ COPY config.py /app/config.py
 EXPOSE 8050
 
 # Create mountpoint
-# VOLUME /app/warehouse
+VOLUME /app/warehouse
 
 # ENTRYPOINT
 ENTRYPOINT ["python"]
