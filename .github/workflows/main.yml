@@ -88,7 +88,8 @@ jobs:
           printf "\n Upcoming ... pytest --cov-report term-missing  --cov src/elements/ tests/elements/"
 
 
-  container:
+  packages:
+    name: For GitHub Packages
     runs-on: ubuntu-latest
 
     permissions:
@@ -122,11 +123,11 @@ jobs:
           REPOSITORY: ${{ github.repository }}
           IMAGE_TAG: ${{ steps.meta.outputs.tags }}
         run: |
-          echo "${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.ref_name }}"
           docker build . --file Dockerfile --tag "$REGISTRY/$REPOSITORY:$IMAGE_TAG"
           docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
 
-  docker:
+  ecr:
+    name: Amazon Elastic Container Registry
     runs-on: ubuntu-latest
 
     permissions:
