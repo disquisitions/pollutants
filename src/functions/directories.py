@@ -41,12 +41,14 @@ class Directories:
         assert len(elements) == 0, f'Unable to delete all directories within path {path}'
 
         # Hence
-        try:
-            if os.path.exists(path=path):
-                os.removedirs(path)
-            return True
-        except OSError as err:
-            raise Exception(err) from err
+        return True if len(elements) == 0 else False
+
+        # try:
+        #     if os.path.exists(path=path):
+        #         os.removedirs(path)
+        #     return True
+        # except OSError as err:
+        #     raise Exception(err) from err
 
     @staticmethod
     def create(path: str) -> bool:
