@@ -61,10 +61,9 @@ class Interface:
                         destination=f's3://{self.__s3_parameters.bucket_name}/{self.__s3_parameters.points_}',
                         metadata=self.__metadata())
 
-    def exc(self, datestr_: list[str]):
+    def exc(self):
         """
 
-        :param datestr_: Data is extracted, from Scottish Air Quality, for each date in the list <datestr_>
         :return:
         """
 
