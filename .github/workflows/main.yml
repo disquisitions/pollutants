@@ -113,10 +113,12 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
 
       - name: Build & Push
+        shell: bash
         env:
           REPOSITORY: ${{ github.repository }}
           IMAGE_TAG: ${{ steps.meta.outputs.tags }}
         run: |
+          echo "${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.ref_name }}"
           docker push "${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.ref_name }}"
 
   docker:
