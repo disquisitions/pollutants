@@ -84,6 +84,26 @@ jobs:
           printf "\nCoverage tests/elements/"
           printf "\n Upcoming ... pytest --cov-report term-missing  --cov src/elements/ tests/elements/"
 
+
+  container:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Logging into GitHub Container
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & Push
+        env:
+          REGISTRY: ghcr.io
+          REPOSITORY: 'environment'
+          IMAGE_TAG: ${{ github.event.repository.name }}
+        run: |
+          docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
+
   docker:
     runs-on: ubuntu-latest
 
