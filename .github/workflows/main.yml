@@ -2,6 +2,9 @@ name: Pollutants
 
 on: [push]
 
+env:
+  REGISTRY: ghcr.io
+
 jobs:
   build:
 
@@ -89,10 +92,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Logging into GitHub Container
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -108,7 +114,6 @@ jobs:
 
       - name: Build & Push
         env:
-          REGISTRY: ghcr.io
           REPOSITORY: ${{ github.repository }}
           IMAGE_TAG: ${{ steps.meta.outputs.tags }}
         run: |
