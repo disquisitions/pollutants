@@ -1,6 +1,8 @@
 <br>
 
 * [Remote & Local Environments](#remote--local-environments)
+  * [Remote](#remote) 
+  * [Local](#local)
 * [Development Notes](#development-notes)
 * [Snippets](#snippets)
 * [References](#references)
