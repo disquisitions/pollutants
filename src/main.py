@@ -28,7 +28,7 @@ def main():
 
     # Execute
     src.data.interface.Interface(
-       s3_parameters=s3_parameters, sequences=sequences, restart=restart).exc(datestr_=datestr_)
+       s3_parameters=s3_parameters, sequences=sequences, restart=restart).exc()
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
