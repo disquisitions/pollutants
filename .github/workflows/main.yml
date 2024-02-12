@@ -7,8 +7,9 @@ env:
 
 jobs:
   build:
-
+    name: Code Analysis
     runs-on: ubuntu-latest
+
     strategy:
       max-parallel: 4
       fail-fast: false
@@ -89,7 +90,7 @@ jobs:
 
 
   packages:
-    name: For GitHub Packages
+    name: GitHub Packages Container Registry
     runs-on: ubuntu-latest
 
     permissions:
