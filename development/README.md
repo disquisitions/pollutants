@@ -4,6 +4,8 @@
   * [Remote](#remote) 
   * [Local](#local)
 * [Development Notes](#development-notes)
+  * [Automatic Code Analysis](#code-analysis) 
+  * [GitHub Actions & Container Registry Packages](#github-actions--container-registry-packages)
 * [Snippets](#snippets)
 * [References](#references)
 
