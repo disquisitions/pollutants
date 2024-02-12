@@ -35,6 +35,7 @@ class Points:
     @dask.delayed
     def __url(self, sequence_id: int, datestr: str) -> str:
         """
+        Data from Scottish Air Quality for a period covering ...
 
         :param sequence_id:
         :param datestr:
@@ -94,7 +95,6 @@ class Points:
     def exc(self):
         """
 
-        :param datestr:
         :return:
         """
 
