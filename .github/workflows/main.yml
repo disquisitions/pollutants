@@ -119,7 +119,8 @@ jobs:
           IMAGE_TAG: ${{ steps.meta.outputs.tags }}
         run: |
           echo "${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.ref_name }}"
-          docker push "${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.ref_name }}"
+          docker build . --file Dockerfile --tag "$REGISTRY/$REPOSITORY:$IMAGE_TAG"
+          docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
 
   docker:
     runs-on: ubuntu-latest
