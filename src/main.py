@@ -30,6 +30,11 @@ def main():
     src.data.interface.Interface(
        s3_parameters=s3_parameters, sequences=sequences, restart=restart).exc()
 
+    # Transfer to S3
+    messages = src.s3.ingress.Ingress(service=service, s3_parameters=s3_parameters, metadata=configurations.metadata).exc(
+        path=configurations.points_storage)
+    logger.info(messages)
+
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
     
@@ -60,6 +65,7 @@ if __name__ == '__main__':
     import src.functions.service
 
     import src.references.interface
+    import src.s3.ingress
     import src.s3.s3_parameters
     import src.setup
 
