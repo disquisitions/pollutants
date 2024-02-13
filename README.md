@@ -8,9 +8,10 @@
 
 **Continuous Integration, Delivery, Deployment**
 
-Dockerfile
+Images & Containers
 - [x] The Dockerfile for [development](/.devcontainer/Dockerfile).
 - [x] The Dockerfile for [production](Dockerfile).
+- [ ] A compose.yaml for local testing (<span style="color: #722f37">In Progress</span>)
 
 Container Registries:
 - [x] Local machine &rarr; GitHub &rarr; Amazon Elastic Container Registry (Via [GitHub Actions](.github/workflows/main.yml))
