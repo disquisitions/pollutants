@@ -8,7 +8,7 @@ RUN pip install --upgrade pip
 # file of each step separately; and RUN the file immediately after COPY
 WORKDIR /app
 COPY requirements.txt /app
-RUN pip install --requirement /app/requirements.txt --no-cache-dir && mkdir /app/warehouse && \
+RUN pip install --requirement /app/requirements.txt --no-cache-dir && apt -y install awscli && mkdir /app/warehouse && \
     mkdir /app/resources
 
 # Specific COPY
