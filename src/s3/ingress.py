@@ -39,8 +39,9 @@ class Ingress:
     def __ingress(self, file: str, key: str) -> str:
         """
 
-        :param file:
-        :param key:
+        :param file: The local file string, i.e., <path> + <file name> + <extension>, of the file being uploaded
+        :param key: The Amazon S3 key of the file being uploaded; this is relative to the S3 Bucket name, but excludes the S3
+                    Bucket name.
         :return:
         """
 
