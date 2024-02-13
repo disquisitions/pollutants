@@ -1,3 +1,6 @@
+"""
+Module ingress.py
+"""
 import glob
 import os
 
@@ -9,6 +12,9 @@ import src.elements.service as sr
 
 
 class Ingress:
+    """
+    Class Ingress
+    """
 
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters, metadata: dict):
         """
