@@ -14,6 +14,11 @@ import src.elements.service as sr
 class Ingress:
     """
     Class Ingress
+
+    Description
+    -----------
+
+    Uploads files to Amazon S3
     """
 
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters, metadata: dict):
