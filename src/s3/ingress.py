@@ -55,7 +55,7 @@ class Ingress:
     def exc(self, path: str) -> list[str]:
         """
 
-        :param path:
+        :param path: The path to the files being transferred to Amazon Simple Storage Service (S3)
         :return:
         """
 
