@@ -43,13 +43,6 @@ class Directories:
         # Hence
         return True if len(elements) == 0 else False
 
-        # try:
-        #     if os.path.exists(path=path):
-        #         os.removedirs(path)
-        #     return True
-        # except OSError as err:
-        #     raise Exception(err) from err
-
     @staticmethod
     def create(path: str) -> bool:
         """
