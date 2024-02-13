@@ -24,8 +24,11 @@ class Ingress:
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters, metadata: dict):
         """
 
-        :param service:
-        :param s3_parameters:
+        :param service: A suite of services for interacting with Amazon Web Services.
+        :param s3_parameters: The overarching S3 parameters settings of this project, e.g., region code
+                              name, bucket name, etc.
+        :param metadata: The metadata of the files being uploaded.  Note, files of the same content type are expected,
+                         assumed.
         """
 
         self.__s3_client = service.s3_client
