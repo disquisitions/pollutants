@@ -15,11 +15,12 @@ def main():
     logger.info('Pollutants')
 
     # The dates
-    datestr_ = src.algorithms.dates.Dates(restart=restart).exc()
+    datestr_ = src.algorithms.dates.Dates(restart=RESTART).exc()
+    logger.info(datestr_)
 
     # Excerpt of metadata of sequences
     excerpt = src.references.interface.Interface(
-        service=service, s3_parameters=s3_parameters, restart=restart).exc()
+        service=service, s3_parameters=s3_parameters, restart=RESTART).exc()
 
     # A parallel execution matrix: (metadata of sequences ⊗ dates), i.e., outer product
     sequences = src.algorithms.vectors.Vectors(
@@ -27,16 +28,19 @@ def main():
 
     # Execute
     src.data.interface.Interface(
-       s3_parameters=s3_parameters, sequences=sequences, restart=restart).exc(datestr_=datestr_)
+       s3_parameters=s3_parameters, sequences=sequences, restart=RESTART).exc()
+
+    # Transfer to S3
+    messages = src.s3.ingress.Ingress(service=service, s3_parameters=s3_parameters, metadata=configurations.metadata).exc(
+        path=configurations.points_storage)
+    logger.info(messages)
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
-    
+
 
 if __name__ == '__main__':
-    '''
-    Setting-up
-    '''
+    # Setting-up
     root = os.getcwd()
     sys.path.append(root)
     sys.path.append(os.path.join(root, 'src'))
@@ -44,10 +48,8 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,
                         format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
                         datefmt='%Y-%m-%d %H:%M:%S')
-    
-    '''
-    Modules
-    '''
+
+    # Modules
     import config
     import src.algorithms.dates
     import src.algorithms.vectors
@@ -59,26 +61,21 @@ if __name__ == '__main__':
     import src.functions.service
 
     import src.references.interface
+    import src.s3.ingress
     import src.s3.s3_parameters
     import src.setup
 
-    '''
-    Upcoming arguments:
-    If restart then all the pollutants data retrieved thus far will be deleted from the cloud depository.
-    '''
-    restart = True
+    # Upcoming arguments:
+    # If restart then all the pollutants data retrieved thus far will be deleted from the cloud depository.
+    RESTART = True
 
-    '''
-    S3 S3Parameters, Service Instance
-    '''
+    # S3 S3Parameters, Service Instance
     s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters().exc()
-    service: sr.Service = src.functions.service.Service().exc()
+    service: sr.Service = src.functions.service.Service(region_name=s3_parameters.region_name).exc()
 
-    '''
-    Setting-up
-    '''
+    # Setting-up
     configurations = config.Config()
     restart = src.setup.Setup(service=service, s3_parameters=s3_parameters, warehouse=configurations.warehouse).exc(
-        restart=restart)
+        restart=RESTART)
 
     main()

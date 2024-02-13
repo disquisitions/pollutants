@@ -55,14 +55,15 @@ class Setup:
         # Ascertaining the states of depositories
         if not self.__bucket.exists():
             self.__bucket.create()
-            self.__directories.cleanup(path=self.__warehouse)
             state = True
         elif (n_references != self.__s3_parameters.n_references) | restart:
             self.__bucket.empty()
-            self.__directories.cleanup(path=self.__warehouse)
             state = True
         else:
             state = restart
+
+        # The warehouse
+        self.__directories.cleanup(path=self.__warehouse)
 
         return state
 

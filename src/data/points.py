@@ -35,6 +35,8 @@ class Points:
     @dask.delayed
     def __url(self, sequence_id: int, datestr: str) -> str:
         """
+        Builds a Scottish Air Quality API (Application Programming Interface) URL (Uniform Resource Locator) for a
+        data period covering a single calendar month
 
         :param sequence_id:
         :param datestr:
@@ -94,7 +96,6 @@ class Points:
     def exc(self):
         """
 
-        :param datestr:
         :return:
         """
 

@@ -37,14 +37,11 @@ class Directories:
                          for base, directories, _ in os.walk(path, topdown=False)
                          for directory in directories
                          if os.path.exists(os.path.join(base, directory))]
+        elements = [directory for _, directories, _ in os.walk(path) for directory in directories]
+        assert len(elements) == 0, f'Unable to delete all directories within path {path}'
 
         # Hence
-        try:
-            if os.path.exists(path=path):
-                os.removedirs(path)
-            return True
-        except OSError as err:
-            raise Exception(err) from err
+        return True if len(elements) == 0 else False
 
     @staticmethod
     def create(path: str) -> bool:

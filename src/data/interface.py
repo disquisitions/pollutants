@@ -8,6 +8,7 @@ import src.elements.s3_parameters as s3p
 import src.elements.sequence as sq
 import src.functions.directories
 import src.references.registry
+import src.s3.ingress
 import src.s3.sync
 
 
@@ -61,10 +62,9 @@ class Interface:
                         destination=f's3://{self.__s3_parameters.bucket_name}/{self.__s3_parameters.points_}',
                         metadata=self.__metadata())
 
-    def exc(self, datestr_: list[str]):
+    def exc(self):
         """
 
-        :param datestr_: Data is extracted, from Scottish Air Quality, for each date in the list <datestr_>
         :return:
         """
 
@@ -72,5 +72,3 @@ class Interface:
         points = src.data.points.Points(sequences=self.__sequences, storage=self.__storage)
         messages = points.exc()
         logging.log(level=logging.INFO, msg=messages)
-
-        self.__s3()

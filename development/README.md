@@ -1,8 +1,13 @@
 <br>
 
 * [Remote & Local Environments](#remote--local-environments)
+  * [Remote](#remote) 
+  * [Local](#local)
 * [Development Notes](#development-notes)
+  * [Automatic Code Analysis](#code-analysis) 
+  * [GitHub Actions & Container Registry Packages](#github-actions--container-registry-packages)
 * [Snippets](#snippets)
+* [References](#references)
 
 <br>
 
@@ -38,8 +43,6 @@ A developer may attach an IDE (independent development environment) application 
 
 Similarly, Visual Studio Code as its container attachment instructions; study [Attach Container](https://code.visualstudio.com/docs/devcontainers/attach-container).
 
-<br>
-
 ### Local
 
 Beforehand update the `base` **`conda`** environment
@@ -58,7 +61,11 @@ which uses the same **requirements.txt** as Dockerfile.
 
 
 
+
+
 ## Development Notes
+
+### Code Analysis
 
 The directive
 
@@ -71,6 +78,26 @@ generates the dotfile `.pylintrc` of the static code analyser [pylint](https://p
 ```shell
 python -m pylint --rcfile .pylintrc ...
 ```
+
+### GitHub Actions & Container Registry Packages
+
+**Case** _"permission denied"_, the `packages` section of [main.yml](/.github/workflows/main.yml) is probably missing
+
+```yaml
+permissions:
+  contents: read
+  packages: write
+```
+
+**Case** _"... image does not exist locally with the tag: ghcr.io... "_, probably forgot
+
+```shell
+docker build . --file Dockerfile --tag ...
+```
+
+within the `packages` section of [main.yml](/.github/workflows/main.yml).
+
+
 
 
 ## Snippets
@@ -87,6 +114,9 @@ logging.log(level=logging.INFO, msg=f'Operating System Name (posix or nt): {os.n
 logging.log(level=logging.INFO, msg=f'Platform: {platform.system()}')
 ```
 
+## References
+
+* [Epoch Time](https://unixtime.org)
 
 
 <br>

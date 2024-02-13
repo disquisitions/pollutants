@@ -23,7 +23,7 @@ class Service:
             html#boto3.session.Session.resource
     """
 
-    def __init__(self):
+    def __init__(self, region_name: str):
         """
         The constructor.
         """
@@ -35,11 +35,11 @@ class Service:
 
         # The S3 resource, client, etc.
         self.__s3_resource: boto3.session.Session.resource = connector.resource(
-            service_name='s3')
+            service_name='s3', region_name=region_name)
         self.__s3_client: boto3.session.Session.client = connector.client(
-            service_name='s3')
+            service_name='s3', region_name=region_name)
         self.__secrets_manager = connector.client(
-            service_name='secretsmanager')
+            service_name='secretsmanager', region_name=region_name)
 
     def exc(self) -> src.elements.service.Service:
         """
