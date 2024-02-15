@@ -106,6 +106,6 @@ class Points:
             data = self.__building(dictionary=dictionary, sequence_id=sequence.sequence_id)
             message = self.__depositing(blob=data, datestr=sequence.datestr, sequence=sequence)
             computations.append(message)
-        messages = dask.compute(computations, scheduler='threads')[0]
+        messages = dask.compute(computations, scheduler='processes')[0]
 
         return messages
