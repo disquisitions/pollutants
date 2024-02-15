@@ -57,10 +57,14 @@ The local virtual environment can be built via **environment.yml**
 conda env create --file environment.yml -p /opt/miniconda3/envs/pollutants
 ```
 
-which uses the same **requirements.txt** as Dockerfile.
+which uses the same **requirements.txt** as Dockerfile.  If the environment exists, i.e., the aim is to replace an 
+existing environment, run
 
+```shell
+conda env remove --name pollutants
+```
 
-
+first.
 
 
 ## Development Notes
