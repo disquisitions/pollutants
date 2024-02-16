@@ -20,7 +20,7 @@ class Config:
         self.points_storage = os.path.join(self.warehouse, 'particulates', 'pollutants', 'points')
 
         # After the development phase, 732 days, i.e., 2 years.
-        self.span: int = 183
+        self.span: int = 366
 
         # 1 Sulphur Dioxide [SO2]
         # 5 Particulate matter < 10 µm (aerosol)
@@ -29,8 +29,9 @@ class Config:
         self.hazards = [1, 38]
 
         # Devices in focus, via their series codes
-        # station: 907, sequence 161 | station: 900, sequence 154 | station: 1013, sequence 530 | station: 136, sequence: 228
-        self.sequence_id_filter = [228]
+        # station: 907, sequence 161, SO2 | station: 900, sequence 154, NO | station: 1013, sequence 530, NO | station: 136,
+        # sequence: 228, NO2 | station: 148, sequence: 212, NO2
+        self.sequence_id_filter = [228, 212]
 
         # The points metadata
         self.metadata = {'epoch_ms': 'The milliseconds unix epoch time  when the measure was recorded',
