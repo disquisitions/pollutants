@@ -28,7 +28,7 @@ class Interface:
         self.__restart = restart
 
         # Config
-        self.__hazards: list[int] = config.Config().hazards
+        # self.__hazards: list[int] = config.Config().hazards
         self.__sequence_id_filter: list[int] = config.Config().sequence_id_filter
 
     @staticmethod
