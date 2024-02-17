@@ -20,7 +20,7 @@ class Config:
         self.points_storage = os.path.join(self.warehouse, 'particulates', 'pollutants', 'points')
 
         # After the development phase, 732 days, i.e., 2 years.
-        self.span: int = 366
+        self.span: int = 244
 
         # Hazardous items in focus
         # 1 Sulphur Dioxide [SO2]
