@@ -4,7 +4,7 @@
   * [Remote](#remote) 
   * [Local](#local)
 * [Development Notes](#development-notes)
-  * [Testing Images Locally](#testing-images-locally)
+  * [Testing Images Containers](#testing-image-containers)
   * [Automatic Code Analysis](#code-analysis) 
   * [GitHub Actions & Container Registry Packages](#github-actions--container-registry-packages)
 * [Snippets](#snippets)
@@ -72,16 +72,17 @@ first.
 
 ## Development Notes
 
-### Testing Image Containers 
+### Testing Image Containers
 
 * Locally
 * Via Amazon EC2 (Elastic Compute Cloud)
 
+
 #### Locally
 
 The image's programs interact with Amazon services therefore an image container will require Amazon credentials.  Hence, 
-a testing option is a `compose.yaml`; a `compose.yaml` of the form [compose.yaml.template](/compose.yaml.template).  
-Subsequently, within the directory hosting `compose.yaml`
+a testing option is a `compose.yaml`; a `compose.yaml` of the form [compose.yaml.template](/compose.yaml.template), 
+**explanatory notes upcoming**.  Subsequently, within the directory hosting `compose.yaml`
 
 ```shell
  docker pull ghcr.io/enqueter/pollutants:develop
@@ -93,6 +94,19 @@ If there are any problems
 ```shell
 docker compose logs -f
 ```
+
+
+#### Via Amazon EC2 (Elastic Compute Cloud)
+
+If the EC2 is launched with the appropriate instance profile policies for interacting with relevant Amazon services, then 
+testing is straightforward
+
+```shell
+docker pull ghcr.io/enqueter/pollutants:develop
+docker run ghcr.io/enqueter/pollutants:develop
+```
+
+
 
 ### Code Analysis
 
