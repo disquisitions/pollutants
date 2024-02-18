@@ -88,8 +88,6 @@ If there are any problems
 docker compose logs -f
 ```
 
-<br>
-
 ### Code Analysis
 
 The directive
