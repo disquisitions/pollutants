@@ -41,8 +41,6 @@ A developer may attach an IDE (independent development environment) application 
 
 Similarly, Visual Studio Code as its container attachment instructions; study [Attach Container](https://code.visualstudio.com/docs/devcontainers/attach-container).
 
-<br>
-
 ### Local
 
 Beforehand update the `base` **`conda`** environment
@@ -106,8 +104,6 @@ generates the dotfile `.pylintrc` of the static code analyser [pylint](https://p
 python -m pylint --rcfile .pylintrc ...
 ```
 
-<br>
-
 ### GitHub Actions & Container Registry Packages
 
 **Case** _"permission denied"_, the `packages` section of [main.yml](/.github/workflows/main.yml) is probably missing
@@ -125,9 +121,6 @@ docker build . --file Dockerfile --tag ...
 ```
 
 within the `packages` section of [main.yml](/.github/workflows/main.yml).
-
-
-<br>
 
 <br>
 
