@@ -4,6 +4,7 @@
   * [Remote](#remote) 
   * [Local](#local)
 * [Development Notes](#development-notes)
+  * [Testing Images Locally](#testing-images-locally)
   * [Automatic Code Analysis](#code-analysis) 
   * [GitHub Actions & Container Registry Packages](#github-actions--container-registry-packages)
 * [Snippets](#snippets)
@@ -69,7 +70,27 @@ first.
 <br>
 
 
+<br>
+
 ## Development Notes
+
+### Testing Images Locally
+
+A simple option for image testing is a `compose.yaml`, especially if the image container has to interact with Amazon
+services.  <span style="color: #777777">The script ...</span> Subsequently, within the directory hosting `compose.yaml`
+
+```shell
+ docker pull ghcr.io/enqueter/pollutants:develop
+ docker compose up -d
+```
+
+If there are any problems
+
+```shell
+docker compose logs -f
+```
+
+<br>
 
 ### Code Analysis
 
@@ -108,6 +129,7 @@ within the `packages` section of [main.yml](/.github/workflows/main.yml).
 
 <br>
 
+<br>
 
 ## Snippets
 
@@ -123,9 +145,7 @@ logging.log(level=logging.INFO, msg=f'Operating System Name (posix or nt): {os.n
 logging.log(level=logging.INFO, msg=f'Platform: {platform.system()}')
 ```
 
-
 <br>
-
 
 ## References
 
