@@ -72,10 +72,16 @@ first.
 
 ## Development Notes
 
-### Testing Images Locally
+### Testing Image Containers 
 
-A simple option for image testing is a `compose.yaml`, especially if the image container has to interact with Amazon
-services.  <span style="color: #777777">The script ...</span> Subsequently, within the directory hosting `compose.yaml`
+* Locally
+* Via Amazon EC2 (Elastic Compute Cloud)
+
+#### Locally
+
+The image's programs interact with Amazon services therefore an image container will require Amazon credentials.  Hence, 
+a testing option is a `compose.yaml`; a `compose.yaml` of the form [compose.yaml.template](/compose.yaml.template).  
+Subsequently, within the directory hosting `compose.yaml`
 
 ```shell
  docker pull ghcr.io/enqueter/pollutants:develop
