@@ -2,8 +2,6 @@
 
 ### Notes
 
-**Continuous Integration, Delivery, Deployment**
-
 Images & Containers
 - [x] The Dockerfile for [development](/.devcontainer/Dockerfile).
 - [x] The Dockerfile for [production](Dockerfile).
