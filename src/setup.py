@@ -1,7 +1,6 @@
 """
 Module setup.py
 """
-import logging
 
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
@@ -31,47 +30,28 @@ class Setup:
         # An instance for dealing with the project's Amazon S3 bucket
         self.__bucket = src.s3.bucket.Bucket(
             service=self.__service, s3_parameters=self.__s3_parameters)
-        self.__objects = src.s3.objects.Objects(
-            service=self.__service, s3_parameters=self.__s3_parameters)
 
-        # logging
-        logging.basicConfig(level=logging.INFO, format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger = logging.getLogger(__name__)
-
-    def __setup(self, restart: bool) -> bool:
+    def __setup(self) -> bool:
         """
 
-        :param restart:
         :return:
         """
 
-        if self.__bucket.exists() & self.__objects.prefix_exist(self.__s3_parameters.references_):
-            n_references = self.__objects.filter(prefix=self.__s3_parameters.references_)
-        else:
-            n_references = 0
-        self.__logger.info('There are %s reference documents within Amazon S3', n_references)
-
-        # Ascertaining the states of depositories
-        if not self.__bucket.exists():
-            self.__bucket.create()
-            state = True
-        elif (n_references != self.__s3_parameters.n_references) | restart:
+        # Amazon S3 (Simple Storage Service)
+        if self.__bucket.exists():
             self.__bucket.empty()
-            state = True
         else:
-            state = restart
+            self.__bucket.create()
 
         # The warehouse
         self.__directories.cleanup(path=self.__warehouse)
 
-        return state
+        return True
 
-    def exc(self, restart: bool) -> bool:
+    def exc(self) -> bool:
         """
 
-        :param restart:
         :return:
         """
 
-        return self.__setup(restart=restart)
+        return self.__setup()
