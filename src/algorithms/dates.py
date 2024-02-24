@@ -3,8 +3,6 @@ Module dates.py
 """
 import logging
 
-import datetime
-
 import pandas as pd
 
 import config
@@ -20,8 +18,6 @@ class Dates:
     def __init__(self):
         """
         Constructor
-
-        :param restart: Restart?
         """
 
         self.__configurations = config.Config()
