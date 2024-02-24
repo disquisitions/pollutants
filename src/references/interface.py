@@ -3,11 +3,10 @@ import logging
 
 import pandas as pd
 
+import config
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
-import src.references.read
 import src.references.regenerate
-import config
 
 
 class Interface:
