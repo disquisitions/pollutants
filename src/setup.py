@@ -2,34 +2,28 @@
 Module setup.py
 """
 
+import config
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
+import src.functions.directories
 import src.s3.bucket
 import src.s3.objects
-
-import src.functions.directories
 
 
 class Setup:
 
-    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters, warehouse: str):
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
         
         :param service:
         :param s3_parameters:
-        :param warehouse:
         """
 
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
-        self.__warehouse = warehouse
 
-        # An instance for dealing with local directories
-        self.__directories = src.functions.directories.Directories()
-
-        # An instance for dealing with the project's Amazon S3 bucket
-        self.__bucket = src.s3.bucket.Bucket(
-            service=self.__service, s3_parameters=self.__s3_parameters)
+        # Configurations
+        self.__configurations = config.Config()
 
     def __s3(self) -> bool:
         """
@@ -38,10 +32,14 @@ class Setup:
         :return:
         """
 
-        if self.__bucket.exists():
-            return self.__bucket.empty()
+        # An instance for interacting with the project's Amazon S3 bucket
+        bucket = src.s3.bucket.Bucket(
+            service=self.__service, s3_parameters=self.__s3_parameters)
+
+        if bucket.exists():
+            return bucket.empty()
         else:
-            return self.__bucket.create()
+            return bucket.create()
 
     def __local(self) -> bool:
         """
@@ -49,8 +47,11 @@ class Setup:
         :return:
         """
 
+        # An instance for interacting with local directories
+        directories = src.functions.directories.Directories()
+
         # The warehouse
-        return self.__directories.cleanup(path=self.__warehouse)
+        return directories.cleanup(path=self.__configurations.warehouse)
 
     def exc(self) -> bool:
         """
