@@ -31,22 +31,26 @@ class Setup:
         self.__bucket = src.s3.bucket.Bucket(
             service=self.__service, s3_parameters=self.__s3_parameters)
 
-    def __setup(self) -> bool:
+    def __s3(self) -> bool:
+        """
+        Prepares an Amazon S3 (Simple Storage Service) bucket.
+
+        :return:
+        """
+
+        if self.__bucket.exists():
+            return self.__bucket.empty()
+        else:
+            return self.__bucket.create()
+
+    def __local(self) -> bool:
         """
 
         :return:
         """
 
-        # Amazon S3 (Simple Storage Service)
-        if self.__bucket.exists():
-            self.__bucket.empty()
-        else:
-            self.__bucket.create()
-
         # The warehouse
-        self.__directories.cleanup(path=self.__warehouse)
-
-        return True
+        return self.__directories.cleanup(path=self.__warehouse)
 
     def exc(self) -> bool:
         """
@@ -54,4 +58,6 @@ class Setup:
         :return:
         """
 
-        return self.__setup()
+        setup = self.__s3() & self.__local()
+
+        return setup
