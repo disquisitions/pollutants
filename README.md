@@ -29,6 +29,24 @@ Usage Notes:
 - [ ] Explanatory usage notes
 - [ ] Resources files
 
+<br>
+
+### Pollutants
+
+Within the module `src.references.interface` possible excerpt options include
+
+* filtering by a pollutant of interest
+* filtering by a set of sequence identifiers
+
+
+| pollutant<br>identifier | pollutant                            | notation |
+|:------------------------|:-------------------------------------|:---------|
+| 1                       | Sulphur Dioxide                      | SO2      |
+| 5                       | Particulate matter < 10 µm (aerosol) |          |
+| 8                       | Nitrogen Dioxide (air)               | NO2      |
+| 38                      | Nitrogen Monoxide                    | NO       |
+
+
 
 <br>
 <br>
