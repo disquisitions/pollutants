@@ -19,21 +19,13 @@ class Config:
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
         self.points_storage = os.path.join(self.warehouse, 'particulates', 'pollutants', 'points')
 
-        # After the development phase, 732 days, i.e., 2 years.
+        # After the development phase ...
         self.span: int = 244
-
-        # Hazardous items in focus
-        # 1 Sulphur Dioxide [SO2]
-        # 5 Particulate matter < 10 µm (aerosol)
-        # 8 Nitrogen Dioxide (air) [NO2]
-        # 38 Nitrogen Monoxide [NO]
-        # self.hazards = [1, 38]
 
         # Devices in focus, via their sequence identifiers
         # pollutant: Nitrogen Dioxide
         # area: Edinburgh
-        # sequence (station): 155 (901), 531 (1014), 177 (460), 150 (791) 165(327), 173 (377),
-        #                     146 (536), 142 (196), 169 (259),
+        # sequence (station): 155 (901), 531 (1014), 177 (460), 150 (791) 165(327), 142 (196)
         self.sequence_id_filter = [155, 531, 177, 150]
 
         # The points metadata
