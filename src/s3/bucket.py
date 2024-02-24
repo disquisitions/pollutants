@@ -45,7 +45,7 @@ class Bucket:
         try:
             self.__bucket.create(CreateBucketConfiguration=create_bucket_configuration)
             self.__bucket.wait_until_exists()
-            return True or False
+            return True
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
@@ -82,7 +82,7 @@ class Bucket:
             self.empty()
             self.__bucket.delete()
             self.__bucket.wait_until_not_exists()
-            return True or False
+            return True
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
