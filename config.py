@@ -2,7 +2,7 @@
 Module config
 """
 import os
-
+import datetime
 
 class Config:
     """
@@ -20,7 +20,8 @@ class Config:
         self.points_storage = os.path.join(self.warehouse, 'particulates', 'pollutants', 'points')
 
         # After the development phase ...
-        self.span: int = 244
+        self.starting = datetime.datetime.strptime(__date_string='2022-01-01', __format='%Y-%m-%d')
+        self.ending = datetime.datetime.today()
 
         # Devices in focus, via their sequence identifiers
         # pollutant: Nitrogen Dioxide
