@@ -15,20 +15,17 @@ class Interface:
     Class Interface
     """
 
-    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters, restart: bool):
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
 
         :param service: A collection of Amazon services
         :param s3_parameters: Amazon S3 parameters
-        :param restart: Restart?
         """
 
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
-        self.__restart = restart
 
-        # Config
-        # self.__hazards: list[int] = config.Config().hazards
+        # Sequences in focus
         self.__sequence_id_filter: list[int] = config.Config().sequence_id_filter
 
     @staticmethod
@@ -75,12 +72,8 @@ class Interface:
 
         # Retrieve (a) raw references data from Scottish Air & European Environment Information and
         # Observation Network depositories, or (b) structured references saved in Amazon S3?
-        if self.__restart:
-            registry, stations, substances = src.references.regenerate.Regenerate(
-                service=self.__service, s3_parameters=self.__s3_parameters).exc()
-        else:
-            registry, stations, substances = src.references.read.Read(
-                service=self.__service, s3_parameters=self.__s3_parameters).exc()
+        registry, stations, substances = src.references.regenerate.Regenerate(
+            service=self.__service, s3_parameters=self.__s3_parameters).exc()
 
         # Merge and structure the references
         data = self.__integrate(registry=registry, stations=stations, substances=substances)
