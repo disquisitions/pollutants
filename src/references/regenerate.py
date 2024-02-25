@@ -41,7 +41,7 @@ class Regenerate:
         :return:
         """
 
-        key_name: str = f'{self.__s3_parameters.references_}registry.csv'
+        key_name: str = f'{self.__s3_parameters.path_int_references}registry.csv'
         data: pd.DataFrame = src.references.registry.Registry().exc()
         self.__upload.bytes(data=data, metadata=self.__metadata.registry(), key_name=key_name)
 
@@ -53,7 +53,7 @@ class Regenerate:
         :return:
         """
 
-        key_name: str = f'{self.__s3_parameters.references_}stations.csv'
+        key_name: str = f'{self.__s3_parameters.path_int_references}stations.csv'
         data: pd.DataFrame = src.references.stations.Stations().exc()
         self.__upload.bytes(data=data, metadata=self.__metadata.stations(), key_name=key_name)
 
@@ -65,7 +65,7 @@ class Regenerate:
         :return:
         """
 
-        key_name: str = f'{self.__s3_parameters.references_}substances.csv'
+        key_name: str = f'{self.__s3_parameters.path_int_references}substances.csv'
         data: pd.DataFrame = src.references.substances.Substances().exc()
         self.__upload.bytes(data=data, metadata=self.__metadata.substances(), key_name=key_name)
 
@@ -88,7 +88,7 @@ class Regenerate:
             substances.copy()[['pollutant_id', 'substance', 'notation']], how='left', on='pollutant_id')
         frame = frame.copy()[list(self.__metadata.reference().keys())]
 
-        key_name: str = f'{self.__s3_parameters.references_}reference.csv'
+        key_name: str = f'{self.__s3_parameters.path_int_references}reference.csv'
         self.__upload.bytes(data=frame, metadata=self.__metadata.reference(), key_name=key_name)
 
         return frame
