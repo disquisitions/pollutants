@@ -5,7 +5,6 @@ import logging
 import typing
 
 import pandas as pd
-from pandas import DataFrame
 
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
@@ -44,7 +43,7 @@ class Regenerate:
         """
 
         key_name: str = f'{self.__s3_parameters.references_}registry.csv'
-        data: DataFrame = src.references.registry.Registry().exc()
+        data: pd.DataFrame = src.references.registry.Registry().exc()
         self.__upload.bytes(data=data, metadata=self.__metadata.registry(), key_name=key_name)
 
         return data
@@ -56,7 +55,7 @@ class Regenerate:
         """
 
         key_name: str = f'{self.__s3_parameters.references_}stations.csv'
-        data: DataFrame = src.references.stations.Stations().exc()
+        data: pd.DataFrame = src.references.stations.Stations().exc()
         self.__upload.bytes(data=data, metadata=self.__metadata.stations(), key_name=key_name)
 
         return data
@@ -68,7 +67,7 @@ class Regenerate:
         """
 
         key_name: str = f'{self.__s3_parameters.references_}substances.csv'
-        data: DataFrame = src.references.substances.Substances().exc()
+        data: pd.DataFrame = src.references.substances.Substances().exc()
         self.__upload.bytes(data=data, metadata=self.__metadata.substances(), key_name=key_name)
 
         return data
