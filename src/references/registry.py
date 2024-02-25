@@ -78,7 +78,7 @@ class Registry:
         return data
 
     @staticmethod
-    def __uniqueness(blob: pd.DataFrame) -> pd.DataFrame:
+    def __deduplicate(blob: pd.DataFrame) -> pd.DataFrame:
         """
 
         :param blob:
@@ -110,6 +110,6 @@ class Registry:
         data.rename(columns=self.__rename, inplace=True)
         data = data.copy().astype(dtype=self.__dtype)
         data = self.__feature_engineering(blob=data)
-        data = self.__uniqueness(blob=data)
+        data = self.__deduplicate(blob=data)
 
         return data[list(self.__metadata.keys())]
