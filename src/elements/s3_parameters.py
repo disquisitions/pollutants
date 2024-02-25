@@ -19,19 +19,19 @@ class S3Parameters(typing.NamedTuple):
     access_control_list : str
       Access control list selection.
 
-    bucket_int : str
+    internal : str
       The Amazon S3 (Simple Storage Service) bucket that hosts this project's data.
 
-    path_int_points : str
+    path_internal_points : str
       The bucket path of the telemetric data.
 
-    path_int_references : str
+    path_internal_references : str
       The bucket path of the telemetric data references.
     """
 
     region_name: str
     location_constraint: str
     access_control_list: str
-    bucket_int: str
-    path_int_points: str
-    path_int_references: str
+    internal: str
+    path_internal_points: str
+    path_internal_references: str
