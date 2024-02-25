@@ -70,13 +70,12 @@ class Interface:
         :return:
         """
 
-        # Retrieve (a) raw references data from Scottish Air & European Environment Information and
-        # Observation Network depositories, or (b) structured references saved in Amazon S3?
-        registry, stations, substances = src.references.regenerate.Regenerate(
+        # Retrieve the raw references data from Scottish Air & European Environment Information and
+        # Observation Network depositories
+        data = src.references.regenerate.Regenerate(
             service=self.__service, s3_parameters=self.__s3_parameters).exc()
 
-        # Merge and structure the references
-        data = self.__integrate(registry=registry, stations=stations, substances=substances)
+        # Excerpt
         excerpt = self.__excerpt(blob=data)
 
         return excerpt
