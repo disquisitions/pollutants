@@ -65,9 +65,10 @@ class Stations:
         frame.reset_index(drop=False, inplace=True)
         frame.rename(columns={'station_id': 'frequency', 'index': 'station_id'}, inplace=True)
         core: pd.DataFrame = frame.loc[frame['frequency'] == 1, :]
-        core.drop_duplicates(inplace=True)
+        data = core[['station_id']].merge(blob.copy(), how='left', on='station_id')
+        data.drop_duplicates(inplace=True)
 
-        return core
+        return data
 
     def exc(self) -> pd.DataFrame:
         """
