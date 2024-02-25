@@ -62,13 +62,8 @@ class Vectors:
         """
         For parallel execution purposes, this class creates a vector of collections
         whereby each collection denotes the data retrieval parameters of a
-        device, i.e., pollutant, for a particular day.  Hence, if there are 3 devices
-        in focus, and for each device we are interested in 60 days of data, then the vector
-        will consist of
-
-            3 x 60 = 180
-
-        collections.
+        device, i.e., pollutant, for a particular day. For example, for 3 devices and 60 days
+        of data, the vector will have 180, i.e., 3 × 60, collections.
 
         :return:
             
