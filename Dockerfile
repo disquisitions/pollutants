@@ -7,7 +7,7 @@ RUN pip install --upgrade pip
 # If the steps of a `Dockerfile` use files that are different from the `context` file, COPY the
 # file of each step separately; and RUN the file immediately after COPY
 WORKDIR /app
-COPY requirements.txt /app
+COPY .devcontainer/requirements.txt /app
 RUN pip install --requirement /app/requirements.txt --no-cache-dir && mkdir /app/warehouse && \
     mkdir /app/resources
 

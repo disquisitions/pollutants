@@ -1,23 +1,17 @@
 <br>
-
-**Pollutants**
-
-<br>
-
-## Notes
-
-**Continuous Integration, Delivery, Deployment**
+ 
+**Notes**
 
 Images & Containers
 - [x] The Dockerfile for [development](/.devcontainer/Dockerfile).
 - [x] The Dockerfile for [production](Dockerfile).
-- [ ] A compose.yaml for local testing (<span style="color: #722f37">In Progress</span>)
+- [x] A compose.yaml for local testing.
 
 <br>
 
 Container Registries:
-- [x] Local machine &rarr; GitHub &rarr; Amazon Elastic Container Registry (Via [GitHub Actions](.github/workflows/main.yml))
-- [x] Local machine &rarr; GitHub &rarr; GitHub Container Registry (Via [GitHub Actions](.github/workflows/main.yml)) 
+- [x] Local Machine &rarr; GitHub &rarr; Amazon Elastic Container Registry ([Via GitHub Actions](.github/workflows/main.yml))
+- [x] Local Machine &rarr; GitHub &rarr; GitHub Container Registry ([Via GitHub Actions](.github/workflows/main.yml)) 
 
 <br>
 
@@ -27,7 +21,7 @@ Cataloguing:
 <br>
 
 Code Analysis
-- [ ] Code Analysis & GitHub Actions (<span style="color: #722f37">In Progress</span>)
+- [ ] Code Analysis ([Via GitHub Actions](.github/workflows/main.yml)): Ongoing.
 
 <br>
 

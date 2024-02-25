@@ -6,7 +6,7 @@ import typing
 
 class S3Parameters(typing.NamedTuple):
     """
-    The data type class -> S3Parameters
+    The data type class ⇾ S3Parameters
 
     Attributes
     ----------
@@ -19,23 +19,19 @@ class S3Parameters(typing.NamedTuple):
     access_control_list : str
       Access control list selection.
 
-    bucket_name : str
+    internal : str
       The Amazon S3 (Simple Storage Service) bucket that hosts this project's data.
 
-    points_ : str
+    path_internal_points : str
       The bucket path of the telemetric data.
 
-    references_ : str
+    path_internal_references : str
       The bucket path of the telemetric data references.
-
-    n_references : int
-      The exact number of reference documents.
     """
 
     region_name: str
     location_constraint: str
     access_control_list: str
-    bucket_name: str
-    points_: str
-    references_: str
-    n_references: int
+    internal: str
+    path_internal_points: str
+    path_internal_references: str

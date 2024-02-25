@@ -1,16 +1,16 @@
 """Module sequences.py"""
 import logging
-import typing
 
 import pandas as pd
 
 import src.functions.objects
+import src.references.metadata
 
 
 class Registry:
     """
     Class Registry
-    Reads-in the metadata of each telemetric device's data
+    Reads-in the metadata of each telemetric device's data.
     """
 
     def __init__(self):
@@ -29,6 +29,9 @@ class Registry:
         self.__rename = dict(zip(labels, names))
         self.__dtype = dict(zip(names, casts))
 
+        # Metadata instance
+        self.__metadata = src.references.metadata.Metadata().registry()
+
         # Logging
         logging.basicConfig(level=logging.INFO,
                             format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
@@ -39,7 +42,7 @@ class Registry:
     def __structure(blob: dict) -> pd.DataFrame:
         """
         The stations data details each station's <station_id>, <station_label>, <longitude>,
-        & <latitude> fields.  The sequences & stations data can be joined, whenever
+        & <latitude> fields. The sequences & stations data can be joined, whenever
         necessary, via their <station_id> fields.
 
         :param blob:
@@ -75,24 +78,27 @@ class Registry:
         return data
 
     @staticmethod
-    def __metadata() -> dict:
+    def __deduplicate(blob: pd.DataFrame) -> pd.DataFrame:
         """
 
+        :param blob:
         :return:
         """
 
-        return {'sequence_id': 'The identification code of the sequence the telemetric device records.',
-                'unit_of_measure': 'The unit of measure of the recordings',
-                'station_id': 'The identification code of the station that hosts the telemetric device.',
-                'pollutant_id': 'The identification code of the pollutant the telemetric device measures.'}
+        frame = blob.copy()['sequence_id'].value_counts().to_frame()
+        frame.reset_index(drop=False, inplace=True)
+        frame.rename(columns={'sequence_id': 'frequency', 'index': 'sequence_id'}, inplace=True)
+        core: pd.DataFrame = frame.loc[frame['frequency'] == 1, :]
+        data = core[['sequence_id']].merge(blob.copy(), how='left', on='sequence_id')
+        data.drop_duplicates(inplace=True)
 
-    def exc(self) -> typing.Tuple[pd.DataFrame, dict]:
+        return data
+
+    def exc(self) -> pd.DataFrame:
         """
 
         :return
           data: A descriptive inventory of substances/pollutants.
-
-          metadata: The metadata of <data>; for a data catalogue.
         """
 
         # Reads-in the metadata
@@ -100,10 +106,11 @@ class Registry:
         dictionary = objects.api(url=self.__url)
 
         # Hence, (a) structuring, (b) renaming the fields in line with field naming conventions
-        # and ontology standards, (c) casting, and (d) adding & dropping features
+        # and ontology standards, (c) casting, and (d) adding & dropping features.
         data = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
         data = data.copy().astype(dtype=self.__dtype)
         data = self.__feature_engineering(blob=data)
+        data = self.__deduplicate(blob=data)
 
-        return data, self.__metadata()
+        return data[list(self.__metadata.keys())]

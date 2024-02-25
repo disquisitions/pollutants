@@ -1,77 +1,64 @@
 """
 Module setup.py
 """
-import logging
 
+import config
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
-import src.s3.bucket
-import src.s3.objects
-
 import src.functions.directories
+import src.s3.bucket
 
 
 class Setup:
 
-    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters, warehouse: str):
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
         
-        :param service:
-        :param s3_parameters:
-        :param warehouse:
+        :param service: A suite of services for interacting with Amazon Web Services.
+        :param s3_parameters: The overarching S3 parameters settings of this project, e.g., region code
+                              name, buckets, etc.
         """
 
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
-        self.__warehouse = warehouse
 
-        # An instance for dealing with local directories
-        self.__directories = src.functions.directories.Directories()
+        # Configurations
+        self.__configurations = config.Config()
 
-        # An instance for dealing with the project's Amazon S3 bucket
-        self.__bucket = src.s3.bucket.Bucket(
-            service=self.__service, s3_parameters=self.__s3_parameters)
-        self.__objects = src.s3.objects.Objects(
-            service=self.__service, s3_parameters=self.__s3_parameters)
-
-        # logging
-        logging.basicConfig(level=logging.INFO, format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger = logging.getLogger(__name__)
-
-    def __setup(self, restart: bool) -> bool:
+    def __s3(self) -> bool:
         """
+        Prepares an Amazon S3 (Simple Storage Service) bucket.
 
-        :param restart:
         :return:
         """
 
-        if self.__bucket.exists() & self.__objects.prefix_exist(self.__s3_parameters.references_):
-            n_references = self.__objects.filter(prefix=self.__s3_parameters.references_)
-        else:
-            n_references = 0
-        self.__logger.info('There are %s reference documents within Amazon S3', n_references)
+        # An instance for interacting with Amazon S3 buckets.
+        bucket = src.s3.bucket.Bucket(service=self.__service, location_constraint=self.__s3_parameters.location_constraint,
+                                      bucket_name=self.__s3_parameters.internal)
 
-        # Ascertaining the states of depositories
-        if not self.__bucket.exists():
-            self.__bucket.create()
-            state = True
-        elif (n_references != self.__s3_parameters.n_references) | restart:
-            self.__bucket.empty()
-            state = True
+        if bucket.exists():
+            return bucket.empty()
         else:
-            state = restart
+            return bucket.create()
+
+    def __local(self) -> bool:
+        """
+
+        :return:
+        """
+
+        # An instance for interacting with local directories
+        directories = src.functions.directories.Directories()
 
         # The warehouse
-        self.__directories.cleanup(path=self.__warehouse)
+        return directories.cleanup(path=self.__configurations.warehouse)
 
-        return state
-
-    def exc(self, restart: bool) -> bool:
+    def exc(self) -> bool:
         """
 
-        :param restart:
         :return:
         """
 
-        return self.__setup(restart=restart)
+        setup = self.__s3() & self.__local()
+
+        return setup

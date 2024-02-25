@@ -4,6 +4,7 @@
   * [Remote](#remote) 
   * [Local](#local)
 * [Development Notes](#development-notes)
+  * [Testing Images Containers](#testing-image-containers)
   * [Automatic Code Analysis](#code-analysis) 
   * [GitHub Actions & Container Registry Packages](#github-actions--container-registry-packages)
 * [Snippets](#snippets)
@@ -40,8 +41,6 @@ A developer may attach an IDE (independent development environment) application 
 
 Similarly, Visual Studio Code as its container attachment instructions; study [Attach Container](https://code.visualstudio.com/docs/devcontainers/attach-container).
 
-<br>
-
 ### Local
 
 Beforehand update the `base` **`conda`** environment
@@ -69,7 +68,45 @@ first.
 <br>
 
 
+<br>
+
 ## Development Notes
+
+### Testing Image Containers
+
+* Locally
+* Via Amazon EC2 (Elastic Compute Cloud)
+
+
+#### Locally
+
+The image's programs interact with Amazon services therefore an image container will require Amazon credentials.  Hence, 
+a testing option is a `compose.yaml`; a `compose.yaml` of the form [compose.yaml.template](/compose.yaml.template), 
+**explanatory notes upcoming**.  Subsequently, within the directory hosting `compose.yaml`
+
+```shell
+ docker pull ghcr.io/enqueter/pollutants:develop
+ docker compose up -d
+```
+
+If there are any problems
+
+```shell
+docker compose logs -f
+```
+
+
+#### Via Amazon EC2 (Elastic Compute Cloud)
+
+If the EC2 is launched with the appropriate instance profile policies for interacting with relevant Amazon services, then 
+testing is straightforward
+
+```shell
+docker pull ghcr.io/enqueter/pollutants:develop
+docker run ghcr.io/enqueter/pollutants:develop
+```
+
+
 
 ### Code Analysis
 
@@ -84,8 +121,6 @@ generates the dotfile `.pylintrc` of the static code analyser [pylint](https://p
 ```shell
 python -m pylint --rcfile .pylintrc ...
 ```
-
-<br>
 
 ### GitHub Actions & Container Registry Packages
 
@@ -105,9 +140,26 @@ docker build . --file Dockerfile --tag ...
 
 within the `packages` section of [main.yml](/.github/workflows/main.yml).
 
+<br>
+
+## Sequences
+
+Within the module `src.references.interface` possible excerpts are
+
+* pollutants of interest.
+* sequence identifiers of interest.
 
 <br>
 
+| pollutant<br>identifier | pollutant                            | notation |
+|:------------------------|:-------------------------------------|:---------|
+| 1                       | Sulphur Dioxide                      | $SO_{2}$ |
+| 5                       | Particulate matter < 10 µm (aerosol) |          |
+| 8                       | Nitrogen Dioxide (air)               | $NO_{2}$ |
+| 38                      | Nitrogen Monoxide                    | $NO$     |
+
+
+<br>
 
 ## Snippets
 
@@ -123,9 +175,7 @@ logging.log(level=logging.INFO, msg=f'Operating System Name (posix or nt): {os.n
 logging.log(level=logging.INFO, msg=f'Platform: {platform.system()}')
 ```
 
-
 <br>
-
 
 ## References
 

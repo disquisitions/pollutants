@@ -1,16 +1,16 @@
 """Module stations.py"""
 import logging
-import typing
 
 import pandas as pd
 
 import src.functions.objects
+import src.references.metadata
 
 
 class Stations:
     """
     Class Stations
-    Reads-in the Scottish Air Quality Agency's inventory of telemetric devices
+    Reads-in the Scottish Air Quality Agency's inventory of telemetric devices.
     """
 
     def __init__(self):
@@ -23,6 +23,9 @@ class Stations:
         # Variables
         self.__url = 'https://www.scottishairquality.scot/sos-scotland/api/v1/stations'
         self.__rename = dict(zip(['properties.id', 'properties.label'], ['station_id', 'station_label']))
+
+        # Metadata instance
+        self.__metadata = src.references.metadata.Metadata().stations()
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -51,24 +54,27 @@ class Stations:
         return data
 
     @staticmethod
-    def __metadata() -> dict:
+    def __deduplicate(blob: pd.DataFrame) -> pd.DataFrame:
         """
 
+        :param blob:
         :return:
         """
 
-        return {'station_id': 'The identification code of the telemetric device station.',
-                'station_label': 'Address, etc., details of the station.',
-                'longitude': 'The x geographic coordinate.',
-                'latitude': 'The y geographic coordinate.'}
+        frame = blob.copy()['station_id'].value_counts().to_frame()
+        frame.reset_index(drop=False, inplace=True)
+        frame.rename(columns={'station_id': 'frequency', 'index': 'station_id'}, inplace=True)
+        core: pd.DataFrame = frame.loc[frame['frequency'] == 1, :]
+        data = core[['station_id']].merge(blob.copy(), how='left', on='station_id')
+        data.drop_duplicates(inplace=True)
 
-    def exc(self) -> typing.Tuple[pd.DataFrame, dict]:
+        return data
+
+    def exc(self) -> pd.DataFrame:
         """
 
         :return
           data: A descriptive inventory of substances/pollutants.
-
-          metadata: The metadata of <data>; for a data catalogue.
         """
 
         # Reading-in the JSON data of telemetric device stations
@@ -78,5 +84,6 @@ class Stations:
         # Hence, structuring, and renaming the fields in line with field naming conventions and ontology standards.
         data: pd.DataFrame = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
+        data = self.__deduplicate(blob=data)
 
-        return data, self.__metadata()
+        return data[list(self.__metadata.keys())]

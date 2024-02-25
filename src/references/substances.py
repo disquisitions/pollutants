@@ -1,17 +1,19 @@
 """Module substances.py"""
-import logging
-import typing
 
 import pandas as pd
 
 import src.functions.objects
+import src.references.metadata
 import src.references.vocabulary
 
 
 class Substances:
     """
-    Class Substances
-    Reads-in the ...
+
+    Notes
+    -----
+
+    Reads-in the pollutants' data.
     """
 
     def __init__(self) -> None:
@@ -23,18 +25,15 @@ class Substances:
         self.__url: str = 'https://www.scottishairquality.scot/sos-scotland/api/v1/phenomena'
 
         # The data source field names <labels>, their corresponding new names <names>,
-        # and their expected data types <casts>
+        # and their expected data types <casts>.
         labels = ['id', 'label']
         names = ['pollutant_id', 'uri']
         casts = [int, str]
         self.__rename = dict(zip(labels, names))
         self.__dtype = dict(zip(names, casts))
 
-        # Logging
-        logging.basicConfig(level=logging.INFO,
-                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger = logging.getLogger(__name__)
+        # Metadata instance
+        self.__metadata = src.references.metadata.Metadata().substances()
 
     @staticmethod
     def __structure(blob: dict) -> pd.DataFrame:
@@ -60,6 +59,11 @@ class Substances:
 
     @staticmethod
     def __extra_fields(blob: pd.DataFrame):
+        """
+
+        :param blob:
+        :return:
+        """
 
         definitions = src.references.vocabulary.Vocabulary().exc()
         data = blob.copy().drop(columns='uri').merge(definitions, how='left', on='pollutant_id')
@@ -67,29 +71,27 @@ class Substances:
         return data
 
     @staticmethod
-    def __metadata() -> dict:
+    def __deduplicate(blob: pd.DataFrame) -> pd.DataFrame:
         """
 
+        :param blob:
         :return:
         """
 
-        return {
-            'pollutant_id': 'The identification code of a pollutant.',
-            'uri': 'The European Environment Information and Observation Network (EIONET) page of a pollutant',
-            'substance': 'The name, and more, of the pollutant.',
-            'notation': 'The chemical formula of the pollutant.',
-            'status': 'Denotes whether a substance is still a valid pollutant.',
-            'accepted_date': 'Probably the date the substance was accepted as a pollutant.',
-            'recommended_unit_of_measure': 'The recommended unit of measure'
-        }
+        frame = blob.copy()['pollutant_id'].value_counts().to_frame()
+        frame.reset_index(drop=False, inplace=True)
+        frame.rename(columns={'pollutant_id': 'frequency', 'index': 'pollutant_id'}, inplace=True)
+        core: pd.DataFrame = frame.loc[frame['frequency'] == 1, :]
+        data = core[['pollutant_id']].merge(blob.copy(), how='left', on='pollutant_id')
+        data.drop_duplicates(inplace=True)
 
-    def exc(self) -> typing.Tuple[pd.DataFrame, dict]:
+        return data
+
+    def exc(self) -> pd.DataFrame:
         """
 
         :return
           data: A descriptive inventory of substances/pollutants.
-
-          metadata: The metadata of <data>; for a data catalogue.
         """
 
         # Reading-in the JSON data of substances
@@ -97,11 +99,12 @@ class Substances:
         dictionary: dict = objects.api(url=self.__url)
 
         # Hence, (a) structuring, (b) renaming fields in line with standards, (c) ensuring
-        # the appropriate data type per field, and (d) adding fields that outline what each
+        # the appropriate data type per data field, and (d) adding fields that outline what each
         # <pollutant_id> denotes.
         data = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
         data = self.__casting(blob=data)
         data = self.__extra_fields(blob=data)
+        data = self.__deduplicate(blob=data)
 
-        return data, self.__metadata()
+        return data[list(self.__metadata.keys())]

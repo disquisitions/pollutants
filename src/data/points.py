@@ -5,7 +5,6 @@ import dask
 import pandas as pd
 
 import src.data.api
-import src.data.deposit
 import src.elements.sequence as sq
 import src.functions.objects
 import src.functions.streams
@@ -15,7 +14,7 @@ class Points:
     """
     Class Points
 
-    Retrieves telemetric device's data points by date, structures the data sets, and saves them.
+    Retrieves telemetric device data points by date, structures the data sets, and saves them.
     """
 
     def __init__(self, sequences: list[sq.Sequence], storage: str):
@@ -36,7 +35,7 @@ class Points:
     def __url(self, sequence_id: int, datestr: str) -> str:
         """
         Builds a Scottish Air Quality API (Application Programming Interface) URL (Uniform Resource Locator) for a
-        data period covering a single calendar month
+        data period covering a single calendar month.
 
         :param sequence_id:
         :param datestr:

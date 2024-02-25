@@ -4,7 +4,6 @@ Module bucket.py
 import boto3
 import botocore.exceptions
 
-import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 
 
@@ -13,21 +12,23 @@ class Bucket:
     https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/index.html
     """
 
-    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
+    def __init__(self, service: sr.Service, location_constraint: str, bucket_name: str):
         """
         Constructor
 
         :param service: A suite of services for interacting with Amazon Web Services.
-        :param s3_parameters: The overarching S3 parameters settings of this project, e.g., region code
-                              name, bucket name, etc.
+        :param location_constraint: The location constraint of an Amazon S3 (Simple Storage Service) bucket.
+        :param bucket_name: The name of an Amazon S3 bucket in focus.
         """
 
-        self.__s3_parameters: s3p.S3Parameters = s3_parameters
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
         self.__s3_client: boto3.session.Session.client = service.s3_client
 
+        self.__location_constraint = location_constraint
+        self.__bucket_name = bucket_name
+
         # A bucket instance
-        self.__bucket = self.__s3_resource.Bucket(name=self.__s3_parameters.bucket_name)
+        self.__bucket = self.__s3_resource.Bucket(name=self.__bucket_name)
 
     def create(self) -> bool:
         """
@@ -40,12 +41,12 @@ class Bucket:
             return True
 
         create_bucket_configuration = {
-            'LocationConstraint': self.__s3_parameters.location_constraint
+            'LocationConstraint': self.__location_constraint
         }
         try:
             self.__bucket.create(CreateBucketConfiguration=create_bucket_configuration)
             self.__bucket.wait_until_exists()
-            return True or False
+            return True
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
@@ -77,12 +78,12 @@ class Bucket:
         if not self.exists():
             return True
 
-        # Ensure the bucket is empty.  Subsequently, delete the bucket.
+        # Ensure the bucket is empty. Subsequently, delete the bucket.
         try:
             self.empty()
             self.__bucket.delete()
             self.__bucket.wait_until_not_exists()
-            return True or False
+            return True
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 

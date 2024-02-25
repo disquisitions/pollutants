@@ -7,7 +7,6 @@ import os
 import botocore.exceptions
 import dask
 
-import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 
 
@@ -21,18 +20,17 @@ class Ingress:
     Uploads files to Amazon Simple Storage Service (S3)
     """
 
-    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters, metadata: dict):
+    def __init__(self, service: sr.Service, bucket_name, metadata: dict):
         """
 
         :param service: A suite of services for interacting with Amazon Web Services.
-        :param s3_parameters: The overarching S3 parameters settings of this project, e.g., region code
-                              name, bucket name, etc.
-        :param metadata: The metadata of the files being uploaded.  Note, files of the same content type are expected,
+        :param bucket_name: The name of the target bucket.
+        :param metadata: The metadata of the files being uploaded. Note, files of the same content type are expected,
                          assumed.
         """
 
         self.__s3_client = service.s3_client
-        self.__bucket_name = s3_parameters.bucket_name
+        self.__bucket_name = bucket_name
         self.__metadata = metadata
 
     @dask.delayed
@@ -40,8 +38,8 @@ class Ingress:
         """
 
         :param file: The local file string, i.e., <path> + <file name> + <extension>, of the file being uploaded
-        :param key: The Amazon S3 key of the file being uploaded; this is relative to the S3 Bucket name, but excludes the S3
-                    Bucket name.
+        :param key: The Amazon S3 key of the file being uploaded; the key is relative-to the S3 Bucket name, but excludes
+                    the S3 Bucket name.
         :return:
         """
 

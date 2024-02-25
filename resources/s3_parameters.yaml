@@ -3,7 +3,6 @@ parameters:
   region_name: 'eu-west-1'
   location_constraint: '{region_name}'
   access_control_list: 'bucket-owner-full-control'
-  bucket_name: 'particulates'
-  points_: 'pollutants/points/'
-  references_: 'pollutants/references/'
-  n_references: 3
+  internal: 'environment-int'
+  path_internal_points: 'pollutants/points/'
+  path_internal_references: 'pollutants/references/'
