@@ -9,7 +9,7 @@ import boto3
 
 class Service(typing.NamedTuple):
     """
-    The data type class -> Service
+    The data type class ⇾ Service
 
     Attributes
     ----------
