@@ -33,7 +33,7 @@ class Setup:
 
         # An instance for interacting with Amazon S3 buckets.
         bucket = src.s3.bucket.Bucket(service=self.__service, location_constraint=self.__s3_parameters.location_constraint,
-                                      bucket_name=self.__s3_parameters.bucket_int)
+                                      bucket_name=self.__s3_parameters.internal)
 
         if bucket.exists():
             return bucket.empty()
