@@ -7,7 +7,6 @@ import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.functions.directories
 import src.s3.bucket
-import src.s3.objects
 
 
 class Setup:
@@ -32,7 +31,7 @@ class Setup:
         :return:
         """
 
-        # An instance for interacting with the project's Amazon S3 bucket
+        # An instance for interacting with Amazon S3 buckets.
         bucket = src.s3.bucket.Bucket(
             service=self.__service, s3_parameters=self.__s3_parameters)
 
