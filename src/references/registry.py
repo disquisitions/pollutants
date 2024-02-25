@@ -1,10 +1,10 @@
 """Module sequences.py"""
 import logging
-import typing
 
 import pandas as pd
 
 import src.functions.objects
+import src.references.metadata
 
 
 class Registry:
@@ -28,6 +28,9 @@ class Registry:
         casts = [int, str, str, int]
         self.__rename = dict(zip(labels, names))
         self.__dtype = dict(zip(names, casts))
+
+        # Metadata instance
+        self.__metadata = src.references.metadata.Metadata().registry()
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -74,25 +77,11 @@ class Registry:
 
         return data
 
-    @staticmethod
-    def __metadata() -> dict:
-        """
-
-        :return:
-        """
-
-        return {'sequence_id': 'The identification code of the sequence the telemetric device records.',
-                'unit_of_measure': 'The unit of measure of the recordings',
-                'station_id': 'The identification code of the station that hosts the telemetric device.',
-                'pollutant_id': 'The identification code of the pollutant the telemetric device measures.'}
-
-    def exc(self) -> typing.Tuple[pd.DataFrame, dict]:
+    def exc(self) -> pd.DataFrame:
         """
 
         :return
           data: A descriptive inventory of substances/pollutants.
-
-          metadata: The metadata of <data>; for a data catalogue.
         """
 
         # Reads-in the metadata
@@ -106,4 +95,4 @@ class Registry:
         data = data.copy().astype(dtype=self.__dtype)
         data = self.__feature_engineering(blob=data)
 
-        return data, self.__metadata()
+        return data[list(self.__metadata.keys())]
