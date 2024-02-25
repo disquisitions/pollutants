@@ -77,6 +77,22 @@ class Registry:
 
         return data
 
+    @staticmethod
+    def __uniqueness(blob: pd.DataFrame) -> pd.DataFrame:
+        """
+
+        :param blob:
+        :return:
+        """
+
+        frame = blob.copy()['sequence_id'].value_counts().to_frame()
+        frame.reset_index(drop=False, inplace=True)
+        frame.rename(columns={'sequence_id': 'frequency', 'index': 'sequence_id'}, inplace=True)
+        core: pd.DataFrame = frame.loc[frame['frequency'] == 1, :]
+        core.drop_duplicates(inplace=True)
+
+        return core
+
     def exc(self) -> pd.DataFrame:
         """
 
@@ -94,5 +110,6 @@ class Registry:
         data.rename(columns=self.__rename, inplace=True)
         data = data.copy().astype(dtype=self.__dtype)
         data = self.__feature_engineering(blob=data)
+        data = self.__uniqueness(blob=data)
 
         return data[list(self.__metadata.keys())]
