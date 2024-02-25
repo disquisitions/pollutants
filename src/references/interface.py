@@ -72,10 +72,10 @@ class Interface:
 
         # Retrieve the raw references data from Scottish Air & European Environment Information and
         # Observation Network depositories.
-        data = src.references.regenerate.Regenerate(
+        reference = src.references.regenerate.Regenerate(
             service=self.__service, s3_parameters=self.__s3_parameters).exc()
 
         # Excerpt
-        excerpt = self.__excerpt(blob=data)
+        excerpt = self.__excerpt(blob=reference)
 
         return excerpt
