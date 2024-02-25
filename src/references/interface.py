@@ -56,8 +56,8 @@ class Interface:
         data = blob.copy()
 
         # Here
-        #  * Exclude records that do not have both coordinate values
-        #  * Extract the records in focus
+        #  * Exclude records that do not have both coordinate values.
+        #  * Extract the records in focus.
         conditionals = data['longitude'].isna() | data['latitude'].isna()
         excerpt: pd.DataFrame = data.copy().loc[~conditionals, :]
         excerpt = excerpt.copy().loc[excerpt['sequence_id'].isin(self.__configurations.sequence_id_filter), :]
@@ -71,7 +71,7 @@ class Interface:
         """
 
         # Retrieve the raw references data from Scottish Air & European Environment Information and
-        # Observation Network depositories
+        # Observation Network depositories.
         data = src.references.regenerate.Regenerate(
             service=self.__service, s3_parameters=self.__s3_parameters).exc()
 
