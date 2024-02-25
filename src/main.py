@@ -7,33 +7,25 @@ import sys
 def main():
     """
     Entry point
-    * In development
     """
 
     # Logging
     logger: logging.Logger = logging.getLogger(__name__)
-    logger.info('Pollutants')
 
     # The dates
-    datestr_ = src.algorithms.dates.Dates(restart=RESTART).exc()
+    datestr_ = src.algorithms.dates.Dates().exc()
     logger.info(datestr_)
 
     # Excerpt of metadata of sequences
-    excerpt = src.references.interface.Interface(
-        service=service, s3_parameters=s3_parameters, restart=RESTART).exc()
+    excerpt = src.references.interface.Interface(service=service, s3_parameters=s3_parameters).exc()
 
     # A parallel execution matrix: (metadata of sequences ⊗ dates), i.e., outer product
     sequences = src.algorithms.vectors.Vectors(
         excerpt=excerpt, datestr_=datestr_).exc()
 
     # Execute
-    src.data.interface.Interface(
-       s3_parameters=s3_parameters, sequences=sequences, restart=RESTART).exc()
-
-    # Transfer to S3
-    messages = src.s3.ingress.Ingress(service=service, s3_parameters=s3_parameters, metadata=configurations.metadata).exc(
-        path=configurations.points_storage)
-    logger.info(messages)
+    src.data.interface.Interface(service=service, s3_parameters=s3_parameters,
+                                 sequences=sequences).exc(storage=storage)
 
     # Deleting __pycache__
     src.functions.cache.Cache().delete()
@@ -61,13 +53,8 @@ if __name__ == '__main__':
     import src.functions.service
 
     import src.references.interface
-    import src.s3.ingress
     import src.s3.s3_parameters
     import src.setup
-
-    # Upcoming arguments:
-    # If restart then all the pollutants data retrieved thus far will be deleted from the cloud depository.
-    RESTART = True
 
     # S3 S3Parameters, Service Instance
     s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters().exc()
@@ -75,7 +62,13 @@ if __name__ == '__main__':
 
     # Setting-up
     configurations = config.Config()
-    restart = src.setup.Setup(service=service, s3_parameters=s3_parameters, warehouse=configurations.warehouse).exc(
-        restart=RESTART)
+    setup: bool = src.setup.Setup(
+        service=service, s3_parameters=s3_parameters).exc()
+
+    # Storage: warehouse, Amazon S3 bucket, bucket prefix
+    parts: list[str] = s3_parameters.points_.split(sep='/')
+    parts: list[str] = [part for part in parts if part]
+    parts: list[str] = [s3_parameters.bucket_name] + parts
+    storage: str = os.path.join(configurations.warehouse, *parts)
 
     main()
