@@ -1,6 +1,5 @@
 """Module stations.py"""
 import logging
-import typing
 
 import pandas as pd
 
