@@ -5,7 +5,7 @@ class Metadata:
         pass
 
     @staticmethod
-    def registry():
+    def registry() -> dict:
         """
 
         :return:
@@ -18,7 +18,7 @@ class Metadata:
                 'pollutant_id': 'The identification code of the pollutant the telemetric device measures.'}
 
     @staticmethod
-    def stations():
+    def stations() -> dict:
         """
 
         :return:
@@ -31,7 +31,7 @@ class Metadata:
                 'latitude': 'The y geographic coordinate.'}
 
     @staticmethod
-    def substances():
+    def substances() -> dict:
         """
 
         :return:
