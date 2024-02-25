@@ -1,5 +1,4 @@
 """Module substances.py"""
-import logging
 
 import pandas as pd
 
@@ -33,12 +32,6 @@ class Substances:
         # Metadata instance
         self.__metadata = src.references.metadata.Metadata().substances()
 
-        # Logging
-        logging.basicConfig(level=logging.INFO,
-                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger = logging.getLogger(__name__)
-
     @staticmethod
     def __structure(blob: dict) -> pd.DataFrame:
         """
@@ -63,9 +56,31 @@ class Substances:
 
     @staticmethod
     def __extra_fields(blob: pd.DataFrame):
+        """
+
+        :param blob:
+        :return:
+        """
 
         definitions = src.references.vocabulary.Vocabulary().exc()
         data = blob.copy().drop(columns='uri').merge(definitions, how='left', on='pollutant_id')
+
+        return data
+
+    @staticmethod
+    def __deduplicate(blob: pd.DataFrame) -> pd.DataFrame:
+        """
+
+        :param blob:
+        :return:
+        """
+
+        frame = blob.copy()['pollutant_id'].value_counts().to_frame()
+        frame.reset_index(drop=False, inplace=True)
+        frame.rename(columns={'pollutant_id': 'frequency', 'index': 'pollutant_id'}, inplace=True)
+        core: pd.DataFrame = frame.loc[frame['frequency'] == 1, :]
+        data = core[['pollutant_id']].merge(blob.copy(), how='left', on='pollutant_id')
+        data.drop_duplicates(inplace=True)
 
         return data
 
@@ -74,8 +89,6 @@ class Substances:
 
         :return
           data: A descriptive inventory of substances/pollutants.
-
-          metadata: The metadata of <data>; for a data catalogue.
         """
 
         # Reading-in the JSON data of substances
@@ -89,5 +102,6 @@ class Substances:
         data.rename(columns=self.__rename, inplace=True)
         data = self.__casting(blob=data)
         data = self.__extra_fields(blob=data)
+        data = self.__deduplicate(blob=data)
 
         return data[list(self.__metadata.keys())]
