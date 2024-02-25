@@ -10,7 +10,7 @@ import src.references.metadata
 class Stations:
     """
     Class Stations
-    Reads-in the Scottish Air Quality Agency's inventory of telemetric devices
+    Reads-in the Scottish Air Quality Agency's inventory of telemetric devices.
     """
 
     def __init__(self):
