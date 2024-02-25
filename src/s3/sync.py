@@ -11,14 +11,14 @@ class Sync:
 
     Description
     -----------
-    Transfers files to Amazon S3.  Note, DataSync incurs cost
+    Transfers files to Amazon S3. Note, DataSync incurs cost
         * https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-s3-requests
     """
 
     def __init__(self, restart: bool):
         """
 
-        :param restart: Restart?  If yes, it means all previous cloud data
+        :param restart: Restart? If yes, it means all previous cloud data
                         will be, has been, deleted during this run.
         """
 
