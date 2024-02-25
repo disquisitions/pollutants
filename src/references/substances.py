@@ -9,8 +9,11 @@ import src.references.vocabulary
 
 class Substances:
     """
-    Class Substances
-    Reads-in the ...
+
+    Notes
+    -----
+
+    Reads-in the pollutants' data.
     """
 
     def __init__(self) -> None:
@@ -22,7 +25,7 @@ class Substances:
         self.__url: str = 'https://www.scottishairquality.scot/sos-scotland/api/v1/phenomena'
 
         # The data source field names <labels>, their corresponding new names <names>,
-        # and their expected data types <casts>
+        # and their expected data types <casts>.
         labels = ['id', 'label']
         names = ['pollutant_id', 'uri']
         casts = [int, str]
@@ -96,7 +99,7 @@ class Substances:
         dictionary: dict = objects.api(url=self.__url)
 
         # Hence, (a) structuring, (b) renaming fields in line with standards, (c) ensuring
-        # the appropriate data type per field, and (d) adding fields that outline what each
+        # the appropriate data type per data field, and (d) adding fields that outline what each
         # <pollutant_id> denotes.
         data = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
