@@ -10,8 +10,8 @@ Images & Containers
 <br>
 
 Container Registries:
-- [x] Local machine &rarr; GitHub &rarr; Amazon Elastic Container Registry (Via [GitHub Actions](.github/workflows/main.yml))
-- [x] Local machine &rarr; GitHub &rarr; GitHub Container Registry (Via [GitHub Actions](.github/workflows/main.yml)) 
+- [x] Local Machine &rarr; GitHub &rarr; Amazon Elastic Container Registry (Via [GitHub Actions](.github/workflows/main.yml))
+- [x] Local Machine &rarr; GitHub &rarr; GitHub Container Registry (Via [GitHub Actions](.github/workflows/main.yml)) 
 
 <br>
 
@@ -45,7 +45,6 @@ Within the module `src.references.interface` possible excerpt options include
 | 5                       | Particulate matter < 10 µm (aerosol) |          |
 | 8                       | Nitrogen Dioxide (air)               | $NO_{2}$ |
 | 38                      | Nitrogen Monoxide                    | $NO$     |
-
 
 
 <br>
