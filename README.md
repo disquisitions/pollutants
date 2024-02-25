@@ -41,10 +41,10 @@ Within the module `src.references.interface` possible excerpt options include
 
 | pollutant<br>identifier | pollutant                            | notation |
 |:------------------------|:-------------------------------------|:---------|
-| 1                       | Sulphur Dioxide                      | SO2      |
+| 1                       | Sulphur Dioxide                      | $SO_{2}$ |
 | 5                       | Particulate matter < 10 µm (aerosol) |          |
-| 8                       | Nitrogen Dioxide (air)               | NO2      |
-| 38                      | Nitrogen Monoxide                    | NO       |
+| 8                       | Nitrogen Dioxide (air)               | $NO_{2}$ |
+| 38                      | Nitrogen Monoxide                    | $NO$     |
 
 
 
