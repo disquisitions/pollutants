@@ -10,7 +10,7 @@ import src.references.metadata
 class Registry:
     """
     Class Registry
-    Reads-in the metadata of each telemetric device's data
+    Reads-in the metadata of each telemetric device's data.
     """
 
     def __init__(self):
@@ -42,7 +42,7 @@ class Registry:
     def __structure(blob: dict) -> pd.DataFrame:
         """
         The stations data details each station's <station_id>, <station_label>, <longitude>,
-        & <latitude> fields.  The sequences & stations data can be joined, whenever
+        & <latitude> fields. The sequences & stations data can be joined, whenever
         necessary, via their <station_id> fields.
 
         :param blob:
@@ -106,7 +106,7 @@ class Registry:
         dictionary = objects.api(url=self.__url)
 
         # Hence, (a) structuring, (b) renaming the fields in line with field naming conventions
-        # and ontology standards, (c) casting, and (d) adding & dropping features
+        # and ontology standards, (c) casting, and (d) adding & dropping features.
         data = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
         data = data.copy().astype(dtype=self.__dtype)
