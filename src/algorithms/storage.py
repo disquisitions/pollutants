@@ -36,11 +36,11 @@ class Storage:
         """
 
         # The prefix parts.
-        parts: list[str] = self.__s3_parameters.path_int_points.split(sep='/')
+        parts: list[str] = self.__s3_parameters.path_internal_points.split(sep='/')
         parts: list[str] = [part for part in parts if part]
 
         # Prepending the bucket name.
-        parts: list[str] = [self.__s3_parameters.bucket_int] + parts
+        parts: list[str] = [self.__s3_parameters.internal] + parts
 
         # Hence, the storage path.
         path: str = os.path.join(self.__configurations.warehouse, *parts)
