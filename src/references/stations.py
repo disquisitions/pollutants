@@ -53,6 +53,22 @@ class Stations:
 
         return data
 
+    @staticmethod
+    def __deduplicate(blob: pd.DataFrame) -> pd.DataFrame:
+        """
+
+        :param blob:
+        :return:
+        """
+
+        frame = blob.copy()['station_id'].value_counts().to_frame()
+        frame.reset_index(drop=False, inplace=True)
+        frame.rename(columns={'station_id': 'frequency', 'index': 'station_id'}, inplace=True)
+        core: pd.DataFrame = frame.loc[frame['frequency'] == 1, :]
+        core.drop_duplicates(inplace=True)
+
+        return core
+
     def exc(self) -> pd.DataFrame:
         """
 
@@ -67,5 +83,6 @@ class Stations:
         # Hence, structuring, and renaming the fields in line with field naming conventions and ontology standards.
         data: pd.DataFrame = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
+        data = self.__deduplicate(blob=data)
 
         return data[list(self.__metadata.keys())]
