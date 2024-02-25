@@ -45,7 +45,7 @@ class Interface:
         metadata = src.data.metadata.Metadata().points()
 
         # Transfer
-        messages: list[str] = src.s3.ingress.Ingress(service=self.__service, s3_parameters=self.__s3_parameters,
+        messages: list[str] = src.s3.ingress.Ingress(service=self.__service, bucket_name=self.__s3_parameters.bucket_name_int,
                                                      metadata=metadata).exc(path=storage)
 
         return messages
