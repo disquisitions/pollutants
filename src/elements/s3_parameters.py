@@ -19,7 +19,7 @@ class S3Parameters(typing.NamedTuple):
     access_control_list : str
       Access control list selection.
 
-    bucket_name_int : str
+    bucket_int : str
       The Amazon S3 (Simple Storage Service) bucket that hosts this project's data.
 
     path_int_points : str
@@ -32,6 +32,6 @@ class S3Parameters(typing.NamedTuple):
     region_name: str
     location_constraint: str
     access_control_list: str
-    bucket_name_int: str
+    bucket_int: str
     path_int_points: str
     path_int_references: str
