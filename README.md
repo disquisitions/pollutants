@@ -1,11 +1,13 @@
 <br>
 
-### Notes
+## Notes
+
+### Steps
 
 Images & Containers
 - [x] The Dockerfile for [development](/.devcontainer/Dockerfile).
 - [x] The Dockerfile for [production](Dockerfile).
-- [ ] A compose.yaml for local testing (<span style="color: #722f37">In Progress</span>)
+- [x] A compose.yaml for local testing.
 
 <br>
 
@@ -31,13 +33,14 @@ Usage Notes:
 
 <br>
 
-### Pollutants
+### Sequences
 
-Within the module `src.references.interface` possible excerpt options include
+Within the module `src.references.interface` possible excerpt approaches are filtering by
 
-* filtering by a pollutant of interest
-* filtering by a set of sequence identifiers
+* pollutants of interest.
+* a set of sequence identifiers
 
+<br>
 
 | pollutant<br>identifier | pollutant                            | notation |
 |:------------------------|:-------------------------------------|:---------|
@@ -45,7 +48,6 @@ Within the module `src.references.interface` possible excerpt options include
 | 5                       | Particulate matter < 10 µm (aerosol) |          |
 | 8                       | Nitrogen Dioxide (air)               | $NO_{2}$ |
 | 38                      | Nitrogen Monoxide                    | $NO$     |
-
 
 <br>
 <br>
