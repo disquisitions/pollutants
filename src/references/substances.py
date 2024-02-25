@@ -1,10 +1,10 @@
 """Module substances.py"""
 import logging
-import typing
 
 import pandas as pd
 
 import src.functions.objects
+import src.references.metadata
 import src.references.vocabulary
 
 
@@ -29,6 +29,9 @@ class Substances:
         casts = [int, str]
         self.__rename = dict(zip(labels, names))
         self.__dtype = dict(zip(names, casts))
+
+        # Metadata instance
+        self.__metadata = src.references.metadata.Metadata().substances()
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -66,24 +69,7 @@ class Substances:
 
         return data
 
-    @staticmethod
-    def __metadata() -> dict:
-        """
-
-        :return:
-        """
-
-        return {
-            'pollutant_id': 'The identification code of a pollutant.',
-            'uri': 'The European Environment Information and Observation Network (EIONET) page of a pollutant',
-            'substance': 'The name, and more, of the pollutant.',
-            'notation': 'The chemical formula of the pollutant.',
-            'status': 'Denotes whether a substance is still a valid pollutant.',
-            'accepted_date': 'Probably the date the substance was accepted as a pollutant.',
-            'recommended_unit_of_measure': 'The recommended unit of measure'
-        }
-
-    def exc(self) -> typing.Tuple[pd.DataFrame, dict]:
+    def exc(self) -> pd.DataFrame:
         """
 
         :return
@@ -104,4 +90,4 @@ class Substances:
         data = self.__casting(blob=data)
         data = self.__extra_fields(blob=data)
 
-        return data, self.__metadata()
+        return data[list(self.__metadata.keys())]
