@@ -23,8 +23,8 @@ class API:
         """
 
         :param sequence_id: The identification code of an air pollutant sequence
-        :param datestr: Date string YYYY-mm-dd
-        :return
+        :param datestr: Date string 'YYYY-mm-dd'.
+        :return:
         """
 
         ending = str(pd.date_range(start=datestr, periods=1, freq='ME').to_list()[0].date())
@@ -40,8 +40,8 @@ class API:
         """
 
         :param sequence_id: The identification code of an air pollutant sequence
-        :param datestr: Date string YYYY-mm-dd
-        :return
+        :param datestr: Date string 'YYYY-mm-dd'.
+        :return:
         """
 
         return self.__pattern(sequence_id=sequence_id, datestr=datestr)
