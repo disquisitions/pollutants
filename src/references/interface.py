@@ -25,6 +25,7 @@ class Interface:
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
         # Sequences in focus
+        self.__configurations = config.Config()
         self.__sequence_id_filter: list[int] = config.Config().sequence_id_filter
 
     @staticmethod
@@ -59,7 +60,7 @@ class Interface:
         #  * Extract the records in focus
         conditionals = data['longitude'].isna() | data['latitude'].isna()
         excerpt: pd.DataFrame = data.copy().loc[~conditionals, :]
-        excerpt = excerpt.copy().loc[excerpt['sequence_id'].isin(self.__sequence_id_filter), :]
+        excerpt = excerpt.copy().loc[excerpt['sequence_id'].isin(self.__configurations.sequence_id_filter), :]
 
         return excerpt
 
