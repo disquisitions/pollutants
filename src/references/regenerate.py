@@ -2,7 +2,6 @@
 Module regenerate.py
 """
 import logging
-import typing
 
 import pandas as pd
 
@@ -72,17 +71,35 @@ class Regenerate:
 
         return data
 
-    def exc(self) -> typing.Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    @staticmethod
+    def __integrate(registry: pd.DataFrame, stations: pd.DataFrame, substances: pd.DataFrame) -> pd.DataFrame:
+        """
+        Integrates the frames such that each record has the details of each distinct
+        sequence identification code.
+
+        :param registry: An inventory of sequence identification codes; a code is associated with a distinct device &
+                         pollutant combination
+        :param stations: An inventory telemetry devices stations
+        :param substances: An inventory of pollutants
+        :return:
+        """
+
+        frame = registry.merge(stations, how='left', on='station_id')
+        frame = frame.copy().merge(
+            substances.copy()[['pollutant_id', 'substance', 'notation']], how='left', on='pollutant_id')
+
+        return frame
+
+    def exc(self) -> pd.DataFrame:
         """
 
         :return:
-          registry: DataFrame
-          stations: DataFrame
-          substances: DataFrame
+          The integration of registry, stations, substances
         """
 
         registry: pd.DataFrame = self.__registry()
         stations: pd.DataFrame = self.__stations()
         substances: pd.DataFrame = self.__substances()
 
-        return registry, stations, substances
+        return self.__integrate(
+            registry=registry, stations=stations, substances=substances)
