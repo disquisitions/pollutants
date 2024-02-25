@@ -42,8 +42,8 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     # Modules
-    import config
     import src.algorithms.dates
+    import src.algorithms.storage
     import src.algorithms.vectors
     import src.data.interface
 
@@ -61,14 +61,11 @@ if __name__ == '__main__':
     service: sr.Service = src.functions.service.Service(region_name=s3_parameters.region_name).exc()
 
     # Setting-up
-    configurations = config.Config()
     setup: bool = src.setup.Setup(
         service=service, s3_parameters=s3_parameters).exc()
 
-    # Storage: warehouse, Amazon S3 bucket, bucket prefix
-    parts: list[str] = s3_parameters.points_.split(sep='/')
-    parts: list[str] = [part for part in parts if part]
-    parts: list[str] = [s3_parameters.bucket_name] + parts
-    storage: str = os.path.join(configurations.warehouse, *parts)
+    # The temporary local storage area
+    storage: str = src.algorithms.storage.Storage(
+        s3_parameters=s3_parameters).exc()
 
     main()
