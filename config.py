@@ -4,6 +4,7 @@ Module config
 import os
 import datetime
 
+
 class Config:
     """
     Class Config
@@ -16,10 +17,9 @@ class Config:
         Constructor
         """
 
-        self.warehouse = os.path.join(os.getcwd(), 'warehouse')
-        self.points_storage = os.path.join(self.warehouse, 'particulates', 'pollutants', 'points')
+        self.warehouse: str = os.path.join(os.getcwd(), 'warehouse')
 
-        # After the development phase ...
+        # After the development phase the dates will be different
         self.starting = datetime.datetime.strptime(__date_string='2022-01-01', __format='%Y-%m-%d')
         self.ending = datetime.datetime.today()
 
