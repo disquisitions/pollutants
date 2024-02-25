@@ -40,7 +40,7 @@ class Storage:
         parts: list[str] = [part for part in parts if part]
 
         # Prepending the bucket name.
-        parts: list[str] = [self.__s3_parameters.bucket_name_int] + parts
+        parts: list[str] = [self.__s3_parameters.bucket_int] + parts
 
         # Hence, the storage path.
         path: str = os.path.join(self.__configurations.warehouse, *parts)
