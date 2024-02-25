@@ -89,9 +89,10 @@ class Registry:
         frame.reset_index(drop=False, inplace=True)
         frame.rename(columns={'sequence_id': 'frequency', 'index': 'sequence_id'}, inplace=True)
         core: pd.DataFrame = frame.loc[frame['frequency'] == 1, :]
-        core.drop_duplicates(inplace=True)
+        data = core[['sequence_id']].merge(blob.copy(), how='left', on='sequence_id')
+        data.drop_duplicates(inplace=True)
 
-        return core
+        return data
 
     def exc(self) -> pd.DataFrame:
         """
