@@ -45,7 +45,7 @@ class Depositories:
         :return:
         """
 
-        # Determining the set of unique pollutant code & station code combinations
+        # Determining the set of unique pollutant code & station code combinations.
         matrices = np.array([[sequence.pollutant_id, sequence.station_id] for sequence in self.__sequences])
         matrices = np.unique(matrices, axis=0)
 
