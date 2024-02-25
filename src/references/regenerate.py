@@ -1,10 +1,15 @@
+"""
+Module regenerate.py
+"""
 import logging
 import typing
 
 import pandas as pd
+from pandas import DataFrame
 
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
+import src.references.metadata
 import src.references.registry
 import src.references.stations
 import src.references.substances
@@ -12,6 +17,9 @@ import src.s3.upload
 
 
 class Regenerate:
+    """
+    This class ...
+    """
 
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
@@ -23,6 +31,9 @@ class Regenerate:
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
+        # Metadata
+        self.__metadata = src.references.metadata.Metadata()
+
         # S3 Upload Instance
         self.__upload = src.s3.upload.Upload(service=self.__service, s3_parameters=self.__s3_parameters)
 
@@ -32,9 +43,9 @@ class Regenerate:
         :return:
         """
 
-        key_name = f'{self.__s3_parameters.references_}registry.csv'
-        data, metadata = src.references.registry.Registry().exc()
-        self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
+        key_name: str = f'{self.__s3_parameters.references_}registry.csv'
+        data: DataFrame = src.references.registry.Registry().exc()
+        self.__upload.bytes(data=data, metadata=self.__metadata.registry(), key_name=key_name)
 
         return data
 
@@ -44,16 +55,21 @@ class Regenerate:
         :return:
         """
 
-        key_name = f'{self.__s3_parameters.references_}stations.csv'
-        data, metadata = src.references.stations.Stations().exc()
-        self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
+        key_name: str = f'{self.__s3_parameters.references_}stations.csv'
+        data: DataFrame = src.references.stations.Stations().exc()
+        self.__upload.bytes(data=data, metadata=self.__metadata.stations(), key_name=key_name)
 
         return data
 
     def __substances(self) -> pd.DataFrame:
-        key_name = f'{self.__s3_parameters.references_}substances.csv'
-        data, metadata = src.references.substances.Substances().exc()
-        self.__upload.bytes(data=data, metadata=metadata, key_name=key_name)
+        """
+
+        :return:
+        """
+
+        key_name: str = f'{self.__s3_parameters.references_}substances.csv'
+        data: DataFrame = src.references.substances.Substances().exc()
+        self.__upload.bytes(data=data, metadata=self.__metadata.substances(), key_name=key_name)
 
         return data
 
