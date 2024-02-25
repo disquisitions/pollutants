@@ -5,6 +5,7 @@ import typing
 import pandas as pd
 
 import src.functions.objects
+import src.references.metadata
 
 
 class Stations:
@@ -23,6 +24,9 @@ class Stations:
         # Variables
         self.__url = 'https://www.scottishairquality.scot/sos-scotland/api/v1/stations'
         self.__rename = dict(zip(['properties.id', 'properties.label'], ['station_id', 'station_label']))
+
+        # Metadata instance
+        self.__metadata = src.references.metadata.Metadata().stations()
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -50,25 +54,11 @@ class Stations:
 
         return data
 
-    @staticmethod
-    def __metadata() -> dict:
-        """
-
-        :return:
-        """
-
-        return {'station_id': 'The identification code of the telemetric device station.',
-                'station_label': 'Address, etc., details of the station.',
-                'longitude': 'The x geographic coordinate.',
-                'latitude': 'The y geographic coordinate.'}
-
-    def exc(self) -> typing.Tuple[pd.DataFrame, dict]:
+    def exc(self) -> pd.DataFrame:
         """
 
         :return
           data: A descriptive inventory of substances/pollutants.
-
-          metadata: The metadata of <data>; for a data catalogue.
         """
 
         # Reading-in the JSON data of telemetric device stations
@@ -79,4 +69,4 @@ class Stations:
         data: pd.DataFrame = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
 
-        return data, self.__metadata()
+        return data[list(self.__metadata.keys())]
