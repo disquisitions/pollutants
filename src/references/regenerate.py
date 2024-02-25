@@ -16,7 +16,7 @@ import src.s3.upload
 
 class Regenerate:
     """
-    This class ...
+    Notes upcoming.
     """
 
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
@@ -71,22 +71,25 @@ class Regenerate:
 
         return data
 
-    @staticmethod
-    def __integrate(registry: pd.DataFrame, stations: pd.DataFrame, substances: pd.DataFrame) -> pd.DataFrame:
+    def __reference(self, registry: pd.DataFrame, stations: pd.DataFrame, substances: pd.DataFrame) -> pd.DataFrame:
         """
         Integrates the frames such that each record has the details of each distinct
         sequence identification code.
 
         :param registry: An inventory of sequence identification codes; a code is associated with a distinct device &
-                         pollutant combination
-        :param stations: An inventory telemetry devices stations
-        :param substances: An inventory of pollutants
+                         pollutant combination.
+        :param stations: An inventory telemetry devices stations.
+        :param substances: An inventory of pollutants.
         :return:
         """
 
         frame = registry.merge(stations, how='left', on='station_id')
         frame = frame.copy().merge(
             substances.copy()[['pollutant_id', 'substance', 'notation']], how='left', on='pollutant_id')
+        frame = frame.copy()[list(self.__metadata.reference().keys())]
+
+        key_name: str = f'{self.__s3_parameters.references_}reference.csv'
+        self.__upload.bytes(data=frame, metadata=self.__metadata.reference(), key_name=key_name)
 
         return frame
 
@@ -101,5 +104,5 @@ class Regenerate:
         stations: pd.DataFrame = self.__stations()
         substances: pd.DataFrame = self.__substances()
 
-        return self.__integrate(
+        return self.__reference(
             registry=registry, stations=stations, substances=substances)
