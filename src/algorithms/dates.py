@@ -32,7 +32,7 @@ class Dates:
         """
 
         :return:
-            A series of dates wherein each date is the date of the first day of a month
+            A series of dates wherein each date is the date of the first day of a month.
         """
 
         #  The dates
