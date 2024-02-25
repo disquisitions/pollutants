@@ -32,7 +32,6 @@ class Interface:
         """
         Integrates the frames such that each record has the details of each distinct
         sequence identification code.
-        
 
         :param registry:
         :param stations:
