@@ -54,6 +54,20 @@ class Stations:
         return data
 
     @staticmethod
+    def __coordinates(blob: pd.DataFrame) -> pd.DataFrame:
+        """
+        Exclude records that do not have both coordinate values.
+
+        :param blob:
+        :return:
+        """
+
+        conditionals = blob['longitude'].isna() | blob['latitude'].isna()
+        excerpt: pd.DataFrame = blob.copy().loc[~conditionals, :]
+
+        return excerpt
+
+    @staticmethod
     def __deduplicate(blob: pd.DataFrame) -> pd.DataFrame:
         """
 
@@ -84,6 +98,7 @@ class Stations:
         # Hence, structuring, and renaming the fields in line with field naming conventions and ontology standards.
         data: pd.DataFrame = self.__structure(blob=dictionary)
         data.rename(columns=self.__rename, inplace=True)
-        data = self.__deduplicate(blob=data)
+        data: pd.DataFrame = self.__coordinates(blob=data)
+        data: pd.DataFrame = self.__deduplicate(blob=data)
 
         return data[list(self.__metadata.keys())]
