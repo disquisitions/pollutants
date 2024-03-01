@@ -87,8 +87,8 @@ class Registry:
 
         frame = blob.copy()['sequence_id'].value_counts().to_frame()
         frame.reset_index(drop=False, inplace=True)
-        frame.rename(columns={'sequence_id': 'frequency', 'index': 'sequence_id'}, inplace=True)
-        core: pd.DataFrame = frame.loc[frame['frequency'] == 1, :]
+        core: pd.DataFrame = frame.loc[frame['count'] == 1, :]
+        print(core)
         data = core[['sequence_id']].merge(blob.copy(), how='left', on='sequence_id')
         data.drop_duplicates(inplace=True)
 
