@@ -80,8 +80,7 @@ class Substances:
 
         frame = blob.copy()['pollutant_id'].value_counts().to_frame()
         frame.reset_index(drop=False, inplace=True)
-        frame.rename(columns={'pollutant_id': 'frequency', 'index': 'pollutant_id'}, inplace=True)
-        core: pd.DataFrame = frame.loc[frame['frequency'] == 1, :]
+        core: pd.DataFrame = frame.loc[frame['count'] == 1, :]
         data = core[['pollutant_id']].merge(blob.copy(), how='left', on='pollutant_id')
         data.drop_duplicates(inplace=True)
 
