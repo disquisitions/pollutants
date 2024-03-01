@@ -28,24 +28,6 @@ class Interface:
         self.__configurations = config.Config()
         self.__sequence_id_filter: list[int] = config.Config().sequence_id_filter
 
-    @staticmethod
-    def __integrate(registry: pd.DataFrame, stations: pd.DataFrame, substances: pd.DataFrame) -> pd.DataFrame:
-        """
-        Integrates the frames such that each record has the details of each distinct
-        sequence identification code.
-
-        :param registry:
-        :param stations:
-        :param substances:
-        :return:
-        """
-
-        frame = registry.merge(stations, how='left', on='station_id')
-        frame = frame.copy().merge(
-            substances.copy()[['pollutant_id', 'substance', 'notation']], how='left', on='pollutant_id')
-
-        return frame
-
     def __excerpt(self, blob: pd.DataFrame) -> pd.DataFrame:
         """
 
