@@ -89,7 +89,7 @@ a testing option is a `compose.yaml`; a `compose.yaml` of the form [compose.yaml
  docker compose up -d
 ```
 
-If there are any problems
+If any problems arise
 
 ```shell
 docker compose logs -f
