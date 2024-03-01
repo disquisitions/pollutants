@@ -43,7 +43,7 @@ class Upload:
         data.to_csv(path_or_buf=buffer, header=True, index=False, encoding='utf-8')
 
         # A bucket object
-        bucket = self.__s3_resource.Bucket(name=self.__s3_parameters.bucket_name)
+        bucket = self.__s3_resource.Bucket(name=self.__s3_parameters.internal)
 
         try:
             bucket.put_object(
