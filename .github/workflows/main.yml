@@ -60,6 +60,9 @@ jobs:
           
           printf "\n src/elements "
           flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/elements
+          
+          printf "\n src/references "
+          flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/references
 
       - name: Lint with pylint
         run: |
