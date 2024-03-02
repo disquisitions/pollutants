@@ -1,5 +1,4 @@
 """Module interface.py"""
-import logging
 
 import pandas as pd
 
@@ -26,7 +25,6 @@ class Interface:
 
         # Sequences in focus
         self.__configurations = config.Config()
-        self.__sequence_id_filter: list[int] = config.Config().sequence_id_filter
 
     def __excerpt(self, blob: pd.DataFrame) -> pd.DataFrame:
         """
