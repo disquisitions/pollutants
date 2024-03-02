@@ -68,6 +68,9 @@ jobs:
           
           printf "\n Package src/elements"
           pylint --rcfile .pylintrc src/elements
+          
+          printf "\n Package src/references"
+          pylint --rcfile .pylintrc src/references
 
       - name: Test with pytest
         run: |
