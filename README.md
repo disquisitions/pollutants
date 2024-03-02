@@ -1,33 +1,16 @@
 <br>
- 
-**Notes**
 
-Images & Containers
-- [x] The Dockerfile for [development](/.devcontainer/Dockerfile).
-- [x] The Dockerfile for [production](Dockerfile).
-- [x] A compose.yaml for local testing.
+**Part I**
 
-<br>
+Presently, this project retrieves the nitrogen dioxide readings of telemetric devices at particular locations within 
+Scotland.  Usage notes upcoming.
 
-Container Registries:
-- [x] Local Machine &rarr; GitHub &rarr; Amazon Elastic Container Registry ([Via GitHub Actions](.github/workflows/main.yml))
-- [x] Local Machine &rarr; GitHub &rarr; GitHub Container Registry ([Via GitHub Actions](.github/workflows/main.yml)) 
-
-<br>
-
-Cataloguing:
-- [x] Cataloguing Amazon S3 (Simple Storage Service) deliveries via Amazon Glue (Via the Glue Package)
-
-<br>
-
-Code Analysis
-- [ ] Code Analysis ([Via GitHub Actions](.github/workflows/main.yml)): Ongoing.
-
-<br>
-
-Usage Notes:
-- [ ] Explanatory usage notes
-- [ ] Resources files
+* [The stations metadata of the telemetric devices](https://www.scottishairquality.scot/sos-scotland/api/v1/stations)
+* [The pollutants that Scottish Air Quality focus on](https://www.scottishairquality.scot/sos-scotland/api/v1/phenomena)
+  * [The pollutants dictionary](https://dd.eionet.europa.eu/vocabulary/aq/pollutant/view)
+* [The metadata of the timeseries](https://www.scottishairquality.scot/sos-scotland/api/v1/timeseries): The metadata 
+  includes a field of unique sequence identification codes.  Each identification code is associated with the 
+  continuous pollutant level recordings of a particular pollutant at a particular telemetric devices station.
 
 <br>
 <br>

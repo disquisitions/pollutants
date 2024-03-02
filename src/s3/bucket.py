@@ -22,7 +22,6 @@ class Bucket:
         """
 
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
-        self.__s3_client: boto3.session.Session.client = service.s3_client
 
         self.__location_constraint = location_constraint
         self.__bucket_name = bucket_name
@@ -48,7 +47,7 @@ class Bucket:
             self.__bucket.wait_until_exists()
             return True
         except botocore.exceptions.ClientError as err:
-            raise Exception(err) from err
+            raise err from err
 
     def empty(self) -> bool:
         """
@@ -62,9 +61,9 @@ class Bucket:
 
         try:
             state = self.__bucket.objects.delete()
-            return True if not state else False
+            return bool(state)
         except botocore.exceptions.ClientError as err:
-            raise Exception(err) from err
+            raise err from err
 
     def delete(self) -> bool:
         """
@@ -85,7 +84,7 @@ class Bucket:
             self.__bucket.wait_until_not_exists()
             return True
         except botocore.exceptions.ClientError as err:
-            raise Exception(err) from err
+            raise err from err
 
     def exists(self) -> bool:
         """
@@ -97,7 +96,7 @@ class Bucket:
 
         try:
             state: dict = self.__bucket.meta.client.head_bucket(Bucket=self.__bucket.name)
-            return True if state else False
+            return bool(state)
         except self.__bucket.meta.client.exceptions.NoSuchBucket:
             return False
         except botocore.exceptions.ClientError:

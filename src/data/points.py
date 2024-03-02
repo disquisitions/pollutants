@@ -53,7 +53,7 @@ class Points:
         """
 
         content: dict = self.__objects.api(url=url)
-        dictionary = content[0].__getitem__('data')
+        dictionary = content[0]['data']
 
         return dictionary
 
@@ -88,9 +88,9 @@ class Points:
 
         if blob.empty:
             return f'{sequence.sequence_id} -> empty'
-        else:
-            basename = os.path.join(self.__storage, f'pollutant_{sequence.pollutant_id}', f'station_{sequence.station_id}')
-            return self.__streams.write(blob=blob, path=os.path.join(basename, f'{datestr}.csv'))
+
+        basename = os.path.join(self.__storage, f'pollutant_{sequence.pollutant_id}', f'station_{sequence.station_id}')
+        return self.__streams.write(blob=blob, path=os.path.join(basename, f'{datestr}.csv'))
 
     def exc(self):
         """

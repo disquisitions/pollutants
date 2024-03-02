@@ -20,7 +20,7 @@ class Config:
         self.warehouse: str = os.path.join(os.getcwd(), 'warehouse')
 
         # After the development phase the dates will be different
-        self.starting = datetime.datetime.strptime(__date_string='2022-01-01', __format='%Y-%m-%d')
+        self.starting = datetime.datetime.strptime('2022-01-01', '%Y-%m-%d')
         self.ending = datetime.datetime.today()
 
         # Devices in focus, via their sequence identifiers

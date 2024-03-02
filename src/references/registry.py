@@ -1,5 +1,4 @@
 """Module sequences.py"""
-import logging
 
 import pandas as pd
 
@@ -32,12 +31,6 @@ class Registry:
         # Metadata instance
         self.__metadata = src.references.metadata.Metadata().registry()
 
-        # Logging
-        logging.basicConfig(level=logging.INFO,
-                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger = logging.getLogger(__name__)
-
     @staticmethod
     def __structure(blob: dict) -> pd.DataFrame:
         """
@@ -52,7 +45,7 @@ class Registry:
         try:
             normalised = pd.json_normalize(data=blob, max_level=2)
         except ImportError as err:
-            raise Exception(err) from err
+            raise err from err
 
         data = normalised.copy().drop(columns=['station.properties.label', 'station.geometry.coordinates',
                                                'station.type', 'station.geometry.type'])
@@ -87,8 +80,8 @@ class Registry:
 
         frame = blob.copy()['sequence_id'].value_counts().to_frame()
         frame.reset_index(drop=False, inplace=True)
-        frame.rename(columns={'sequence_id': 'frequency', 'index': 'sequence_id'}, inplace=True)
-        core: pd.DataFrame = frame.loc[frame['frequency'] == 1, :]
+        core: pd.DataFrame = frame.loc[frame['count'] == 1, :]
+        print(core)
         data = core[['sequence_id']].merge(blob.copy(), how='left', on='sequence_id')
         data.drop_duplicates(inplace=True)
 

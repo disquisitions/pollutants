@@ -22,15 +22,15 @@ class Vectors:
 
     """
 
-    def __init__(self, excerpt: pd.DataFrame, datestr_: list[str]):
+    def __init__(self, reference: pd.DataFrame, datestr_: list[str]):
         """
 
-        :param excerpt: A data frame wherein each instance is a set of metadata, or retrieval parameters,
+        :param reference: A data frame wherein each instance is a set of metadata, or retrieval parameters,
                           for a pollutant telemetry device.
         :param datestr_: The dates.
         """
 
-        self.__excerpt = excerpt
+        self.__reference = reference
         self.__datestr_ = datestr_
 
     @dask.delayed
@@ -41,7 +41,7 @@ class Vectors:
         :return:
         """
 
-        frame = self.__excerpt.copy()
+        frame = self.__reference.copy()
         frame.loc[:, 'datestr'] = datestr
 
         return frame
@@ -58,7 +58,7 @@ class Vectors:
 
         return [sq.Sequence(**structure) for structure in structures]
 
-    def exc(self):
+    def exc(self) -> list[sq.Sequence]:
         """
         For parallel execution purposes, this class creates a vector of collections
         whereby each collection denotes the data retrieval parameters of a
