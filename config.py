@@ -20,8 +20,8 @@ class Config:
         self.warehouse: str = os.path.join(os.getcwd(), 'warehouse')
 
         # After the development phase the dates will be different
-        self.starting = datetime.datetime.strptime('2022-01-01', '%Y-%m-%d')
-        self.ending = datetime.datetime.today()
+        self.starting = datetime.datetime.strptime('2023-01-01', '%Y-%m-%d')
+        self.ending = datetime.datetime.today() - datetime.timedelta(days=3)
 
         # Devices in focus, via their sequence identifiers
         # pollutant: Nitrogen Dioxide
