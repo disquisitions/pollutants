@@ -46,7 +46,7 @@ class Substances:
         try:
             return pd.json_normalize(data=blob, max_level=1)
         except ImportError as err:
-            raise Exception(err) from err
+            raise err from err
 
     def __casting(self, blob: pd.DataFrame) -> pd.DataFrame:
         """
