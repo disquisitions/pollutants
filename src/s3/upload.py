@@ -46,10 +46,10 @@ class Upload:
         bucket = self.__s3_resource.Bucket(name=self.__s3_parameters.internal)
 
         try:
-            bucket.put_object(
+            response = bucket.put_object(
                 ACL=self.__s3_parameters.access_control_list,
                 Body=buffer.getvalue(),
                 Key=key_name, Metadata=metadata)
-            return True or False
+            return bool(response)
         except botocore.exceptions.ClientError as err:
-            raise Exception(err) from err
+            raise err from err
