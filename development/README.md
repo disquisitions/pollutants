@@ -3,11 +3,13 @@
 * [Remote & Local Environments](#remote--local-environments)
   * [Remote](#remote) 
   * [Local](#local)
-* [Development Notes](#development-notes)
-  * [Testing Images Containers](#testing-image-containers)
-  * [Automatic Code Analysis](#code-analysis) 
-  * [GitHub Actions & Container Registry Packages](#github-actions--container-registry-packages)
-* [Snippets](#snippets)
+* [GitHub Actions](#github-actions)
+  * [Code Analysis](#code-analysis)
+  * [Container Registry Packages](#container-registry-packages)
+* [Testing Images Containers](#testing-image-containers)
+  * [Locally](#locally)
+  * [Via Amazon EC2 (Elastic Compute Cloud)](#via-amazon-ec2-elastic-compute-cloud)
+* [Steps](#steps)
 * [References](#references)
 
 <br>
@@ -19,7 +21,7 @@
 Development within a container.  The environment's image is built via
 
 ```shell
-docker build -t pollutants .
+docker build . --file .devcontainer/Dockerfile -t pollutants
 ```
 
 which names the new image `pollutants`.  Subsequently, use a container/instance of the image `pollutants` as a development environment via the command
@@ -33,52 +35,86 @@ wherein   `-p 10000:8888` maps the host port `1000` to container port `8888`.  N
 docker ps --all
 ```
 
-A developer may attach an IDE (independent development environment) application to a running container.  In the case of IntelliJ IDEA
+A developer may attach an IDE (independent development environment) application to a running container.  The IntelliJ 
+IDEA instructions are:
 
 > Connect to the Docker [daemon](https://www.jetbrains.com/help/idea/docker.html#connect_to_docker)
 > * **Settings** $\rightarrow$ **Build, Execution, Deployment** $\rightarrow$ **Docker** $\rightarrow$ **WSL:** `operating system`
 > * **View** $\rightarrow$ **Tool Window** $\rightarrow$ **Services** <br>Within the **Containers** section connect to the running instance of interest, or ascertain connection to the running instance of interest.
 
-Similarly, Visual Studio Code as its container attachment instructions; study [Attach Container](https://code.visualstudio.com/docs/devcontainers/attach-container).
+Visual Studio Code has its container attachment instructions; study [Attach Container](https://code.visualstudio.com/docs/devcontainers/attach-container).
+
 
 ### Local
 
-Beforehand update the `base` **`conda`** environment
+For temporary explorations via a local environment, first update your machine's base `conda` environment, i.e.,
 
 ```shell
 conda update -n base -c anaconda conda
 ```
 
-The local virtual environment can be built via **environment.yml**
+Subsequently, build a local virtual environment via the command
 
 ```shell
 conda env create --file environment.yml -p /opt/miniconda3/envs/pollutants
 ```
 
-which uses the same **requirements.txt** as Dockerfile.  If the environment exists, i.e., the aim is to replace an 
-existing environment, run
+Herein, **environment.yml** uses the same **requirements.txt** as [Dockerfile](/.devcontainer/Dockerfile).  If the 
+environment exists, i.e., if the aim is to replace an existing environment, initially run
 
 ```shell
 conda env remove --name pollutants
 ```
 
-first.
+<br>
+
+## GitHub Actions
+
+<span style="margin-bottom: 25px"><b>Integration, Delivery, Deployment</b></span>
+
+The project uses GitHub Actions for a variety of code analysis, and to automatically deliver images to container registries.
+
+### Code Analysis
+
+Study the code analysis steps outlined in [`.github/workflows/main.yml`](/.github/workflows/main.yml).  The steps therein 
+mimic local code analysis steps.  For example, 
+
+```shell
+python -m pylint --rcfile .pylintrc ...
+```
+
+will analyse a program or set of programs; depending on the ellipsis replacement. Note, the directive below generates the 
+dotfile `.pylintrc` of the static code analyser [pylint](https://pylint.pycqa.org/en/latest/user_guide/checkers/features.html).
+
+```shell
+pylint --generate-rcfile > .pylintrc
+```
+
+### Container Registry Packages
+
+**Case** _permission denied_, the `packages` section of [main.yml](/.github/workflows/main.yml) is probably missing:
+
+```yaml
+permissions:
+  contents: read
+  packages: write
+```
+
+**Case** _the image does not exist locally_, probably forgot
+
+```shell
+docker build . --file Dockerfile --tag ...
+```
+
+Forgotten within the `packages` section of [main.yml](/.github/workflows/main.yml).
 
 
 <br>
 
 
-<br>
+## Testing Image Containers
 
-## Development Notes
-
-### Testing Image Containers
-
-* Locally
-* Via Amazon EC2 (Elastic Compute Cloud)
-
-
-#### Locally
+### Locally
 
 The image's programs interact with Amazon services therefore an image container will require Amazon credentials.  Hence, 
 a testing option is a `compose.yaml`; a `compose.yaml` of the form [compose.yaml.template](/compose.yaml.template), 
@@ -95,85 +131,46 @@ If any problems arise
 docker compose logs -f
 ```
 
-
-#### Via Amazon EC2 (Elastic Compute Cloud)
+### Via Amazon EC2 (Elastic Compute Cloud)
 
 If the EC2 is launched with the appropriate instance profile policies for interacting with relevant Amazon services, then 
-testing is straightforward
+testing is straightforward.
 
 ```shell
 docker pull ghcr.io/enqueter/pollutants:develop
 docker run ghcr.io/enqueter/pollutants:develop
 ```
 
+<br>
 
+## Steps
 
-### Code Analysis
-
-The directive
-
-```shell
-pylint --generate-rcfile > .pylintrc
-```
-
-generates the dotfile `.pylintrc` of the static code analyser [pylint](https://pylint.pycqa.org/en/latest/user_guide/checkers/features.html).  Subsequently, analyse via
-
-```shell
-python -m pylint --rcfile .pylintrc ...
-```
-
-### GitHub Actions & Container Registry Packages
-
-**Case** _"permission denied"_, the `packages` section of [main.yml](/.github/workflows/main.yml) is probably missing
-
-```yaml
-permissions:
-  contents: read
-  packages: write
-```
-
-**Case** _"... image does not exist locally with the tag: ghcr.io... "_, probably forgot
-
-```shell
-docker build . --file Dockerfile --tag ...
-```
-
-within the `packages` section of [main.yml](/.github/workflows/main.yml).
+Images & Containers
+- [x] The Dockerfile for [development](/.devcontainer/Dockerfile).
+- [x] The Dockerfile for [production](/Dockerfile).
+- [x] A compose.yaml for local testing.
 
 <br>
 
-## Sequences
-
-Within the module `src.references.interface` possible excerpts are
-
-* pollutants of interest.
-* sequence identifiers of interest.
+Container Registries:
+- [x] Local Machine &rarr; GitHub &rarr; Amazon Elastic Container Registry ([Via GitHub Actions](/.github/workflows/main.yml))
+- [x] Local Machine &rarr; GitHub &rarr; GitHub Container Registry ([Via GitHub Actions](/.github/workflows/main.yml))
 
 <br>
 
-| pollutant<br>identifier | pollutant                            | notation |
-|:------------------------|:-------------------------------------|:---------|
-| 1                       | Sulphur Dioxide                      | $SO_{2}$ |
-| 5                       | Particulate matter < 10 µm (aerosol) |          |
-| 8                       | Nitrogen Dioxide (air)               | $NO_{2}$ |
-| 38                      | Nitrogen Monoxide                    | $NO$     |
-
+Cataloguing:
+- [x] Cataloguing Amazon S3 (Simple Storage Service) deliveries via Amazon Glue (Via the Glue Package)
 
 <br>
 
-## Snippets
+Code Analysis
+- [ ] Code Analysis ([Via GitHub Actions](/.github/workflows/main.yml)): Ongoing.
 
-Determining the operating system/platform $\ldots$
+<br>
 
-```python
-import logging
-import os
-import platform
-
-# Environment
-logging.log(level=logging.INFO, msg=f'Operating System Name (posix or nt): {os.name}')
-logging.log(level=logging.INFO, msg=f'Platform: {platform.system()}')
-```
+Usage Notes:
+- [ ] Explanatory usage notes
+- [ ] Resources files
 
 <br>
 
