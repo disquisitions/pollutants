@@ -96,6 +96,9 @@ jobs:
           
           printf "\nCoverage tests/elements/"
           printf "\n Upcoming ... pytest --cov-report term-missing  --cov src/elements/ tests/elements/"
+          
+          printf "\nCoverage tests/references/"
+          printf "\n Upcoming ... pytest --cov-report term-missing  --cov src/references/ tests/references/"
 
 
   packages:
