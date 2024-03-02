@@ -13,6 +13,10 @@ def main():
     # Logging
     logger: logging.Logger = logging.getLogger(__name__)
 
+    # The temporary local storage area
+    storage: str = src.algorithms.storage.Storage(
+        s3_parameters=s3_parameters).exc()
+
     # The dates
     datestr_ = src.algorithms.dates.Dates().exc()
     logger.info(datestr_)
@@ -65,9 +69,5 @@ if __name__ == '__main__':
     # Setting-up
     setup: bool = src.setup.Setup(
         service=service, s3_parameters=s3_parameters).exc()
-
-    # The temporary local storage area
-    storage: str = src.algorithms.storage.Storage(
-        s3_parameters=s3_parameters).exc()
 
     main()
