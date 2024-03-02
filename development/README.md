@@ -177,6 +177,8 @@ Usage Notes:
 ## References
 
 * [Epoch Time](https://unixtime.org)
+* [UNIX Time Converters](https://time.is/Unix_time_converter)
+* [Time Durations](https://en.wikipedia.org/wiki/ISO_8601#Durations)
 
 
 <br>
