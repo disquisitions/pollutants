@@ -1,6 +1,8 @@
 """
 Module upload.py
 """
+
+import logging
 import io
 
 import boto3
@@ -30,6 +32,12 @@ class Upload:
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
 
+        # Logging
+        logging.basicConfig(level=logging.INFO,
+                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
+                            datefmt='%Y-%m-%d %H:%M:%S')
+        self.__logger = logging.getLogger(__name__)
+
     def bytes(self, data: pd.DataFrame, metadata: dict, key_name: str) -> bool:
         """
 
@@ -50,6 +58,7 @@ class Upload:
                 ACL=self.__s3_parameters.access_control_list,
                 Body=buffer.getvalue(),
                 Key=key_name, Metadata=metadata)
+            self.__logger.info('%s\n%s', key_name, response)
             return bool(response)
         except botocore.exceptions.ClientError as err:
             raise err from err
