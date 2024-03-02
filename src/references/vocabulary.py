@@ -17,7 +17,7 @@ class Vocabulary:
         Constructor
         """
 
-        # The url (uniform resource locator) of the air quality pollutants dictionary
+        # The url (uniform resource locator) of the air-quality-pollutants dictionary.
         self.__uri: str = 'https://dd.eionet.europa.eu/vocabulary/aq/pollutant/csv'
 
         # Its date fields
@@ -49,7 +49,7 @@ class Vocabulary:
         identifiers = data.copy().loc[:, 'uri'].str.rsplit(pat='/', n=1, expand=True)
         data.loc[:, 'pollutant_id'] = identifiers.loc[:, 1].astype(dtype=int).array
 
-        # Extracting the <recommended_unit_of_measure>
+        # Extracting the <recommended_unit_of_measure>.
         units = data.copy().loc[:, 'recommended_unit'].str.rsplit(pat='/', n=1, expand=True)
         data.loc[:, 'recommended_unit_of_measure'] = units.loc[:, 1].array
         data.drop(columns='recommended_unit', inplace=True)
@@ -69,7 +69,7 @@ class Vocabulary:
             date_format=self.__date_format)
 
         # Hence, (a) renaming the fields in line with field naming conventions and ontology standards, and (b)
-        # adding & dropping features
+        # adding & dropping features.
         data = data.copy().rename(columns=self.__rename)
         data = self.__feature_engineering(blob=data)
 
