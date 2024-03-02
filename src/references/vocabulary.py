@@ -4,6 +4,7 @@ import logging
 import pandas as pd
 
 import src.functions.streams
+import src.elements.text_attributes as txa
 
 
 class Vocabulary:
@@ -64,9 +65,9 @@ class Vocabulary:
 
         # Reads-in the details of each substance
         streams = src.functions.streams.Streams()
-        data: pd.DataFrame = streams.api(
-            uri=self.__uri, header=0, usecols=list(self.__dtype.keys()), dtype=self.__dtype,
-            date_format=self.__date_format)
+        text = txa.TextAttributes(uri=self.__uri, header=0, usecols=list(self.__dtype.keys()),
+                                  dtype=self.__dtype, date_format=self.__date_format)
+        data: pd.DataFrame = streams.api(text=text)
 
         # Hence, (a) renaming the fields in line with field naming conventions and ontology standards, and (b)
         # adding & dropping features.
