@@ -11,7 +11,7 @@ develop <br>
 **Part I**
 
 Presently, this project retrieves the nitrogen dioxide readings at particular telemetric devices locations 
-within Scotland.  Usage notes upcoming.
+within Scotland.  **Details upcoming**.
 
 * [The stations metadata of the telemetric devices](https://www.scottishairquality.scot/sos-scotland/api/v1/stations)
 * [The pollutants that Scottish Air Quality focus on](https://www.scottishairquality.scot/sos-scotland/api/v1/phenomena)
