@@ -33,7 +33,7 @@ def main():
                                  sequences=sequences).exc(storage=storage)
 
     # Deleting __pycache__
-    src.functions.cache.Cache().delete()
+    src.functions.cache.Cache().exc()
 
 
 if __name__ == '__main__':

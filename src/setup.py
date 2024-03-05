@@ -15,7 +15,7 @@ class Setup:
     Notes
     -----
 
-    This class prepare the Amazon S3 (Simple Storage Service) and local data environments.
+    This class prepares the Amazon S3 (Simple Storage Service) and local data environments.
     """
 
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
