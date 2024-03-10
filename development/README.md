@@ -1,5 +1,9 @@
 <br>
 
+<span style="color: #777777"><b>IN PROGRESS</b></span>
+
+<br>
+
 * [Remote & Local Environments](#remote--local-environments)
   * [Remote](#remote) 
   * [Local](#local)
@@ -163,22 +167,22 @@ Steps in focus:
     <thead><tr style="text-align: left"><th>focus</th><th>notes</th></tr></thead>
     <tr><td>Images & Containers</td>
         <td><ul style="list-style-type:'\2713';">
-          <li>&nbsp; The Dockerfile for [development](/.devcontainer/Dockerfile).</li>
-          <li>&nbsp; The Dockerfile for [production](/Dockerfile).</li>
+          <li>&nbsp; The Dockerfile for <a href="/.devcontainer/Dockerfile" target="_blank">development</a>.</li>
+          <li>&nbsp; The Dockerfile for <a href="/Dockerfile" target="_blank">production</a>.</li>
           <li>&nbsp; A compose.yaml for local testing.</li>
         </ul></td>
     </tr>
     <tr><td>Container Registries</td>
         <td><ul style="list-style-type:'\2713';">
-          <li>&nbsp; Local Machine &rarr; GitHub &rarr; Amazon Elastic Container Registry ([Via GitHub Actions](/.github/workflows/main.yml))</li>
-          <li>&nbsp; Local Machine &rarr; GitHub &rarr; GitHub Container Registry ([Via GitHub Actions](/.github/workflows/main.yml))</li>
+          <li>&nbsp; Local Machine &rarr; GitHub &rarr; Amazon Elastic Container Registry (<a href="/.github/workflows/main.yml" target="_blank">Via GitHub Actions</a>)</li>
+          <li>&nbsp; Local Machine &rarr; GitHub &rarr; GitHub Container Registry (<a href="/.github/workflows/main.yml" target="_blank">Via GitHub Actions</a>)</li>
         </ul></td>
     </tr>
     <tr><td>Cataloguing</td>
         <td>&#10003; &nbsp; Cataloguing Amazon S3 (Simple Storage Service) deliveries via Amazon Glue (Via the Glue Package)</td>
     </tr>
     <tr><td>Code Analysis</td>
-        <td>&#10003; &nbsp; Code Analysis ([Via GitHub Actions](/.github/workflows/main.yml)): Ongoing.</td>
+        <td>&#10003; &nbsp; Code Analysis (<a href="/.github/workflows/main.yml" target="_blank">Via GitHub Actions</a>)</td>
     </tr>
     <tr><td>Usage Notes</td>
         <td><ul  style="list-style-type:'\2717';">
