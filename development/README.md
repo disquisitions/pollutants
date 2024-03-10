@@ -153,32 +153,40 @@ docker run ghcr.io/enqueter/pollutants:develop
 
 ## Steps
 
-Images & Containers
-- [x] The Dockerfile for [development](/.devcontainer/Dockerfile).
-- [x] The Dockerfile for [production](/Dockerfile).
-- [x] A compose.yaml for local testing.
+Steps in focus:
 
-<br>
-
-Container Registries:
-- [x] Local Machine &rarr; GitHub &rarr; Amazon Elastic Container Registry ([Via GitHub Actions](/.github/workflows/main.yml))
-- [x] Local Machine &rarr; GitHub &rarr; GitHub Container Registry ([Via GitHub Actions](/.github/workflows/main.yml))
-
-<br>
-
-Cataloguing:
-- [x] Cataloguing Amazon S3 (Simple Storage Service) deliveries via Amazon Glue (Via the Glue Package)
-
-<br>
-
-Code Analysis
-- [ ] Code Analysis ([Via GitHub Actions](/.github/workflows/main.yml)): Ongoing.
-
-<br>
-
-Usage Notes:
-- [ ] Explanatory usage notes
-- [ ] Resources files
+<table style="width: 80%; border: 0; border-spacing: 5px; margin-left: 35px">
+    <colgroup>
+        <col span="1" style="width: 23.5%;">
+        <col span="1" style="width: 66.5%;">
+    </colgroup>
+    <thead><tr style="text-align: left"><th>focus</th><th>notes</th></tr></thead>
+    <tr><td>Images & Containers</td>
+        <td><ul style="list-style-type:'\2713';">
+          <li>&nbsp; The Dockerfile for [development](/.devcontainer/Dockerfile).</li>
+          <li>&nbsp; The Dockerfile for [production](/Dockerfile).</li>
+          <li>&nbsp; A compose.yaml for local testing.</li>
+        </ul></td>
+    </tr>
+    <tr><td>Container Registries</td>
+        <td><ul style="list-style-type:'\2713';">
+          <li>&nbsp; Local Machine &rarr; GitHub &rarr; Amazon Elastic Container Registry ([Via GitHub Actions](/.github/workflows/main.yml))</li>
+          <li>&nbsp; Local Machine &rarr; GitHub &rarr; GitHub Container Registry ([Via GitHub Actions](/.github/workflows/main.yml))</li>
+        </ul></td>
+    </tr>
+    <tr><td>Cataloguing</td>
+        <td>&#10003; &nbsp; Cataloguing Amazon S3 (Simple Storage Service) deliveries via Amazon Glue (Via the Glue Package)</td>
+    </tr>
+    <tr><td>Code Analysis</td>
+        <td>&#10003; &nbsp; Code Analysis ([Via GitHub Actions](/.github/workflows/main.yml)): Ongoing.</td>
+    </tr>
+    <tr><td>Usage Notes</td>
+        <td><ul  style="list-style-type:'\2717';">
+            <li>&nbsp; Explanatory usage notes</li>
+            <li>&nbsp; Resources files</li>
+        </ul></td>
+    </tr>
+</table>
 
 <br>
 
