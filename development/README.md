@@ -92,7 +92,12 @@ pylint --generate-rcfile > .pylintrc
 
 ### Container Registry Packages
 
-**Case** _permission denied_, the `packages` section of [main.yml](/.github/workflows/main.yml) is probably missing:
+The **packages** section of [main.yml](/.github/workflows/main.yml) is for GitHub Container Registry (GCR) container 
+registration.  Beware of errors due to:
+
+
+> **Case** _permission denied_ $\rightarrow$ the **packages** section of [main.yml](/.github/workflows/main.yml) is probably 
+missing:
 
 ```yaml
 permissions:
@@ -100,14 +105,17 @@ permissions:
   packages: write
 ```
 
-**Case** _the image does not exist locally_, probably forgot
+> **Case** _the image does not exist locally_ $\rightarrow$ the **packages** section of [main.yml](/.github/workflows/main.yml) is probably
+missing:
 
-```shell
+```yaml
 docker build . --file Dockerfile --tag ...
 ```
 
-Forgotten within the `packages` section of [main.yml](/.github/workflows/main.yml).
+<br>
 
+The **ecr** section of [main.yml](/.github/workflows/main.yml) is for Amazon Elastic Container Registry (ECR) container 
+registration.
 
 <br>
 
@@ -179,6 +187,7 @@ Usage Notes:
 * [Epoch Time](https://unixtime.org)
 * [UNIX Time Converters](https://time.is/Unix_time_converter)
 * [Time Durations](https://en.wikipedia.org/wiki/ISO_8601#Durations)
+* [ubuntu man pages](https://manpages.ubuntu.com/manpages/trusty/man1/)
 
 
 <br>
