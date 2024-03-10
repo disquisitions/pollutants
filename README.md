@@ -1,5 +1,9 @@
 <br>
 
+<span style="color: #777777"><b>IN PROGRESS</b></span>
+
+<br>
+
 master <br>
 [![Pollutants m](https://github.com/enqueter/pollutants/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/enqueter/pollutants/actions/workflows/main.yml)
 
@@ -8,10 +12,15 @@ develop <br>
 
 <br>
 
-**Part I**
+### Notes
 
-Presently, this project retrieves the nitrogen dioxide readings at particular telemetric devices locations 
-within Scotland.  **Details upcoming**.
+Function: 
+
+> Retrieves the nitrogen dioxide readings at particular telemetric devices locations within Scotland.
+
+<br>
+
+### References
 
 * [The stations metadata of the telemetric devices](https://www.scottishairquality.scot/sos-scotland/api/v1/stations)
 * [The pollutants that Scottish Air Quality focus on](https://www.scottishairquality.scot/sos-scotland/api/v1/phenomena)

@@ -1,5 +1,9 @@
 <br>
 
+<span style="color: #777777"><b>IN PROGRESS</b></span>
+
+<br>
+
 * [Remote & Local Environments](#remote--local-environments)
   * [Remote](#remote) 
   * [Local](#local)
@@ -92,7 +96,12 @@ pylint --generate-rcfile > .pylintrc
 
 ### Container Registry Packages
 
-**Case** _permission denied_, the `packages` section of [main.yml](/.github/workflows/main.yml) is probably missing:
+The **packages** section of [main.yml](/.github/workflows/main.yml) is for GitHub Container Registry (GCR) container 
+registration.  Beware of errors due to:
+
+
+> **Case** _permission denied_ $\rightarrow$ the **packages** section of [main.yml](/.github/workflows/main.yml) is probably 
+missing:
 
 ```yaml
 permissions:
@@ -100,14 +109,17 @@ permissions:
   packages: write
 ```
 
-**Case** _the image does not exist locally_, probably forgot
+> **Case** _the image does not exist locally_ $\rightarrow$ the **packages** section of [main.yml](/.github/workflows/main.yml) is probably
+missing:
 
-```shell
+```yaml
 docker build . --file Dockerfile --tag ...
 ```
 
-Forgotten within the `packages` section of [main.yml](/.github/workflows/main.yml).
+<br>
 
+The **ecr** section of [main.yml](/.github/workflows/main.yml) is for Amazon Elastic Container Registry (ECR) container 
+registration.
 
 <br>
 
@@ -145,32 +157,40 @@ docker run ghcr.io/enqueter/pollutants:develop
 
 ## Steps
 
-Images & Containers
-- [x] The Dockerfile for [development](/.devcontainer/Dockerfile).
-- [x] The Dockerfile for [production](/Dockerfile).
-- [x] A compose.yaml for local testing.
+Steps in focus:
 
-<br>
-
-Container Registries:
-- [x] Local Machine &rarr; GitHub &rarr; Amazon Elastic Container Registry ([Via GitHub Actions](/.github/workflows/main.yml))
-- [x] Local Machine &rarr; GitHub &rarr; GitHub Container Registry ([Via GitHub Actions](/.github/workflows/main.yml))
-
-<br>
-
-Cataloguing:
-- [x] Cataloguing Amazon S3 (Simple Storage Service) deliveries via Amazon Glue (Via the Glue Package)
-
-<br>
-
-Code Analysis
-- [ ] Code Analysis ([Via GitHub Actions](/.github/workflows/main.yml)): Ongoing.
-
-<br>
-
-Usage Notes:
-- [ ] Explanatory usage notes
-- [ ] Resources files
+<table style="width: 80%; border: 0; border-spacing: 5px; margin-left: 35px">
+    <colgroup>
+        <col span="1" style="width: 23.5%;">
+        <col span="1" style="width: 66.5%;">
+    </colgroup>
+    <thead><tr style="text-align: left"><th>focus</th><th>notes</th></tr></thead>
+    <tr><td>Images & Containers</td>
+        <td><ul style="list-style-type:'\2713';">
+          <li>&nbsp; The Dockerfile for <a href="/.devcontainer/Dockerfile" target="_blank">development</a>.</li>
+          <li>&nbsp; The Dockerfile for <a href="/Dockerfile" target="_blank">production</a>.</li>
+          <li>&nbsp; A compose.yaml for local testing.</li>
+        </ul></td>
+    </tr>
+    <tr><td>Container Registries</td>
+        <td><ul style="list-style-type:'\2713';">
+          <li>&nbsp; Local Machine &rarr; GitHub &rarr; Amazon Elastic Container Registry (<a href="/.github/workflows/main.yml" target="_blank">Via GitHub Actions</a>)</li>
+          <li>&nbsp; Local Machine &rarr; GitHub &rarr; GitHub Container Registry (<a href="/.github/workflows/main.yml" target="_blank">Via GitHub Actions</a>)</li>
+        </ul></td>
+    </tr>
+    <tr><td>Cataloguing</td>
+        <td>&#10003; &nbsp; Cataloguing Amazon S3 (Simple Storage Service) deliveries via Amazon Glue (Via the Glue Package)</td>
+    </tr>
+    <tr><td>Code Analysis</td>
+        <td>&#10003; &nbsp; Code Analysis (<a href="/.github/workflows/main.yml" target="_blank">Via GitHub Actions</a>)</td>
+    </tr>
+    <tr><td>Usage Notes</td>
+        <td><ul  style="list-style-type:'\2717';">
+            <li>&nbsp; Explanatory usage notes</li>
+            <li>&nbsp; Resources files</li>
+        </ul></td>
+    </tr>
+</table>
 
 <br>
 
@@ -179,6 +199,7 @@ Usage Notes:
 * [Epoch Time](https://unixtime.org)
 * [UNIX Time Converters](https://time.is/Unix_time_converter)
 * [Time Durations](https://en.wikipedia.org/wiki/ISO_8601#Durations)
+* [ubuntu man pages](https://manpages.ubuntu.com/manpages/trusty/man1/)
 
 
 <br>
