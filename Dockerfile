@@ -6,7 +6,7 @@ FROM python:3.11.7-bookworm
 WORKDIR /app
 COPY .devcontainer/requirements.txt /app
 RUN adduser --system --home /home/reader reader && pip install --upgrade pip && \
-    pip install --requirement /app/requirements.txt --no-cache-dir && mkdir /app/warehouse
+    pip install --requirement /app/requirements.txt --no-cache-dir
 
 # Specific COPY
 COPY src /app/src
@@ -20,6 +20,7 @@ USER reader
 EXPOSE 8050
 
 # Create mountpoint
+RUN mkdir /app/warehouse
 VOLUME /app/warehouse
 
 # ENTRYPOINT
