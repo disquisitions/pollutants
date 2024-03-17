@@ -49,6 +49,7 @@ IDEA instructions are:
 
 Visual Studio Code has its container attachment instructions; study [Attach Container](https://code.visualstudio.com/docs/devcontainers/attach-container).
 
+<br>
 
 ### Local
 
@@ -72,6 +73,7 @@ conda env remove --name pollutants
 ```
 
 <br>
+<br>
 
 ## GitHub Actions
 
@@ -94,6 +96,8 @@ dotfile `.pylintrc` of the static code analyser [pylint](https://pylint.pycqa.or
 ```shell
 pylint --generate-rcfile > .pylintrc
 ```
+
+<br>
 
 ### Container Registry Packages
 
@@ -123,6 +127,7 @@ The **ecr** section of [main.yml](/.github/workflows/main.yml) is for Amazon Ela
 registration.
 
 <br>
+<br>
 
 
 ## Testing Image Containers
@@ -144,6 +149,8 @@ If any problems arise
 docker compose logs -f
 ```
 
+<br>
+
 ### Via Amazon EC2 (Elastic Compute Cloud)
 
 If the EC2 is launched with the appropriate instance profile policies for interacting with relevant Amazon services, then 
@@ -154,6 +161,7 @@ docker pull ghcr.io/enqueter/pollutants:develop
 docker run ghcr.io/enqueter/pollutants:develop
 ```
 
+<br>
 <br>
 
 ## Steps
@@ -193,6 +201,7 @@ Steps in focus:
     </tr>
 </table>
 
+<br>
 <br>
 
 ## References
