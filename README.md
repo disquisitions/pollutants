@@ -12,11 +12,10 @@ develop <br>
 
 <br>
 
-### Notes
+**Part I**
 
-Function: 
-
-> Retrieves the nitrogen dioxide readings at particular telemetric devices locations within Scotland.
+The retrieval of baseline, historical, nitrogen dioxide readings recorded at particular *telemetric devices locations* 
+within Scotland.  **Details upcoming.**
 
 <br>
 
