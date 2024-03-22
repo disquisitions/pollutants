@@ -5,7 +5,7 @@
 <br>
 
 master <br>
-[![Pollutants m](https://github.com/enqueter/pollutants/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/enqueter/pollutants/actions/workflows/main.yml)
+[![Pollutants](https://github.com/enqueter/pollutants/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/enqueter/pollutants/actions/workflows/main.yml)
 
 develop <br>
 [![Pollutants](https://github.com/enqueter/pollutants/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/enqueter/pollutants/actions/workflows/main.yml)
