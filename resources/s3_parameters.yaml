@@ -1,7 +1,7 @@
 # S3: Endpoints -> https://docs.aws.amazon.com/general/latest/gr/s3.html
 parameters:
-  region_name: 'eu-west-1'
-  location_constraint: '{region_name}'
+  region_name: ''
+  location_constraint: ''
   access_control_list: 'bucket-owner-full-control'
   internal: 'environment-int'
   path_internal_points: 'pollutants/points/'
