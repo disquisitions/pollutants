@@ -14,18 +14,20 @@ develop <br>
 
 **Part I**
 
-This package repository retrieves baseline/historical nitrogen dioxide readings recorded at particular *telemetric 
-devices locations* within Scotland.  Within Amazon Web Services, a container instance of the repository is run via a Step 
-Functions state machine.
+This package repository retrieves baseline/historical nitrogen dioxide readings recorded at particular *telemetric devices locations* within Scotland.  Within Amazon Web Services, a container instance of the repository is run via a Step Functions state machine.  The container is an instance of this repository.  In brief,
+
+* Foremost, a GitHub Actions event **(a)** builds an image of this repository, **(b)** delivers the image to an Amazon Elastic Container Registry repository.
+
+* Next, at runtime the State Machine pulls the image from the registry and creates a runtime container.  The container reads the raw data, structures it, and delivers the structured data to a specified Amazon S3 (Simple Storage Service) bucket.
+
+* Depending on events, a success or failure notification is released.  Afterwards, all activated services are terminated.
 
 <br>
 
-<div style="margin-left: 5px;">
+<details><summary><b>State Machine</b></summary>
 
 ```mermaid
----
-title: The State Machine
----
+
 stateDiagram-v2
     id1: pollutants
     id2: Notify Success
@@ -38,23 +40,14 @@ stateDiagram-v2
 
     id2 --> [*]
     id3 --> [*]
+
 ```
+</details>
 
-</div>
-
-<br>
-
-The task state *pollutants* runs a container that reads historical pollutants data from Scottish Air Quality's data hub.  The container is an instance of this repository.  In brief, 
-
-* Foremost, a GitHub Actions event **(a)** builds an image of this repository, **(b)** delivers the image to an Amazon Elastic Container Registry repository.  
-
-* Next, at runtime the State Machine pulls the image from the registry and creates a runtime container.  The container reads the raw data, structures it, and delivers the structured data to a specified Amazon S3 (Simple Storage Service) bucket.  
-
-* Depending on events, a success or failure notification is released.  Afterwards, all activated services are terminated.
-
+The task state *pollutants* runs a container that reads historical pollutants data from Scottish Air Quality's data hub.
 
 <br>
-
+<br>
 
 ### References
 
