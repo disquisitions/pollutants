@@ -14,10 +14,45 @@ develop <br>
 
 **Part I**
 
-The retrieval of baseline, historical, nitrogen dioxide readings recorded at particular *telemetric devices locations* 
-within Scotland.  **Details upcoming.**
+This package repository retrieves baseline/historical nitrogen dioxide readings recorded at particular *telemetric 
+devices locations* within Scotland.  Within Amazon Web Services, a container instance of the repositry is run via Step 
+Functions state machine.
 
 <br>
+
+<div style="align: left;">
+
+```mermaid
+---
+title: The State Machine
+---
+stateDiagram-v2
+    id1: pollutants
+    id2: Notify Success
+    id3: Notify Failure
+
+    [*] --> id1
+    
+    id1 --> id2
+    id1 --> id3: catch
+
+    id2 --> [*]
+    id3 --> [*]
+```
+
+</div>
+
+The task state *pollutants* runs a container that reads historical pollutants data from Scottish Air Quality's data hub.  The container is an instance of this repository.  In brief, 
+
+* Foremost, a GitHub Actions event **(a)** builds an image of this repository, **(b)** delivers the image to an Amazon Elastic Container Registry repository.  
+
+* Next, at runtime the State Machine pulls the image from the registry and creates a runtime container.  The container reads the raw data, structures it, and delivers the structured data to a specified Amazon S3 (Simple Storage Service) bucket.  
+
+* Depending on events, a success or failure notification is released.  Afterwards, all activated services are terminated.
+
+
+<br>
+
 
 ### References
 
