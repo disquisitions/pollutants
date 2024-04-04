@@ -27,7 +27,6 @@ This package repository retrieves baseline/historical nitrogen dioxide readings 
 <details><summary><b>State Machine</b></summary>
 
 ```mermaid
-
 stateDiagram-v2
     id1: pollutants
     id2: Notify Success
