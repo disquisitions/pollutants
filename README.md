@@ -24,7 +24,7 @@ This package repository retrieves baseline/historical nitrogen dioxide readings 
 
 <br>
 
-<details><summary><b>State Machine</b></summary>
+<b>State Machine</b>
 
 ```mermaid
 stateDiagram-v2
@@ -38,7 +38,7 @@ stateDiagram-v2
     id3 --> [*]
 ```
 
-</details>
+
 
 The task state *pollutants* runs a container that reads historical pollutants data from Scottish Air Quality's data hub.
 
