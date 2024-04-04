@@ -15,12 +15,12 @@ develop <br>
 **Part I**
 
 This package repository retrieves baseline/historical nitrogen dioxide readings recorded at particular *telemetric 
-devices locations* within Scotland.  Within Amazon Web Services, a container instance of the repositry is run via Step 
+devices locations* within Scotland.  Within Amazon Web Services, a container instance of the repository is run via a Step 
 Functions state machine.
 
 <br>
 
-<div style="align: left;">
+<div style="margin-left: 5px;">
 
 ```mermaid
 ---
@@ -41,6 +41,8 @@ stateDiagram-v2
 ```
 
 </div>
+
+<br>
 
 The task state *pollutants* runs a container that reads historical pollutants data from Scottish Air Quality's data hub.  The container is an instance of this repository.  In brief, 
 
