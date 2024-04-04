@@ -42,6 +42,7 @@ stateDiagram-v2
     id3 --> [*]
 
 ```
+
 </details>
 
 The task state *pollutants* runs a container that reads historical pollutants data from Scottish Air Quality's data hub.
