@@ -14,13 +14,18 @@ develop <br>
 
 **Part I**
 
-This package repository retrieves baseline/historical nitrogen dioxide readings recorded at particular *telemetric devices locations* within Scotland.  Within Amazon Web Services, a container instance of the repository is run via a Step Functions state machine.  The container is an instance of this repository.  In brief,
+This package repository retrieves baseline/historical nitrogen dioxide readings recorded at particular *telemetric 
+devices locations* within Scotland.  Within Amazon Web Services (AWS), a container instance of the repository is run via a 
+**task 
+state** of an AWS Step Functions **state machine**.  The container is an instance of this repository.  In brief:
 
-* Foremost, a GitHub Actions event **(a)** builds an image of this repository, **(b)** delivers the image to an Amazon Elastic Container Registry repository.
+* Foremost, a GitHub Actions event **(a)** builds an image of this repository, **(b)** delivers the image to an Amazon 
+  Elastic Container Registry repository.  This occurs automatically on-push to GitHub.
 
-* Next, at runtime the State Machine pulls the image from the registry and creates a runtime container.  The container reads the raw data, structures it, and delivers the structured data to a specified Amazon S3 (Simple Storage Service) bucket.
+* Next, at runtime the state machine pulls the image from the registry and creates a runtime container.  The container 
+  reads the raw data, structures it, and delivers the structured data to a specified Amazon S3 (Simple Storage Service) bucket.
 
-* Depending on events, a success or failure notification is released.  Afterwards, all activated services are terminated.
+* Depending on events, a success or failure notification is raised.  Afterwards, all activated services are terminated.
 
 <br>
 
@@ -37,7 +42,6 @@ stateDiagram-v2
     id2 --> [*]
     id3 --> [*]
 ```
-
 
 
 The task state *pollutants* runs a container that reads historical pollutants data from Scottish Air Quality's data hub.
