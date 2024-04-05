@@ -20,11 +20,11 @@ class Config:
         self.warehouse: str = os.path.join(os.getcwd(), 'warehouse')
 
         # After the development phase the start date will be a few years earlier.
-        self.starting = datetime.datetime.strptime('2023-01-01', '%Y-%m-%d')
+        self.starting = datetime.datetime.strptime('2018-01-01', '%Y-%m-%d')
         self.ending = datetime.datetime.today() - datetime.timedelta(days=3)
 
         # Devices in focus, via their sequence identifiers
         # pollutant: Nitrogen Dioxide
         # area: Edinburgh
-        # sequence (station): 155 (901), 531 (1014), 177 (460), 150 (791) 165(327), 142 (196)
-        self.sequence_id_filter = [155, 531, 177, 150]
+        # sequence (station): 155 (901), 531 (1014), 177 (460), 150 (791), 165(327), 142 (196)
+        self.sequence_id_filter = [155, 531, 177, 150, 165, 142]
