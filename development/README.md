@@ -15,6 +15,7 @@
   * [Via Amazon EC2 (Elastic Compute Cloud)](#via-amazon-ec2-elastic-compute-cloud)
 * [Steps](#steps)
 * [References](#references)
+* [Appendix](#appendix)
 
 <br>
 
@@ -211,6 +212,26 @@ Steps in focus:
 * [Time Durations](https://en.wikipedia.org/wiki/ISO_8601#Durations)
 * [ubuntu man pages](https://manpages.ubuntu.com/manpages/trusty/man1/)
 
+<br>
+<br>
+
+## Appendix
+
+<b>State Machine</b>
+
+```mermaid
+stateDiagram-v2
+    id1: pollutants
+    id2: Notify Success
+    id3: Notify Failure
+    [*] --> id1
+    id1 --> id2
+    id1 --> id3: catch
+    id2 --> [*]
+    id3 --> [*]
+```
+
+The task state *pollutants* runs a container that reads historical pollutants data from Scottish Air Quality's data hub.
 
 <br>
 <br>
