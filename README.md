@@ -61,6 +61,34 @@ The task state *pollutants* runs a container that reads historical pollutants da
 <br>
 <br>
 
+### Rough Notes
+
+327 might be malfunctioning
+
+155 (901), 531 (1014), 177 (460), 150 (791), 165(327), 142 (196)
+
+"id":901,"label":"901-Edinburgh St Leonards-Nitrogen dioxide in air",
+"type": "urban background","start": "24/11/2003", "url": "https://www.scottishairquality.scot/latest/site-info/ED3"
+
+"id":1014,"label":"1014-Edinburgh Nicolson Street-Nitrogen dioxide in air",
+"type": "roadside","start": "01/12/2017", "url": "https://www.scottishairquality.scot/latest/site-info/EDNS"
+
+"id":460,"label":"460-Edinburgh Queensferry Road-Nitrogen dioxide in air",
+"type": "roadside","start": "01/01/2011", "url": "https://www.scottishairquality.scot/latest/site-info/ED9"
+
+"id":791,"label":"791-Edinburgh Currie-Nitrogen dioxide in air",
+"type": "suburban","start": "01/01/2013", "url": "https://www.scottishairquality.scot/latest/site-info/ED11"
+
+"id":327,"label":"327-Edinburgh Gorgie Road-Nitrogen dioxide in air",
+"type": "roadside","start": "01/01/2005", "url": "https://www.scottishairquality.scot/latest/site-info/ED5"
+
+"id":196,"label":"196-Edinburgh St John's Road-Nitrogen dioxide in air",
+"type": "kerbside","start": "03/01/2007", "url": "https://www.scottishairquality.scot/latest/site-info/ED1"
+
+
+<br>
+<br>
+
 <br>
 <br>
 
