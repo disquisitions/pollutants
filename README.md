@@ -1,6 +1,6 @@
 <br>
 
-<span style="color: #777777"><b>IN PROGRESS</b></span>
+<span style="color: #555555"><b>IN PROGRESS</b></span>
 
 <br>
 
@@ -19,32 +19,13 @@ devices locations* within Scotland.  Within Amazon Web Services (AWS), a contain
 **task 
 state** of an AWS Step Functions **state machine**.  The container is an instance of this repository.  In brief:
 
-* Foremost, a GitHub Actions event **(a)** builds an image of this repository, **(b)** delivers the image to an Amazon 
+* A GitHub Actions event **(a)** builds an image of this repository, and **(b)** delivers the image to an Amazon 
   Elastic Container Registry repository.  This occurs automatically on-push to GitHub.
 
 * Next, at runtime the state machine pulls the image from the registry and creates a runtime container.  The container 
   reads the raw data, structures it, and delivers the structured data to a specified Amazon S3 (Simple Storage Service) bucket.
 
 * Depending on events, a success or failure notification is raised.  Afterwards, all activated services are terminated.
-
-<br>
-
-<b>State Machine</b>
-
-```mermaid
-stateDiagram-v2
-    id1: pollutants
-    id2: Notify Success
-    id3: Notify Failure
-    [*] --> id1
-    id1 --> id2
-    id1 --> id3: catch
-    id2 --> [*]
-    id3 --> [*]
-```
-
-
-The task state *pollutants* runs a container that reads historical pollutants data from Scottish Air Quality's data hub.
 
 <br>
 <br>
@@ -87,9 +68,6 @@ sequence_id (station_id):
     "start": "03/01/2007", "url": "https://www.scottishairquality.scot/latest/site-info/ED1"}
 ]
 ```
-
-
-
 
 <br>
 <br>
