@@ -52,6 +52,7 @@ The task state *pollutants* runs a container that reads historical pollutants da
 ### References
 
 * [The stations metadata of the telemetric devices](https://www.scottishairquality.scot/sos-scotland/api/v1/stations)
+* [Monitoring Sites](https://www.scottishairquality.scot/latest/summary)
 * [The pollutants that Scottish Air Quality focus on](https://www.scottishairquality.scot/sos-scotland/api/v1/phenomena)
   * [The pollutants dictionary](https://dd.eionet.europa.eu/vocabulary/aq/pollutant/view)
 * [The metadata of the timeseries](https://www.scottishairquality.scot/sos-scotland/api/v1/timeseries): The metadata 
