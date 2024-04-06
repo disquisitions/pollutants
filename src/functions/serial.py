@@ -41,7 +41,7 @@ class Serial:
         raise f'Failure code: {response.status_code}'
 
     @staticmethod
-    def get_dictionary(uri: str) -> dict:
+    def read(uri: str) -> dict:
         """
 
         :param uri: The file string of a local YAML file; path + file name + extension.
