@@ -1,10 +1,9 @@
 """Module s3_parameters.py"""
-import os
 
+import config
 import src.elements.s3_parameters as s3p
 import src.functions.secret
 import src.functions.serial
-import config
 
 
 class S3Parameters:
@@ -26,7 +25,6 @@ class S3Parameters:
         Constructor
         """
 
-        self.__uri = os.path.join(os.getcwd(), 'resources', 's3_parameters.yaml')
         self.__url = config.Config().s3_parameters_template
         self.__secret = src.functions.secret.Secret()
 
