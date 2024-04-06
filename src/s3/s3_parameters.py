@@ -35,7 +35,7 @@ class S3Parameters:
             A dictionary, or excerpt dictionary, of YAML file contents
         """
 
-        blob = src.functions.serial.Serial().get_dictionary(uri=self.__uri)
+        blob = src.functions.serial.Serial().read(uri=self.__uri)
 
         return blob['parameters']
 
