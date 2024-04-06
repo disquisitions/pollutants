@@ -71,10 +71,10 @@ class Points:
         else:
             data = pd.DataFrame(data=dictionary, columns=['epoch_ms', 'measure'])
             data.dropna(axis=0, inplace=True)
-            data = data.copy().loc[data['measure'] >= 0, :]
             data.loc[:, 'timestamp'] = pd.to_datetime(data.loc[:, 'epoch_ms'].array, unit='ms', origin='unix')
             data.loc[:, 'date'] = data.loc[:, 'timestamp'].dt.date.array
             data.loc[:, 'sequence_id'] = sequence_id
+            data = data.copy().loc[data['measure'] >= 0, :]
 
         return data
 
