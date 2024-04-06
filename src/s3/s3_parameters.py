@@ -4,6 +4,7 @@ import os
 import src.elements.s3_parameters as s3p
 import src.functions.secret
 import src.functions.serial
+import config
 
 
 class S3Parameters:
@@ -26,6 +27,7 @@ class S3Parameters:
         """
 
         self.__uri = os.path.join(os.getcwd(), 'resources', 's3_parameters.yaml')
+        self.__url = config.Config().s3_parameters_template
         self.__secret = src.functions.secret.Secret()
 
     def __get_dictionary(self) -> dict:
@@ -35,7 +37,7 @@ class S3Parameters:
             A dictionary, or excerpt dictionary, of YAML file contents
         """
 
-        blob = src.functions.serial.Serial().read(uri=self.__uri)
+        blob = src.functions.serial.Serial().api(url=self.__url)
 
         return blob['parameters']
 
@@ -51,6 +53,7 @@ class S3Parameters:
 
         # Parsing variables
         region_name = self.__secret.exc(secret_id='RegionCodeDefault')
+
         s3_parameters: s3p.S3Parameters = s3_parameters._replace(
             location_constraint=region_name, region_name=region_name)
 
