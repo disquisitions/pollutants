@@ -53,9 +53,9 @@ class S3Parameters:
 
         # Parsing variables
         region_name = self.__secret.exc(secret_id='RegionCodeDefault')
-
+        internal = self.__secret.exc(secret_id='InternalBucketEnqueter')
         s3_parameters: s3p.S3Parameters = s3_parameters._replace(
-            location_constraint=region_name, region_name=region_name)
+            location_constraint=region_name, region_name=region_name, internal=internal)
 
         return s3_parameters
 
