@@ -13,9 +13,7 @@
 * [Testing Images Containers](#testing-image-containers)
   * [Locally](#locally)
   * [Via Amazon EC2 (Elastic Compute Cloud)](#via-amazon-ec2-elastic-compute-cloud)
-* [Steps](#steps)
 * [References](#references)
-* [Appendix](#appendix)
 
 <br>
 
@@ -23,19 +21,19 @@
 
 ### Remote
 
-Development within a container.  The environment's image is built via
+The remote environment's image is built via
 
 ```shell
 docker build . --file .devcontainer/Dockerfile -t pollutants
 ```
 
-which names the new image `pollutants`.  Subsequently, use a container/instance of the image `pollutants` as a development environment via the command
+This names the new image `pollutants`.  Subsequently, a container/instance of the image `pollutants` is set up via:
 
 > docker run [--rm](https://docs.docker.com/engine/reference/commandline/run/#:~:text=a%20container%20exits-,%2D%2Drm,-Automatically%20remove%20the) [-i](https://docs.docker.com/engine/reference/commandline/run/#:~:text=and%20reaps%20processes-,%2D%2Dinteractive,-%2C%20%2Di) [-t](https://docs.docker.com/get-started/02_our_app/#:~:text=Finally%2C%20the-,%2Dt,-flag%20tags%20your) [-p](https://docs.docker.com/engine/reference/commandline/run/#:~:text=%2D%2Dpublish%20%2C-,%2Dp,-Publish%20a%20container%E2%80%99s) 127.0.0.1:10000:8888 -w /app --mount \
 > &nbsp; &nbsp; type=bind,src="$(pwd)",target=/app pollutants
 
-wherein   `-p 10000:8888` maps the host port `10000` to container port `8888`.  Note, the container's working environment,
-i.e., -w, must be inline with this project's top directory.  Get the name of the running instance ``pollutants`` via
+Herein, `-p 10000:8888` maps the host port `10000` to container port `8888`.  Note, the container's working environment,
+i.e., -w, must be inline with this project's top directory.  Get the name of the running instance ``pollutants`` via:
 
 ```shell
 docker ps --all
@@ -165,73 +163,12 @@ docker run ghcr.io/enqueter/pollutants:develop
 <br>
 <br>
 
-## Steps
-
-Steps in focus:
-
-<table style="width: 80%; border: 0; border-spacing: 5px; margin-left: 35px">
-    <colgroup>
-        <col span="1" style="width: 23.5%;">
-        <col span="1" style="width: 66.5%;">
-    </colgroup>
-    <thead><tr style="text-align: left"><th>focus</th><th>notes</th></tr></thead>
-    <tr><td>Images & Containers</td>
-        <td><ul style="list-style-type:'\2713';">
-          <li>&nbsp; The Dockerfile for <a href="/.devcontainer/Dockerfile" target="_blank">development</a>.</li>
-          <li>&nbsp; The Dockerfile for <a href="/Dockerfile" target="_blank">production</a>.</li>
-          <li>&nbsp; A compose.yaml for local testing.</li>
-        </ul></td>
-    </tr>
-    <tr><td>Container Registries</td>
-        <td><ul style="list-style-type:'\2713';">
-          <li>&nbsp; Local Machine &rarr; GitHub &rarr; Amazon Elastic Container Registry (<a href="/.github/workflows/main.yml" target="_blank">Via GitHub Actions</a>)</li>
-          <li>&nbsp; Local Machine &rarr; GitHub &rarr; GitHub Container Registry (<a href="/.github/workflows/main.yml" target="_blank">Via GitHub Actions</a>)</li>
-        </ul></td>
-    </tr>
-    <tr><td>Cataloguing</td>
-        <td>&#10003; &nbsp; Cataloguing Amazon S3 (Simple Storage Service) deliveries via Amazon Glue (Via the Glue Package)</td>
-    </tr>
-    <tr><td>Code Analysis</td>
-        <td>&#10003; &nbsp; Code Analysis (<a href="/.github/workflows/main.yml" target="_blank">Via GitHub Actions</a>)</td>
-    </tr>
-    <tr><td>Usage Notes</td>
-        <td><ul  style="list-style-type:'\2717';">
-            <li>&nbsp; Explanatory usage notes</li>
-            <li>&nbsp; Resources files</li>
-        </ul></td>
-    </tr>
-</table>
-
-<br>
-<br>
-
 ## References
 
 * [Epoch Time](https://unixtime.org)
 * [UNIX Time Converters](https://time.is/Unix_time_converter)
 * [Time Durations](https://en.wikipedia.org/wiki/ISO_8601#Durations)
 * [ubuntu man pages](https://manpages.ubuntu.com/manpages/trusty/man1/)
-
-<br>
-<br>
-
-## Appendix
-
-<b>State Machine</b>
-
-```mermaid
-stateDiagram-v2
-    id1: pollutants
-    id2: Notify Success
-    id3: Notify Failure
-    [*] --> id1
-    id1 --> id2
-    id1 --> id3: catch
-    id2 --> [*]
-    id3 --> [*]
-```
-
-The task state *pollutants* runs a container that reads historical pollutants data from Scottish Air Quality's data hub.
 
 <br>
 <br>

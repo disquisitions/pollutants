@@ -13,7 +13,7 @@ class Objects:
 
     Description
     -----------
-    This class reads & writes JSON (JavaScript Object Notation) objects
+    This class reads & writes JSON (JavaScript Object Notation) objects.
     """
 
     def __init__(self):
@@ -54,7 +54,7 @@ class Objects:
             response = requests.get(url=url, timeout=600)
             response.raise_for_status()
         except requests.exceptions.Timeout as err:
-            raise f"TIME OUT: {url.split('timeseries')[1]}\n{err}" from err
+            raise f"Time Out:\n{err}" from err
         except Exception as err:
             raise err from err
 
