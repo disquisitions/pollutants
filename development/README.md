@@ -1,9 +1,5 @@
 <br>
 
-<span style="color: #777777"><b>IN PROGRESS</b></span>
-
-<br>
-
 * [Remote & Local Environments](#remote--local-environments)
   * [Remote](#remote) 
   * [Local](#local)
@@ -24,16 +20,16 @@
 The remote environment's image is built via
 
 ```shell
-docker build . --file .devcontainer/Dockerfile -t pollutants
+docker build . --file .devcontainer/Dockerfile -t excomputing
 ```
 
-This names the new image `pollutants`.  Subsequently, a container/instance of the image `pollutants` is set up via:
+This names the new image `excomputing`.  Subsequently, a container/instance of the image `excomputing` is set up via:
 
-> docker run [--rm](https://docs.docker.com/engine/reference/commandline/run/#:~:text=a%20container%20exits-,%2D%2Drm,-Automatically%20remove%20the) [-i](https://docs.docker.com/engine/reference/commandline/run/#:~:text=and%20reaps%20processes-,%2D%2Dinteractive,-%2C%20%2Di) [-t](https://docs.docker.com/get-started/02_our_app/#:~:text=Finally%2C%20the-,%2Dt,-flag%20tags%20your) [-p](https://docs.docker.com/engine/reference/commandline/run/#:~:text=%2D%2Dpublish%20%2C-,%2Dp,-Publish%20a%20container%E2%80%99s) 127.0.0.1:10000:8888 -w /app --mount \
-> &nbsp; &nbsp; type=bind,src="$(pwd)",target=/app pollutants
+> docker run [--rm](https://docs.docker.com/engine/reference/commandline/run/#:~:text=a%20container%20exits-,%2D%2Drm,-Automatically%20remove%20the) [-i](https://docs.docker.com/engine/reference/commandline/run/#:~:text=and%20reaps%20processes-,%2D%2Dinteractive,-%2C%20%2Di) [-t](https://docs.docker.com/get-started/02_our_app/#:~:text=Finally%2C%20the-,%2Dt,-flag%20tags%20your) [-p](https://docs.docker.com/engine/reference/commandline/run/#:~:text=%2D%2Dpublish%20%2C-,%2Dp,-Publish%20a%20container%E2%80%99s) 10000:8050 -w /app --mount \
+> &nbsp; &nbsp; type=bind,src="$(pwd)",target=/app excomputing
 
-Herein, `-p 10000:8888` maps the host port `10000` to container port `8888`.  Note, the container's working environment,
-i.e., -w, must be inline with this project's top directory.  Get the name of the running instance ``pollutants`` via:
+Herein, `-p 10000:8050` maps the host port `10000` to container port `8050`.  Note, the container's working environment,
+i.e., -w, must be inline with this project's top directory.  Get the name of the running instance ``excomputing`` via:
 
 ```shell
 docker ps --all
@@ -61,14 +57,14 @@ conda update -n base -c anaconda conda
 Subsequently, build a local virtual environment via the command
 
 ```shell
-conda env create --file environment.yml -p /opt/miniconda3/envs/pollutants
+conda env create --file environment.yml -p /opt/miniconda3/envs/excomputing
 ```
 
 Herein, **environment.yml** uses the same **requirements.txt** as [Dockerfile](/.devcontainer/Dockerfile).  If the 
 environment exists, i.e., if the aim is to replace an existing environment, initially run
 
 ```shell
-conda env remove --name pollutants
+conda env remove --name excomputing
 ```
 
 <br>
@@ -138,7 +134,7 @@ a testing option is a `compose.yaml`; a `compose.yaml` of the form [compose.yaml
 **explanatory notes upcoming**.  Subsequently, within the directory hosting `compose.yaml`
 
 ```shell
- docker pull ghcr.io/enqueter/pollutants:develop
+ docker pull ghcr.io/enqueter/data:develop
  docker compose up -d
 ```
 
@@ -156,8 +152,8 @@ If the EC2 is launched with the appropriate instance profile policies for intera
 testing is straightforward.
 
 ```shell
-docker pull ghcr.io/enqueter/pollutants:develop
-docker run ghcr.io/enqueter/pollutants:develop
+docker pull ghcr.io/enqueter/data:develop
+docker run ghcr.io/enqueter/data:develop
 ```
 
 <br>
