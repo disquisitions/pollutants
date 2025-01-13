@@ -2,6 +2,8 @@
 import logging
 import os
 import sys
+
+import boto3
 import pandas as pd
 
 
@@ -63,8 +65,10 @@ if __name__ == '__main__':
     import src.setup
 
     # S3 S3Parameters, Service Instance
-    s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters().exc()
-    service: sr.Service = src.functions.service.Service(region_name=s3_parameters.region_name).exc()
+    connector = boto3.session.Session()
+    s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters(connector=connector).exc()
+    service: sr.Service = src.functions.service.Service(
+        connector=connector, region_name=s3_parameters.region_name).exc()
 
     # Setting-up
     setup: bool = src.setup.Setup(
