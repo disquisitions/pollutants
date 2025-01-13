@@ -26,7 +26,7 @@ docker build . --file .devcontainer/Dockerfile -t excomputing
 This names the new image `excomputing`.  Subsequently, a container/instance of the image `excomputing` is set up via:
 
 ```shell
-docker run [--rm] [-i] [-t] [-p] 10000:8050 -w /app --mount
+docker run --rm -i -t -p 10000:8050 -w /app --mount
   type=bind,src="$(pwd)",target=/app excomputing
 ```
 
