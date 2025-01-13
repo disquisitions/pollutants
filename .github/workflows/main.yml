@@ -1,4 +1,4 @@
-name: Pollutants
+name: 'Ex Computing: Data'
 
 on: [push]
 
