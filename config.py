@@ -21,7 +21,6 @@ class Config:
 
         # A S3 parameters template
         self.s3_parameters_key = 's3_parameters.yaml'
-        self.s3_parameters_template = 'https://raw.githubusercontent.com/enqueter/.github/master/profile/s3_parameters.yaml'
 
         # After the development phase the start date will be a few years earlier.
         self.starting = datetime.datetime.strptime('2011-01-01', '%Y-%m-%d')
