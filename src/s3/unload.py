@@ -2,9 +2,8 @@
 Module unload.py
 """
 
-import botocore.exceptions
-
 import boto3
+import botocore.exceptions
 
 
 class Unload:
