@@ -1,8 +1,9 @@
 """Module main.py"""
 import logging
-import boto3
 import os
 import sys
+
+import boto3
 import pandas as pd
 
 
