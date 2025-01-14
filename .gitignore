@@ -163,3 +163,4 @@ cython_debug/
 # Exclude
 compose.yaml
 *.bat
+warehouse
