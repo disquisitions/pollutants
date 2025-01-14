@@ -44,7 +44,7 @@ i.e., -w, must be inline with this project's top directory.  Get the name of the
 docker ps --all
 ```
 
-A developer may attach an IDE (independent development environment) application to a running container.  The IntelliJ 
+A developer may attach an IDE (integrated development environment) application to a running container.  The IntelliJ 
 IDEA instructions are:
 
 > Connect to the Docker [daemon](https://www.jetbrains.com/help/idea/docker.html#connect_to_docker)
