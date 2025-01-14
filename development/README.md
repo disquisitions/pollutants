@@ -140,7 +140,7 @@ a testing option is a `compose.yaml`; a `compose.yaml` of the form [compose.yaml
 **explanatory notes upcoming**.  Subsequently, within the directory hosting `compose.yaml`
 
 ```shell
- docker pull ghcr.io/excomputing/data:develop
+ docker pull ghcr.io/excomputing/data:master
  docker compose up -d
 ```
 
@@ -158,8 +158,8 @@ If the EC2 is launched with the appropriate instance profile policies for intera
 testing is straightforward.
 
 ```shell
-docker pull ghcr.io/excomputing/data:develop
-docker run ghcr.io/excomputing/data:develop
+docker pull ghcr.io/excomputing/data:master
+docker run ghcr.io/excomputing/data:master
 ```
 
 <br>
