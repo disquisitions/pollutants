@@ -31,8 +31,11 @@ class S3Parameters(typing.NamedTuple):
     external: str
       The name of the bucket that the project's calculations will be delivered to.
 
-    path_external_quantiles: str
-      A path
+    path_external_quantiles
+      * The bucket path of the quantiles calculations
+      
+    configurations
+      * The configurations bucket
     """
 
     region_name: str
@@ -43,3 +46,4 @@ class S3Parameters(typing.NamedTuple):
     path_internal_references: str
     external: str
     path_external_quantiles: str
+    configurations: str
