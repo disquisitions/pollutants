@@ -30,7 +30,8 @@ docker run --rm -i -t -p 10000:8050 -w /app --mount
   type=bind,src="$(pwd)",target=/app excomputing
 ```
 
-More at
+For an explanatory note of a `docker run` option visit [docker](https://docs.docker.com/reference/cli/docker/container/run/).  Examples:
+
 * [--rm](https://docs.docker.com/engine/reference/commandline/run/#:~:text=a%20container%20exits-,%2D%2Drm,-Automatically%20remove%20the)
 * [-i](https://docs.docker.com/engine/reference/commandline/run/#:~:text=and%20reaps%20processes-,%2D%2Dinteractive,-%2C%20%2Di)
 * [-t](https://docs.docker.com/get-started/02_our_app/#:~:text=Finally%2C%20the-,%2Dt,-flag%20tags%20your)
