@@ -23,11 +23,11 @@ class Config:
         self.s3_parameters_key = 's3_parameters.yaml'
 
         # After the development phase the start date will be a few years earlier.
-        self.starting = datetime.datetime.strptime('2015-01-01', '%Y-%m-%d')
+        self.starting = datetime.datetime.strptime('2016-01-01', '%Y-%m-%d')
         self.ending = datetime.datetime.today() - datetime.timedelta(days=3)
 
         # Devices in focus, via their sequence identifiers
         # pollutant: Nitrogen Dioxide
         # area: Edinburgh
         # sequence (station): 155 (901), 531 (1014), 177 (460), 150 (791), 165(327), 142 (196), 609 (1072), 169 (259), 173 (377)
-        self.sequence_id_filter = [155, 531, 177, 150, 165, 142, 609, 169, 173]
+        self.sequence_id_filter = [155, 531, 177, 150]
