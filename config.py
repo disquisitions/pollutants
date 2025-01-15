@@ -23,7 +23,7 @@ class Config:
         self.s3_parameters_key = 's3_parameters.yaml'
 
         # After the development phase the start date will be a few years earlier.
-        self.starting = datetime.datetime.strptime('2016-01-01', '%Y-%m-%d')
+        self.starting = datetime.datetime.strptime('2022-01-01', '%Y-%m-%d')
         self.ending = datetime.datetime.today() - datetime.timedelta(days=3)
 
         # Devices in focus, via their sequence identifiers
